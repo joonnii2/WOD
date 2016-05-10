@@ -152,12 +152,6 @@ define([
             $stateParams.poster = 'http://vjs.zencdn.net/v/oceans.png';
           }
 
-
-
-
-
-
-
           $state.go('myclass.learningPlayer', $stateParams);
         };
       };
