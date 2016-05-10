@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>나의 문의사항 | SCU WOD Mobile LMS</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="description" content="서울사이버대학교 평생교육원" />
+    <meta name="keywords" content="서울사이버대학교 평생교육원, 서울사이버대학교, 평생교육원" /> 
+	<link rel="stylesheet" href="../styles/common.css" />
+	<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="../scripts/lib/jquery/jquery-1.11.0.min.js"></script>
+	<script src="../scripts/common.js"></script>
+</head>
+<body>
+	<p id="skip_nav"><a href="#contents">본문 바로가기</a></p>
+	<div id="full_screen">
+		<header>
+			<h1>글쓰기</h1>
+			<button class="btn_close"><span class="hide">화면 닫기</span></button>
+		</header>
+		<div id="contents">
+			<form>
+				<div class="board_write">
+					<div class="select">
+						<select title="질문 구분">
+							<option value="">질문 구분</option>
+						</select>						
+					</div>
+					<ul class="check_control inp_radio item2">
+						<li><label class="on"><input type="radio" name="opened" class="radio" checked="checked"> 공개</label></li>
+						<li><label><input type="radio" name="opened" class="radio"> 비공개</label></li>
+					</ul>
+
+					<div class="intxt"><input type="text" placeholder="상담제목" title="상담제목 입력" /></div>
+					<div class="intxt"><textarea cols="70" rows="5" placeholder="상담내용" title="상담내용 입력" class="h219"></textarea></div>
+				</div>
+				<div class="btn_area">
+					<button type="submit" class="btn_block btn_primary">저장</button>
+					<button type="reset" class="btn_block btn_default">취소</button>
+				</div>	
+			</form>
+		</div>
+	</div>
+</body>
+</html>

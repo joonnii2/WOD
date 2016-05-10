@@ -1,0 +1,142 @@
+<ion-view view-title="홈" hide-back-button="true">
+  <ion-content class="login">
+  	<div class="login_wrap" style="text-align:center;">
+  		<img style="text-align:center;" src="images/1.png"/>
+  		<p/>
+		<h2 style="color:#ffffff;"><span>SCU WOD Mobile App</span></h2>
+		<h4 style="color:#ffffff;text-align: left">
+		<span>&nbsp;<i class="icon ion-checkmark"></i>&nbsp;아이디 찾기</span>
+		</h4>
+		<form name="idSearchForm" novalidate allow-invalid="true" ng-submit="idSearch(idSearchForm)">
+	      <div class="list list-inset">
+	        <label class="item item-input">
+	          	<input type="text" placeholder="이름" 
+					name="username"
+		          	ng-model="idSearchData.username" 
+		          	ng-minlength="4" 
+	   				ng-maxlength="50" 
+	   				required>
+				<div class="help-block" ng-messages="idSearchForm.username.$error" 
+					ng-if="idSearchForm.username.$touched">
+				    <p ng-message="minlength">이름은 2자 이상 입력하세요.</p>
+				    <p ng-message="maxlength">이름은 50자 이하로 입력하세요.</p>
+				    <p ng-message="required">이름은 필수입니다.</p>
+				</div>
+	        </label>
+	        <label class="item item-input">
+			    <input type="text"
+					name="phone" placeholder="휴대전화 ex) 010-0000-0000" 
+		          	ng-model="idSearchData.phone" 
+		          	ng-pattern="/^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/"
+		          	ng-minlength="10" 
+	   				ng-maxlength="13" 
+	   				required>
+				<div class="help-block" ng-messages="idSearchForm.phone.$error" 
+					ng-if="idSearchForm.phone.$touched">
+				    <p ng-message="minlength">잘못된 휴대폰번호 형식 입니다.</p>
+				    <p ng-message="maxlength">잘못된 휴대폰번호 형식 입니다.</p>
+				    <p ng-message="required">휴대폰번호는 필수 입니다.</p>
+				    <p ng-message="pattern">잘못된 휴대폰번호 형식 입니다.</p>
+				</div>
+	        </label>
+	        <label class="item item-input">
+	          	<input type="email" placeholder="이메일 ex) example@example.com" 
+					name="email"
+		          	ng-model="idSearchData.email" 
+		          	ng-minlength="3" 
+	   				ng-maxlength="50" 
+	   				required>
+				<div class="help-block" ng-messages="idSearchForm.email.$error" 
+					ng-if="idSearchForm.email.$touched">
+				    <p ng-message="minlength">잘못된 이메일 형식 입니다.</p>
+				    <p ng-message="maxlength">이메일은 80자 이하로 입력하세요.</p>
+				    <p ng-message="required">이메일은 필수입니다.</p>
+				    <p ng-message="email">잘못된 이메일 형식 입니다.</p>
+				</div>
+	        </label>
+	        <label class="item item-input">
+	          	<input type="text"
+					name="birthday" placeholder="생년월일 ex) 2016-05-01" 
+		          	ng-model="idSearchData.birthday"
+		          	ng-pattern="/^(19|20)([0-9]{2})-?([0|1]?)([0-9]{1})-?([0|1|2|3]?)([0-9]{1})$/"
+		          	ng-minlength="8" 
+	   				ng-maxlength="10" 
+	   				required>
+				<div class="help-block" ng-messages="idSearchForm.birthday.$error" 
+					ng-if="idSearchForm.birthday.$touched">
+				    <p ng-message="minlength">생년월일은 8자 이상 입력하세요.</p>
+				    <p ng-message="maxlength">생년월일은 10자 이하로 입력하세요.</p>
+				    <p ng-message="required">생년월일은 필수입니다.</p>
+				    <p ng-message="pattern">잘못된 생년월일 형식 입니다.</p>
+				</div>
+			</label>
+	        <div class="row" style="background-color: #ffffff">
+	          <div class="col">
+	          	<button type="submit" class="button button-block button-positive">아이디 찾기</button>
+	          </div>
+	        </div>
+	      </div>
+		</form>
+		<p>&nbsp;</p>
+		<h4 style="color:#ffffff;text-align: left">
+		<span>&nbsp;<i class="icon ion-checkmark"></i>&nbsp;비밀번호 찾기</span>
+		</h4>
+		<form name="pwSearchForm" novalidate allow-invalid="true" ng-submit="pwSearch(pwSearchForm)">
+	      <div class="list list-inset">
+	        <label class="item item-input">
+	          	<input type="text" placeholder="이름" 
+					name="username"
+		          	ng-model="pwSearchData.username" 
+		          	ng-minlength="4" 
+	   				ng-maxlength="50" 
+	   				required>
+				<div class="help-block" ng-messages="pwSearchForm.username.$error" 
+					ng-if="pwSearchForm.username.$touched">
+				    <p ng-message="minlength">이름은 2자 이상 입력하세요.</p>
+				    <p ng-message="maxlength">이름은 50자 이하로 입력하세요.</p>
+				    <p ng-message="required">이름은 필수입니다.</p>
+				</div>
+	        </label>
+	        <label class="item item-input">
+	          	<input type="text" placeholder="아이디" 
+					name="userid"
+		          	ng-model="pwSearchData.userid" 
+		          	ng-minlength="3" 
+	   				ng-maxlength="50" 
+	   				required>
+				<div class="help-block" ng-messages="pwSearchForm.userid.$error" 
+					ng-if="pwSearchForm.userid.$touched">
+				    <p ng-message="minlength">아이디는 3자 이상 입력하세요.</p>
+				    <p ng-message="maxlength">아이디는 80자 이하로 입력하세요.</p>
+				    <p ng-message="required">아이디는 필수입니다.</p>
+				</div>
+	        </label>
+	        <label class="item item-input">
+			    <input type="text"
+					name="phone" placeholder="휴대전화 ex) 010-0000-0000" 
+		          	ng-model="pwSearchData.phone" 
+		          	ng-pattern="/^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/"
+		          	ng-minlength="10" 
+	   				ng-maxlength="13" 
+	   				required>
+				<div class="help-block" ng-messages="pwSearchForm.phone.$error" 
+					ng-if="pwSearchForm.phone.$touched">
+				    <p ng-message="minlength">잘못된 휴대폰번호 형식 입니다.</p>
+				    <p ng-message="maxlength">잘못된 휴대폰번호 형식 입니다.</p>
+				    <p ng-message="required">휴대폰번호는 필수 입니다.</p>
+				    <p ng-message="pattern">잘못된 휴대폰번호 형식 입니다.</p>
+				</div>
+	        </label>
+	        <div class="row" style="background-color: #ffffff">
+	          <div class="col">
+	          	<button type="submit" class="button button-block button-positive">비밀번호 찾기</button>
+	          </div>
+	        </div>
+	      </div>
+		</form>
+		<p>&nbsp;</p>
+		<button class="button icon-left ion-arrow-left-a button-balanced" ng-click="goLogin()">로그인 페이지로 이동</button>
+		<p class="copyright">Copyright(c) SCU Lifelong Education Institute.<br/>All rights Reserved.</p>
+	</div>
+  </ion-content>
+</ion-view>

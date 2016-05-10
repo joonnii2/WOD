@@ -1,0 +1,94 @@
+<ion-view view-title="수강중인과정 상세">
+<!-- <ion-tabs class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
+
+  <ion-tab class="tab-item active" title="학습하기" href="#/weekList/1">
+    <ion-nav-view name="courseContent"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab class="tab-item" title="공지사항" href="#/main/weekList/1">
+    <ion-nav-view name="noticeContent"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab class="tab-item" title="강의정보" href="#/main/weekList/1">
+    <ion-nav-view name="courseInfoContent"></ion-nav-view>
+  </ion-tab>
+  <ion-tab class="tab-item" title="Q&A" href="#/main/weekList/1">
+    <ion-nav-view name="qnaContent"></ion-nav-view>
+  </ion-tab>
+</ion-tabs> -->
+
+<!-- 	<div class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
+		<div class="tabs">
+			<a class="tab-item active" href="#/main/weekList/1">
+			학습하기
+			</a>
+			
+			<a class="tab-item" href="#">
+			공지
+			</a>
+			<a class="tab-item" href="#">
+			강의정보
+			</a>
+			<a class="tab-item" href="#">
+			Q&A
+			</a>
+		</div>
+	</div>
+<ion-content style="margin-top:60px;">
+			<ion-nav-view name="courseContent">
+			<ion-view view-title="test">
+				<ion-content>Hello !</ion-content>
+			</ion-view>
+		</ion-nav-view>
+</ion-content> -->
+	
+
+  <ion-content style="/*background:#67b0d6; */margin-top:48px;">
+    <ion-refresher 
+		pulling-text="새로고침" 
+		on-refresh="doRefresh()" 
+		on-pulling="onPulling()" 
+		spinner="crescent" 
+		pulling-icon="ion-ios-arrow-up">
+	</ion-refresher>
+
+	<ion-list>
+		<div class="list card list-inset">
+	  	<a class="item item-icon-left item-icon-right" href="#" 
+	  		ng-class="{active: isGroupShown('courseInfo')}"
+	  		ng-click="toggleGroup('courseInfo')">
+	    	<i class="icon ion-document-text calm"></i>
+	    	강의정보
+	    	<i class="icon calm" ng-class="isGroupShown('courseInfo') ? 'ion-ios-arrow-down' : 'ion-ios-arrow-forward'"></i>
+	  	</a>
+		<ion-item class="item-accordion item-icon-right"
+            ng-show="isGroupShown('courseInfo')">
+	        <div>강의정보 내용</div>
+      	</ion-item>
+	  	<a class="item item-icon-left item-icon-right" href="#"
+	  		ng-class="{active: isGroupShown('studyInfo')}"
+	  		ng-click="toggleGroup('studyInfo')">
+	    	<i class="icon ion-stats-bars calm"></i>
+	    	학습현황
+	    	<i class="icon calm" ng-class="isGroupShown('studyInfo') ? 'ion-ios-arrow-down' : 'ion-ios-arrow-forward'"></i>
+	  	</a>
+	  	<ion-item class="item-accordion item-icon-right"
+            ng-show="isGroupShown('studyInfo')">
+	        <div>학습현황 내용</div>
+      	</ion-item>
+	  	<a class="item item-icon-left item-icon-right" href="#"
+	  		ng-class="{active: isGroupShown('studyResult')}"
+	  		ng-click="toggleGroup('studyResult')">
+	    	<i class="icon ion-university calm"></i>
+	    	성적조회
+	    	<i class="icon calm" ng-class="isGroupShown('studyResult') ? 'ion-ios-arrow-down' : 'ion-ios-arrow-forward'"></i>
+	  	</a>
+	  	<ion-item class="item-accordion item-icon-right"
+            ng-show="isGroupShown('studyResult')">
+	        <div>성적조회 내용</div>
+      	</ion-item>
+	  	</div>
+	</ion-list>
+
+  </ion-content>
+</ion-view>

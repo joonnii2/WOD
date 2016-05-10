@@ -1,0 +1,42 @@
+<ion-view view-title="아이템명"  on-touch="onTouch()" >
+  <ion-header-bar id="playerHeader" class="bar-dark ion_nav_header">
+    <h1 class="title">아이템명</h1>
+    <div class="buttons">
+      <button class="btn_close" ng-click="showConfirm()" style="margin-top: 5px;"><span class="hide">학습종료</span></button>
+    </div>
+  </ion-header-bar>
+
+  <ion-content class="scu_player" style="margin-top: -45px;" scroll="false">
+    <div class="player_info_panel" id="infoPanel">
+      <div class="player_panel_txt"><span>아이템명</span></div>
+      <div class="player_panel_btn">
+        <button class="btn_exit" ng-click="showConfirm()"><span class="hide">학습종료</span></button>
+      </div>
+    </div>
+    <iframe id="webContents" 
+      class="webcontents_frame" 
+      ng-show="!isMedia"
+      ng-src="{{webContentsUrl}}" 
+      allowfullscreen 
+      width="100%" style="height: 100vh;margin-top: 44px;"
+      frameborder="0"
+      scrolling="auto" 
+      allowTransparency="true">
+    </iframe>
+    <!-- <div id="mediaContents" class="contentsLayer"> -->
+    <video id="media" 
+      ng-show="isMedia"
+      preload="auto" 
+      poster="{{poster}}" 
+      webkit-playsinline 
+      width="100%"
+      controls>
+        <source 
+          src="{{mediaUrl}}" 
+          type="{{mediaType}}">
+        <!-- <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"> -->
+        <p>Your user agent does not support the HTML5 Video element.</p>
+    </video>
+    <!-- </div> -->
+  </ion-content>
+</ion-view>

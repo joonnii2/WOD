@@ -1,0 +1,33 @@
+<ion-view>
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">아이템명</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="goToList()">닫기</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+<!--         <div class="list">
+            <a class="item" href="#" onclick="window.open('http://naver.com', '_self'); return false;">
+                Open a Browser
+            </a>
+            <a class="item" href="#" onclick="window.open('http://naver.com', '_blank', 'location=no'); return false;">
+                Open a Twitter Client or Browser
+            </a>
+            <a class="item" href="#" onclick="window.open('https://naver.com', '_system', 'location=yes'); return false;">
+                Open a Google+ Client or Browser
+            </a>
+        </div> -->
+        <iframe ng-src="{{contentsUrl}}" allowfullscreen width="{{contentsWidth}}" height="{{contentsHeight}}"></iframe>
+        <!-- <div ng-include src="'http://google.co.kr'" style="width:100%;height: 600px; background-color: #232323">123123</div> -->
+        <div style="width:{{contentsWidth}};height:{{contentsHeight}}">
+            <video id="media" preload="auto" 
+                   width="100%" poster="{{poster}}" webkit-playsinline controls>
+                <!-- <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"> -->
+                <source src="http://mp4.iscu.ac.kr/iscu/Contents/13110001/289778/1028548/13110001_1_01.mp4" type="video/mp4">
+                <p>Your user agent does not support the HTML5 Video element.</p>
+            </video>
+        </div>
+  </ion-content>
+
+</ion-view>
+<!--           <div ng-include src="'templates/main/home.html'" style="width:100%;height: 600px; background-color: #232323">123123</div> -->

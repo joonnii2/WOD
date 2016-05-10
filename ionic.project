@@ -1,0 +1,8 @@
+{
+  "name": "WOD",
+  "app_id": "",
+  "proxies" : [{
+  	"path":"/api",
+  	"proxyUrl":"http://wod.iscu.ac.kr/api"
+  }]
+}

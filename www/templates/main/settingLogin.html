@@ -1,0 +1,25 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">자동로그인 인증</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModal()">닫기</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="doUserValidation()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">아이디</span>
+          <input type="text" ng-model="loginData.userid">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">비밀번호</span>
+          <input type="password" ng-model="loginData.password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">자동로그인 설정</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

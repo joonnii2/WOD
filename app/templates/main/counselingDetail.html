@@ -1,0 +1,25 @@
+<ion-view view-title="나의 문의사항">
+  <ion-content>
+	<ion-refresher 
+		pulling-text="새로고침" 
+		on-refresh="doRefresh()" 
+		on-pulling="onPulling()" 
+		spinner="crescent" 
+		pulling-icon="ion-ios-arrow-up">
+	</ion-refresher>
+  <div class="item">
+    <h2>제목입니다.</h2>
+    <p>등록자 ID | 2016-04-28</p>
+  </div>
+
+  <div class="item item-body">
+    <p>
+      내용입니다.
+    </p>
+  </div>
+        <div class="btn_area" style="margin-top: 10px;">
+        <a href="#" class="btn_block btn_primary" ng-click="goModify()">수정</a>
+        <button type="button" class="btn_block btn_default" ng-click="doDelete()">삭제</button>
+      </div>
+  </ion-content>
+</ion-view>

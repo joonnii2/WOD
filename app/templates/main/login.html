@@ -1,0 +1,121 @@
+<ion-view view-title="홈" hide-back-button="true" name="login">
+	<ion-header-bar class="logotype">
+	  <h1><span class="hide">서울사이버대학교</span></h1>
+	</ion-header-bar>
+	<ion-content class="login" scroll="false">
+<!-- 			<header class="logotype">
+				<h1><span class="hide">서울사이버대학교</span></h1>
+			</header> -->
+			<div class="login_cont">
+				<h2><span class="hide">SCU WOD Mobile App</span></h2>
+				<form name="loginForm" novalidate allow-invalid="true" ng-submit="login(loginForm)">
+					<fieldset>
+						<legend>로그인</legend>
+						<div class="intxt">
+							<label class="item-input">
+							<!-- <input type="text" placeholder="ID" title="아이디 입력" /> -->
+							<input type="text" placeholder="ID" 
+								name="userid"
+		          				ng-model="loginData.userid" 
+		          				ng-minlength="1" 
+	   							ng-maxlength="50" 
+	   							required/>
+							<div class="help-block" ng-messages="loginForm.userid.$error" 
+								ng-if="loginForm.userid.$touched">
+				    			<p ng-message="minlength">ID는 1자 이상 입력하세요.</p>
+				    			<p ng-message="maxlength">ID는 50자 이하로 입력하세요.</p>
+				    			<p ng-message="required">ID는 필수입니다.</p>
+							</div>
+							</label>
+						</div>
+						<div class="intxt">
+							<!-- <input type="password" placeholder="Password" title="비밀번호 입력" /> -->
+					        <label class="item-input">
+					          	<input type="password" 
+						          	name="password" 
+						          	placeholder="Password" 
+						          	ng-model="loginData.password"
+						          	ng-minlength="1" 
+					   				ng-maxlength="25"
+					   				required/>
+								<div class="help-block" ng-messages="loginForm.password.$error" 
+									ng-if="loginForm.password.$touched">
+								    <p ng-message="minlength">Password는 1자 이상 입력하세요.</p>
+								    <p ng-message="maxlength">Password는 25자 이하로 입력하세요.</p>
+								    <p ng-message="required">Password는 필수입니다.</p>
+								</div>
+					        </label>
+						</div>
+						<div class="btn_area">
+							<button type="submit" class="btn_block btn_primary">로그인</button>
+							<a href="#" class="btn_block btn_default" ng-click="goSearch()">아이디/비밀번호 찾기</a>
+						</div>
+						<ul class="check_control inp_check item2">
+							<li><label><input type="checkbox" id="idSave" name="idSave" class="check" ng-model="settings.isSaveId"/> ID 저장하기</label></li>
+							<li><label><input type="checkbox" id="autoLogin" name="autoLogin" class="check" ng-model="settings.isAutoLogin"/> 자동로그인</label></li>
+						</ul>	
+					</fieldset>
+				</form>
+			</div>
+			<footer>
+				<p class="txt">회원가입 및 개인정보 변경은 웹 사이트에서만 가능합니다.</p>	
+				<p class="copy">COPYRIGHT (C) SEOUL CYBER UNIVERSITY.<br />ALL RIGHTS RESERVED</p>
+			</footer>
+	</ion-content>
+
+
+<!--   <ion-content class="login">
+  	<div class="login_wrap" style="text-align:center;">
+  		<img style="text-align:center;" src="images/img_intro_logo.png"/>
+  		<p/>
+		<h2 style="color:#ffffff;"><span>SCU WOD Mobile App</span></h2>
+		<form name="loginForm" novalidate allow-invalid="true" ng-submit="login(loginForm)">
+	      <div class="list list-inset login-form">
+	        <label class="item item-input">
+	          	<input type="text" placeholder="User ID" 
+					name="userid"
+		          	ng-model="loginData.userid" 
+		          	ng-minlength="1" 
+	   				ng-maxlength="50" 
+	   				required>
+				<div class="help-block" ng-messages="loginForm.userid.$error" 
+					ng-if="loginForm.userid.$touched">
+				    <p ng-message="minlength">ID는 1자 이상 입력하세요.</p>
+				    <p ng-message="maxlength">ID는 50자 이하로 입력하세요.</p>
+				    <p ng-message="required">ID는 필수입니다.</p>
+				</div>
+	        </label>
+	        <label class="item item-input">
+	          	<input type="password" 
+		          	name="password" 
+		          	placeholder="Password" 
+		          	ng-model="loginData.password"
+		          	ng-minlength="1" 
+	   				ng-maxlength="25"
+	   				required>
+				<div class="help-block" ng-messages="loginForm.password.$error" 
+					ng-if="loginForm.password.$touched">
+				    <p ng-message="minlength">Password는 1자 이상 입력하세요.</p>
+				    <p ng-message="maxlength">Password는 25자 이하로 입력하세요.</p>
+				    <p ng-message="required">Password는 필수입니다.</p>
+				</div>
+	        </label>
+	        <div class="row" style="background-color: #ffffff">
+	          <div class="col col-50">
+	          	<button type="submit" class="button button-block button-positive">로그인</button>
+	          </div>
+	          <div class="col col-50">
+	          	<button type="button" class="button button-block button-balanced" ng-click="goSearch()">아이디/비밀번호찾기</button>
+	          </div>
+	        </div>
+			<div class="row">
+				<ion-checkbox class="col col-50" ng-model="settings.isSaveId" >ID 저장하기</ion-checkbox>
+				<ion-checkbox class="col col-50" ng-model="settings.isAutoLogin" >자동로그인</ion-checkbox>
+			</div>
+	      </div>
+
+		</form>
+		<p class="copyright">회원가입 및 개인정보 변경은 웹사이트에서만 가능합니다.<br/>Copyright(c) SCU Lifelong Education Institute.<br/>All rights Reserved.</p>
+	</div>
+  </ion-content> -->
+</ion-view>

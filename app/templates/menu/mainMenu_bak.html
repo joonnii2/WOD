@@ -1,0 +1,171 @@
+<ion-side-menus enable-menu-with-back-views="true">
+
+  <ion-side-menu-content>
+
+    <ion-nav-bar class="bar-dark">
+
+<!--       <ion-nav-back-button>
+      </ion-nav-back-button> -->
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+<!--       <ion-nav-back-button class="button-clear" side="right">
+        <i class="ion-chevron-left"></i> Back
+      </ion-nav-back-button> -->
+    </ion-nav-bar>
+    <ion-tabs id="courseMenu" 
+      class="tabs-striped tabs-top tabs-background-dark tabs-color-light" 
+      style="display:none">
+      <ion-tab title="학습하기" href="#/myclass/tocList/1"></ion-tab>
+      <ion-tab title="공지" href="#/myclass/noticeList/1"></ion-tab>
+      <ion-tab title="강의정보" href="#/myclass/ingCourseDetail/1"></ion-tab>
+      <ion-tab title="Q&A" href="#/myclass/qnaList/1"></ion-tab>
+    </ion-tabs>
+
+<!--     <div id="courseMenu" class="tabs-striped tabs-top tabs-background-dark tabs-color-light" 
+      style="display:none">
+      <div class="tabs">
+        <a class="tab-item" on-select="tabSelected(this)" on-deselect="tabDeSelected(this)" href="#/main/weekList/1">
+        학습하기
+        </a>
+        <a class="tab-item" on-select="tabSelected(this)" on-deselect="tabDeSelected(this)" href="#">
+        공지
+        </a>
+        <a class="tab-item" on-select="tabSelected(this)" on-deselect="tabDeSelected(this)" href="#/main/ingCourseDetail/1">
+        강의정보
+        </a>
+        <a class="tab-item" on-select="tabSelected(this)" on-deselect="tabDeSelected(this)" href="#">
+        Q&A
+        </a>
+      </div>
+    </div> -->
+    <ion-nav-view name="menuContent"></ion-nav-view>
+
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+
+    <ion-header-bar class="bar-calm">
+      <h3 class="title">WOD</h3>
+      <button class="button button-icon ion-log-out" ng-click="logout()"></button>
+    </ion-header-bar>
+
+    <ion-content>
+
+      <div class="item item-divider dark">
+        <i class="ion-earth"></i>
+        <p>홍길동 님</p>
+        <p>User ID</p>
+      </div>
+    
+      <ion-list>
+        <ion-item menu-close href="#/myclass/ingCourseList">
+          <i class="ion-ios-book-outline"></i>
+          &nbsp;수강중인 강의
+        </ion-item>
+        <ion-item menu-close href="#/main/noticeList">
+          <i class="ion-ios-copy-outline"></i>
+          &nbsp;공지사항
+          <span class="badge badge-assertive">0</span>
+        </ion-item>
+        <ion-item menu-close href="#/main/faqList">
+          <i class="ion-ios-information-outline"></i>
+          &nbsp;FAQ
+        </ion-item>
+        <ion-item menu-close href="#/main/counselingList">
+          <i class="ion-ios-help-outline"></i>
+          &nbsp;나의 문의사항
+          <span class="badge badge-assertive">0</span>
+        </ion-item>
+        <ion-item menu-close href="#/main/setting">
+          <i class="ion-ios-gear-outline"></i>
+          &nbsp;설정
+        </ion-item>
+
+      </ion-list>
+    <!-- 
+      <div class="item item-divider positive">
+        <i class="ion-person-stalker"></i>
+        내강의실
+        <span class="item-note">
+          Member's Only
+        </span>
+      </div>
+
+      <ion-list>
+
+        <ion-item menu-close href="#/member/ingCourseList">
+          <i class="ion-ios-monitor-outline"></i>
+          수강중인과정
+        </ion-item>
+        <ion-item menu-close href="#/member/endCourseList">
+          <i class="ion-ios-monitor-outline"></i>
+          수강완료과정
+        </ion-item>
+
+        <ion-item menu-close href="#/main/intro">
+          <i class="ion-ios-checkmark-empty"></i>
+          기관소개
+        </ion-item>
+    
+        <ion-item menu-close href="#/main/courseList">
+          <i class="ion-ios-checkmark-empty"></i>
+          과정안내
+        </ion-item>
+
+        <ion-item menu-close href="#/main/news">
+          <i class="ion-ios-checkmark-empty"></i>
+          소식
+          <span class="badge badge-assertive">0</span>
+        </ion-item>
+
+        <ion-item menu-close href="#/main/faq">
+          <i class="ion-ios-checkmark-empty"></i>
+          FAQ
+        </ion-item>
+
+        <ion-item menu-close ng-click="login()">
+          <i class="ion-log-in"></i>
+          로그인
+        </ion-item>
+      </ion-list> -->
+  
+    </ion-content>
+  
+  </ion-side-menu>
+
+</ion-side-menus>
+<ion-tabs class="tabs-color-active-positive tabs-icon-only">
+    <ion-tab title="수강중인 강의" 
+        icon-on="ion-ios-book" 
+        icon-off="ion-ios-book-outline" 
+        href="#/myclass/ingCourseList">
+    </ion-tab>
+    <ion-tab title="공지사항" 
+        icon-on="ion-ios-copy" 
+        icon-off="ion-ios-copy-outline" 
+        href="#/main/noticeList">
+    </ion-tab>
+    <ion-tab title="FAQ" 
+        icon-on="ion-ios-information" 
+        icon-off="ion-ios-information-outline" 
+        href="#/main/faqList">
+    </ion-tab>
+    <ion-tab title="나의 문의사항" 
+        icon-on="ion-ios-help" 
+        icon-off="ion-ios-help-outline" 
+        href="#/main/counselingList">
+    </ion-tab>
+    <ion-tab title="설정" 
+        icon-on="ion-ios-gear" 
+        icon-off="ion-ios-gear-outline" 
+        href="#/main/setting">
+    </ion-tab>
+    <ion-tab id="backBtn" title="뒤로" 
+        icon="ion-arrow-left-a"
+        ng-click="goBack()"
+        ng-if="$root.isShowBackButton">
+    </ion-tab>
+</ion-tabs>

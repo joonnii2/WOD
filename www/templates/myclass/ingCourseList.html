@@ -1,0 +1,64 @@
+<ion-view view-title="수강중인 강의">
+
+  <ion-content style="/*background:#67b0d6;*/">
+    <ion-refresher 
+		pulling-text="" 
+		on-refresh="doRefresh()" 
+		on-pulling="onPulling()" 
+		spinner="crescent" 
+		pulling-icon="ion-ios-arrow-up">
+	</ion-refresher>
+	<div class="card">
+	  <div class="item item-divider item-icon-left">
+	    <i class="icon ion-ios-monitor calm"></i>
+	    일반강의
+	    <!-- <span class="badge badge-assertive">0</span> -->
+	  </div>
+	  <div>
+	    <a class="item" href="#/myclass/tocList/1" ng-repeat="course in courseList">
+	      <span class="item-note dark">1기</span>
+	      <h2>강좌명</h2>
+	      <span class="item-note dark">온라인강의</span>
+	      <p>2016-02-23 ~ 2016-05-08</p>
+	    </a>
+	    <a class="item balanced" href="#/myclass/tocList/1">
+	      <span class="item-note dark">1기</span>
+	      <h2>강좌명</h2>
+	      <span class="item-note dark">온라인강의</span>
+	      <p>2016-02-23 ~ 2016-05-08</p>
+	    </a>
+	    <a class="item balanced" href="#/myclass/tocList/1">
+	      <span class="item-note dark">2기</span>
+	      <h2>강좌명</h2>
+	      <span class="item-note dark">온라인강의</span>
+	      <p>2016-02-23 ~ 2016-05-08</p>
+	    </a>
+	  </div>
+	</div>
+
+	<div class="card">
+	  <div class="item item-divider item-icon-left">
+	  <i class="icon ion-ios-compose calm"></i>
+	    온라인 자격시험
+	  <!-- <span class="badge badge-assertive">0</span> -->
+	  </div>
+	  <div>
+	    <a class="item" href="#/myclass/examDetail/1?type=EXAM" ng-repeat="exam in examList">
+	      <h2>시험명</h2>
+	      <span class="item-note dark">자격증명</span>
+	      <p>2016-02-23 ~ 2016-05-08</p>
+	    </a>
+	    <a class="item" href="#/myclass/examDetail/1?type=EXAM">
+	      <h2>시험명</h2>
+	      <span class="item-note dark">자격증명</span>
+	      <p>2016-02-23 ~ 2016-05-08</p>
+	    </a>
+	    <a class="item" href="#/myclass/examDetail/1?type=EXAM">
+	      <h2>시험명</h2>
+	      <span class="item-note dark">자격증명</span>
+	      <p>2016-02-23 ~ 2016-05-08</p>
+	    </a>
+	  </div>
+	</div>
+  </ion-content>
+</ion-view>

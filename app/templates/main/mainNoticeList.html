@@ -1,0 +1,87 @@
+<ion-view view-title="공지사항">
+  <ion-content>
+  	<ion-refresher 
+		pulling-text="새로고침" 
+		on-refresh="doRefresh()" 
+		on-pulling="onPulling()" 
+		spinner="crescent" 
+		pulling-icon="ion-ios-arrow-up">
+	</ion-refresher>
+	<ion-list>
+		<div class="list card list-inset" ng-repeat="notice in mainNoticeList" >
+         <ion-item class="item item-text-wrap">
+          <div ng-class="isItemShown(notice) ? 'item-expand active' : 'item-expand inactive'">
+            <h2>{{ notice.title }}</h2>
+            <p>admin | 2016-04-18</p>
+            <p>{{ notice.text }}</p>
+          </div>
+          <div ng-click="toggleItem(notice)" class="item-expand-footer">
+            <i ng-class="isItemShown(notice) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
+            {{ isItemShown(notice) ? '닫기' : '더보기' }}
+          </div>
+        </ion-item>
+        </div>
+<!-- 		<div class="list card list-inset" >
+         <ion-item class="item item-text-wrap">
+          <div ng-class="isItemShown(notice) ? 'item-expand active' : 'item-expand inactive'">
+            <h2>vasdfasdf</h2>
+            <p>admin | 2016-04-18</p>
+	    <p><img class="full-image" src="http://ionicframework.com/img/docs/delorean.jpg"></p>
+	    <p>
+	      This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+	      the content is from a card-body consisting of an image and paragraph text. The footer
+	      consists of tabs, icons aligned left, within the card-footer.
+	    </p>
+	    <p>
+	      <a href="#" class="subdued">1 Like</a>
+	      <a href="#" class="subdued">5 Comments</a>
+	    </p>
+          </div>
+          <div ng-click="toggleItem(notice)" class="item-expand-footer">
+            <i ng-class="isItemShown(notice) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
+            {{ isItemShown(notice) ? '닫기' : '더보기' }}
+          </div>
+        </ion-item>
+        </div> -->
+
+	</ion-list>
+
+
+<!-- 	<div class="list card">
+	  <div class="item">
+	    <h2>[필독] 공지사항</h2>
+	    <p>2016-04-29</p>
+	  </div>
+	  <div class="item item-body">
+	    <img class="full-image" src="http://ionicframework.com/img/docs/delorean.jpg">
+	    <p>
+	      This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+	      the content is from a card-body consisting of an image and paragraph text. The footer
+	      consists of tabs, icons aligned left, within the card-footer.
+	    </p>
+	    <p>
+	      <a href="#" class="subdued">1 Like</a>
+	      <a href="#" class="subdued">5 Comments</a>
+	    </p>
+	  </div>
+	</div>
+
+	<div class="list card">
+	  <div class="item">
+	    <h2>[필독] 공지사항</h2>
+	    <p>2016-04-29</p>
+	  </div>
+	  <div class="item item-body">
+	    <p>
+	      This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+	      the content is from a card-body consisting of an image and paragraph text. The footer
+	      consists of tabs, icons aligned left, within the card-footer.
+	    </p>
+	    <p>
+	      <a href="#" class="subdued">1 Like</a>
+	      <a href="#" class="subdued">5 Comments</a>
+	    </p>
+	  </div>
+	</div>	 -->
+  </ion-content>
+</ion-view>

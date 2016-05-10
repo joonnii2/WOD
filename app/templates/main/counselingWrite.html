@@ -1,0 +1,23 @@
+<ion-view view-title="나의 문의사항">
+  <ion-content>
+	<ion-refresher 
+		pulling-text="새로고침" 
+		on-refresh="doRefresh()" 
+		on-pulling="onPulling()" 
+		spinner="crescent" 
+		pulling-icon="ion-ios-arrow-up">
+	</ion-refresher>
+    <div id="contents">
+      <form>
+        <div class="board_write">
+          <div class="intxt"><input type="text" placeholder="상담제목" title="상담제목 입력" /></div>
+          <div class="intxt"><textarea cols="70" rows="5" placeholder="상담내용" title="상담내용 입력" class="h219"></textarea></div>
+        </div>
+        <div class="btn_area">
+          <button type="submit" class="btn_block btn_primary" ng-click="doRegist()">저장</button>
+          <button type="reset" class="btn_block btn_default" ng-click="doCancel()">취소</button>
+        </div>  
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

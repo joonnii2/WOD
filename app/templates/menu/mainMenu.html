@@ -1,0 +1,95 @@
+<ion-side-menus enable-menu-with-back-views="true">
+
+  <ion-side-menu-content>
+
+    <ion-nav-bar id="mainHeader" class="bar-dark ion_nav_header">
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+      </ion-nav-buttons>
+<!--       <ion-nav-back-button class="button-clear" side="right">
+        <i class="ion-chevron-left"></i> Back
+      </ion-nav-back-button> -->
+
+    </ion-nav-bar>
+
+    <ion-tabs id="courseMenu" 
+      class="tabs-striped tabs-top tabs-background-dark tabs-color-light ion_nav_header" 
+      style="display:none">
+      <ion-tab title="학습하기" href="#/myclass/tocList/1"></ion-tab>
+      <ion-tab title="강의공지" href="#/myclass/noticeList/1"></ion-tab>
+      <ion-tab title="강의정보" href="#/myclass/ingCourseDetail/1"></ion-tab>
+      <ion-tab title="Q&A" href="#/myclass/qnaList/1"></ion-tab>
+    </ion-tabs>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+
+  </ion-side-menu-content>
+  <!-- 사이드메뉴 -->
+  <ion-side-menu side="left">
+    <div id="gnb">
+    <ion-header-bar class="gnb_header">
+        <h1>SCU WOD Mobile LMS</h1>
+        <button class="btn_close" menu-close><span class="hide">주요메뉴 닫기</span></button>
+        <a href="#" class="btn_logout" ng-click="logout()"><span class="hide">로그아웃</span></a>
+    </ion-header-bar>
+    <ion-content>
+      <div class="profile">
+        <img src="images/thum_user.png" width="35" height="35" alt="회원 프로필 이미지" class="thumb" />
+        <strong class="ellip">홍길동 님</strong>
+        <em class="ellip">user id</em>
+      </div>
+      <ul>
+        <li class="mn_learning" menu-close ><a href="#/myclass/ingCourseList">수강중인 강의</a></li>
+        <li class="mn_notice" menu-close ><a href="#/main/noticeList">공지사항</a></li>
+        <li class="mn_faq" menu-close ><a href="#/main/faqList">FAQ</a></li>
+        <li class="mn_qna" menu-close ><a href="#/main/counselingList">나의 문의사항</a></li>
+        <li class="mn_setting" menu-close ><a href="#/main/setting">설정</a></li>
+      </ul>
+    </ion-content>
+    </div>
+  </ion-side-menu>
+  <!-- //사이드메뉴 -->
+</ion-side-menus>
+  <!-- 하단메뉴 -->
+  <ion-tabs id="footerTab" class="tabs-color-active-positive tabs-icon-only">
+    <ul class="nav">
+      <li><a href="#/myclass/ingCourseList" class="btn_learning"><span class="hide">수강중인 강의</span></a></li>
+      <li><a href="#/main/noticeList" class="btn_notice"><span class="hide">공지사항</span></a></li>
+      <li><a href="#/main/faqList" class="btn_faq"><span class="hide">FAQ</span></a></li>
+      <li><a href="#/main/counselingList" class="btn_qna"><span class="hide">나의 문의사항</span></a></li>
+      <li><a href="#/main/setting" class="btn_setting"><span class="hide">설정</span></a></li>
+      <li id="backBtn" ng-if="$root.isShowBackButton"><a href="#" class="btn_prev" ng-click="goBack()"><span class="hide">이전 화면으로 이동</span></a></li>
+    </ul>
+  </ion-tabs>
+  <!-- //하단메뉴 -->
+<!-- <ion-tabs class="tabs-color-active-positive tabs-icon-only">
+    <ion-tab title="수강중인 강의" 
+        icon-on="ion-ios-book" 
+        icon-off="ion-ios-book-outline" 
+        href="#/myclass/ingCourseList">
+    </ion-tab>
+    <ion-tab title="공지사항" 
+        icon-on="ion-ios-copy" 
+        icon-off="ion-ios-copy-outline" 
+        href="#/main/noticeList">
+    </ion-tab>
+    <ion-tab title="FAQ" 
+        icon-on="ion-ios-information" 
+        icon-off="ion-ios-information-outline" 
+        href="#/main/faqList">
+    </ion-tab>
+    <ion-tab title="나의 문의사항" 
+        icon-on="ion-ios-help" 
+        icon-off="ion-ios-help-outline" 
+        href="#/main/counselingList">
+    </ion-tab>
+    <ion-tab title="설정" 
+        icon-on="ion-ios-gear" 
+        icon-off="ion-ios-gear-outline" 
+        href="#/main/setting">
+    </ion-tab>
+    <ion-tab id="backBtn" title="뒤로" 
+        icon="ion-arrow-left-a"
+        ng-click="goBack()"
+        ng-if="$root.isShowBackButton">
+    </ion-tab>
+</ion-tabs> -->

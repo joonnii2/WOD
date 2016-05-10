@@ -1,0 +1,21 @@
+<div class="scu_player" on-touch="onTouch()" >
+	<div class="player_info_panel" id="infoPanel"><span class="player_panel_txt">asdfasdf</span>
+	</div>
+	<div class="player_menu_panel" id="menuPanel"><span class="player_panel_txt" ng-click="menuToggle()">닫기</span>
+	</div>	
+	<div>
+	    <video id="media" class="video-js vjs-16-9 vjs-big-play-centered fod-vjs-default-skin media_player" preload="auto"
+	           width="100%" poster="http://vjs.zencdn.net/v/oceans.png" webkit-playsinline vjs-video>
+	        <!-- <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"> -->
+	        <source src="http://mp4.iscu.ac.kr/iscu/Contents/13110001/289778/1028548/13110001_1_01.mp4" type="video/mp4">
+	        <p>Your user agent does not support the HTML5 Video element.</p>
+	    </video>
+	</div>
+	<div class="player_controll_panel" id="controllPanel">
+		<span><a class="button button-icon icon ion-ios-arrow-back padding-vertical player_panel_txt" ng-click="goPrevious()"></a></span>
+		<span><a class="button button-icon icon ion-ios-list-outline padding-vertical player_panel_txt" ng-click="menuToggle()"></a></span>
+		<span><a class="button button-icon icon ion-ios-play-outline padding-vertical player_panel_txt" ng-click="play()"></a></span>
+		<span><a class="button button-icon icon ion-ios-pause-outline padding-vertical player_panel_txt" ng-click="pause()"></a></span>
+		<span><a class="button button-icon icon ion-ios-arrow-forward padding-vertical player_panel_txt" ng-click="goNext()"></a></span>
+	</div>
+</div>
