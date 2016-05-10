@@ -96,12 +96,14 @@ define([
         };
       }else if ($state.current.name == 'myclass.itemDetail') {
         console.log('$stateParams.type:'+$stateParams.type);
-        if ($stateParams.type == 'CONTENTS' || $stateParams.type == 'EXAM') {
+
+        if ($stateParams.type == 'WEB' || $stateParams.type == 'EXAM' || $stateParams.type == 'URL' || $stateParams.type == 'VIDEO' || $stateParams.type == 'AUDIO') {
           jQuery('.btn_area').show();
         }else {
           jQuery('.btn_area').hide();
         };
         doItemDetail($stateParams);
+
         $scope.goStudy = function() {
           //'2','https://www.youtube.com/embed/4iHlfXHnN94?autoplay=1'
           if ($scope.itemDetail != null) {
@@ -111,35 +113,44 @@ define([
             $stateParams.height = $scope.itemDetail.height;
             $stateParams.poster = $scope.itemDetail.poster;
           }
-                // TODO 임시 테스트 - SCU 웹콘텐츠
-          // $stateParams.itemId = 2;
-          // $stateParams.contentsType = 'WEB';
-          // $stateParams.contentsUrl = 'http://stream.iscu.ac.kr/stream/Contents/IC0409/1/IC0409_1_1.asp';
-          // //$stateParams.contentsUrl = 'http://192.168.0.19:8080/edu.scu';
-          // //$stateParams.contentsUrl = 'http://wod.iscu.ac.kr/edu.scu';
-          // $stateParams.width = '560';
-          // $stateParams.height = '315';
-          // $stateParams.poster = 'http://vjs.zencdn.net/v/oceans.png';
-          
-          
-          //     // TODO 임시 테스트 - 유튜브동영상
-          // $stateParams.itemId = 2;
-          // $stateParams.contentsType = 'URL';
-          // $stateParams.contentsUrl = 'https://www.youtube.com/embed/4iHlfXHnN94?autoplay=1';
-          // $stateParams.width = '560';
-          // $stateParams.height = '315';
-          // $stateParams.poster = 'http://vjs.zencdn.net/v/oceans.png';
 
-          
-
-
-          // TODO 임시 테스트 - SCU 동영상
-          $stateParams.itemId = 2;
-          $stateParams.contentsType = 'VIDEO';
-          $stateParams.contentsUrl = 'http://mp4.iscu.ac.kr/iscu/Contents/13110001/289778/1028548/13110001_1_01.mp4';
-          $stateParams.width = '1080';
-          $stateParams.height = '920';
-          $stateParams.poster = 'http://vjs.zencdn.net/v/oceans.png';
+          if ($stateParams.itemId == '1') {
+                  // TODO 임시 테스트 - SCU 웹콘텐츠
+            //$stateParams.itemId = 2;
+            $stateParams.contentsType = 'WEB';
+            $stateParams.contentsUrl = 'http://stream.iscu.ac.kr/stream/Contents/IC0409/1/IC0409_1_1.asp';
+            //$stateParams.contentsUrl = 'http://192.168.0.19:8080/edu.scu';
+            //$stateParams.contentsUrl = 'http://wod.iscu.ac.kr/edu.scu';
+            $stateParams.width = '560';
+            $stateParams.height = '315';
+            $stateParams.poster = 'http://vjs.zencdn.net/v/oceans.png';
+          }else if ($stateParams.itemId == '2') {
+                // TODO 임시 테스트 - 유튜브동영상
+            //$stateParams.itemId = 2;
+            $stateParams.contentsType = 'URL';
+            $stateParams.contentsUrl = 'https://www.youtube.com/embed/4iHlfXHnN94?autoplay=1';
+            $stateParams.width = '560';
+            $stateParams.height = '315';
+            $stateParams.poster = 'http://vjs.zencdn.net/v/oceans.png';
+          }else if ($stateParams.itemId == '3') {
+                // TODO 임시 테스트 - 시험
+            //$stateParams.itemId = 2;
+            $stateParams.contentsType = 'EXAM';
+            $stateParams.contentsUrl = 'http://wave.jicsaw.com';
+            //$stateParams.contentsUrl = 'http://192.168.0.19:8080/edu.scu';
+            //$stateParams.contentsUrl = 'http://wod.iscu.ac.kr/edu.scu';
+            $stateParams.width = '560';
+            $stateParams.height = '315';
+            $stateParams.poster = 'http://vjs.zencdn.net/v/oceans.png';
+          }else if ($stateParams.itemId == '4') {
+            // TODO 임시 테스트 - SCU 동영상
+            //$stateParams.itemId = 2;
+            $stateParams.contentsType = 'VIDEO';
+            $stateParams.contentsUrl = 'http://mp4.iscu.ac.kr/iscu/Contents/13110001/289778/1028548/13110001_1_01.mp4';
+            $stateParams.width = '1080';
+            $stateParams.height = '920';
+            $stateParams.poster = 'http://vjs.zencdn.net/v/oceans.png';
+          }
 
           $state.go('myclass.learningPlayer', $stateParams);
         };

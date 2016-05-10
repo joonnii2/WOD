@@ -36,8 +36,8 @@ define([
     LOCAL_TOKEN_KEY : 'WOD_SESSION_INFO'
   });
   app.config([
-    '$sceDelegateProvider',
-    function($sceDelegateProvider) {
+    '$sceDelegateProvider', '$ionicConfigProvider',
+    function($sceDelegateProvider, $ionicConfigProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
           'self', 
           new RegExp('^(http[s]?):\/\/(w{3}.)?youtube\.com/.+$'),
@@ -46,12 +46,17 @@ define([
           'http://mp4.iscu.ac.kr/**',
           'http://stream.iscu.ac.kr/**',
           'http://192.168.0.19:8080/**',
-          'http://wod.iscu.ac.kr/**'
+          'http://wod.iscu.ac.kr/**',
+          'http://eval.iscu.ac.kr/**',
+          'http://wave.jicsaw.com/**'
           //new RegExp('^(http[s]?):\/\/(mp4\.)?iscu\.ac\.kr/.+$'),
         ]);
         $sceDelegateProvider.resourceUrlBlacklist([
           'http://myapp.example.com/clickThru**'
         ]);
+        
+        // IONIC-TABS Position
+        $ionicConfigProvider.tabs.position('bottom');
     }
   ]);
   // return the app so you can require it in other components

@@ -36,8 +36,8 @@ define([
     LOCAL_TOKEN_KEY : 'WOD_SESSION_INFO'
   });
   app.config([
-    '$sceDelegateProvider',
-    function($sceDelegateProvider) {
+    '$sceDelegateProvider', '$ionicConfigProvider',
+    function($sceDelegateProvider, $ionicConfigProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
           'self', 
           new RegExp('^(http[s]?):\/\/(w{3}.)?youtube\.com/.+$'),
@@ -54,6 +54,9 @@ define([
         $sceDelegateProvider.resourceUrlBlacklist([
           'http://myapp.example.com/clickThru**'
         ]);
+        
+        // IONIC-TABS Position
+        $ionicConfigProvider.tabs.position('bottom');
     }
   ]);
   // return the app so you can require it in other components
