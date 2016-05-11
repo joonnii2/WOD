@@ -9,25 +9,29 @@ define([
     '$ionicHistory', 
     '$state',
     '$ionicPlatform',
-    function (apiSvc, $scope, $ionicHistory, $state, $ionicPlatform) {
+    '$ionicPopup',
+    function (apiSvc, $scope, $ionicHistory, $state, $ionicPlatform, $ionicPopup) {
       $scope.idSearchData = {
-        username : null,
+        mbrName : null,
         phoneFirst : '010',
         phoneMiddle : null,
         phoneLast : null,
-        emailId : null,
-        emailHost : null,
+        orgSuffixUrl : null,
         birthYear : null,
         birthMonth : null,
-        birthDay : null
+        birthDay : null,
+        hp : null,
+        birdt : null
       };
 
       $scope.pwSearchData = {
-        username : null,
-        userid : null,
+        mbrName : null,
+        mbrId : null,
+        orgSuffixUrl : null,
         phoneFirst : '010',
         phoneMiddle : null,
-        phoneLast : null
+        phoneLast : null,
+        hp : null
       }
 
       $scope.goLogin = function () {
@@ -40,13 +44,16 @@ define([
 
       $scope.yearList = new Array();
       var nowYear = new Date().getFullYear();
-      for (var i = (nowYear-10) ; i >= 1940 ; i--) {
+      for (var i = nowYear ; i >= 1940 ; i--) {
         $scope.yearList.push(i);
       };
 
       $scope.dayList = new Array();
       for (var i = 1 ; i <= 31 ; i++) {
-        $scope.dayList.push(i);
+        var d = '';
+        if (i < 10) d = '0'+i;
+        else d = ''+i; 
+        $scope.dayList.push(d);
       };
 
       $scope.showIdSearchForm = function() {
@@ -65,23 +72,26 @@ define([
         console.log(idSearchForm);
 
         if(idSearchForm.$invalid) {
-          alert('항목을 모두 빠짐없이 입력해주세요.');
+          showAlert('항목을 모두 빠짐없이 입력해주세요.');
           return false;
         };
+
+        $scope.idSearchData.hp = $scope.idSearchData.phoneFirst + '-' + $scope.idSearchData.phoneMiddle + '-' + $scope.idSearchData.phoneLast;
+        $scope.idSearchData.birdt = $scope.idSearchData.birthYear + $scope.idSearchData.birthMonth + $scope.idSearchData.birthDay;
+
         apiSvc.call('doIdSearch', $scope.idSearchData).then(function(res) {
           console.log(res);
-          if (res != null && res.data != null) {
-            switch ( res.data.flag ) {
+          if (res != null) {
+            switch ( res.flag ) {
               case '1' : 
-                console.log('Search OK : ' + res.data.flag);
-                alert('회원님의 ID는 '+res.data.id+' 입니다.');
-                $state.go('login');
+                console.log('Search OK : ' + res.flag);
+                showAlert('회원님의 ID는 '+res.mbrId+' 입니다.', 'login');
                 break;
-              case '2' : console.log('Search Fail (인증실패): ' + res.data.flag);
-                alert('입력하신 정보로 가입된 회원이 없습니다.');
+              case '2' : console.log('Search Fail (인증실패): ' + res.flag);
+                showAlert('입력하신 정보로 가입된 회원이 없습니다.');
                 break;
-              default : console.log('Search Fail (알수없는 오류) : ' + res.data.flag);
-                alert('입력하신 정보로 가입된 회원이 없습니다.');
+              default : console.log('Search Fail (알수없는 오류) : ' + res.flag);
+                showAlert('조회요청에 실패하였습니다.');
                 break;
             }
           }
@@ -91,26 +101,41 @@ define([
       $scope.pwSearch = function(pwSearchForm) {
         console.log(pwSearchForm);
         if(pwSearchForm.$invalid) {
-          alert('항목을 모두 빠짐없이 입력해주세요.');
+          showAlert('항목을 모두 빠짐없이 입력해주세요.');
           return false;
         }
+
+        $scope.pwSearchData.hp = $scope.pwSearchData.phoneFirst + '-' + $scope.pwSearchData.phoneMiddle + '-' + $scope.pwSearchData.phoneLast;
+
         apiSvc.call('doPwSearch', $scope.pwSearchData).then(function(res) {
           console.log(res);
-          if (res != null && res.data != null) {
-            switch ( res.data.flag ) {
+          if (res != null) {
+            switch ( res.flag ) {
               case '1' : 
-                console.log('Search OK : ' + res.data.flag);
-                alert('회원님 휴대전화로 초기화된 비밀번호를 보내드렸습니다.로그인 후 반드시 비밀번호를 변경해 주세요.');
-                $state.go('login');
+                console.log('Search OK : ' + res.flag);
+                showAlert('회원님 휴대전화로 초기화된 비밀번호를 보내드렸습니다.로그인 후 반드시 비밀번호를 변경해 주세요.', 'login');
                 break;
-              case '2' : console.log('Search Fail (인증실패): ' + res.data.flag);
-                alert('입력하신 정보로 가입된 회원이 없습니다.');
+              case '2' : console.log('Search Fail (인증실패): ' + res.flag);
+                showAlert('입력하신 정보로 가입된 회원이 없습니다.');
                 break;
-              default : console.log('Search Fail (알수없는 오류) : ' + res.data.flag);
-                alert('입력하신 정보로 가입된 회원이 없습니다.');
+              default : console.log('Search Fail (알수없는 오류) : ' + res.flag);
+                showAlert('조회요청에 실패하였습니다.');
                 break;
             }
           }
+        });
+      };
+
+      function showAlert(msg, goTo) {
+        var alertPopup = $ionicPopup.alert({
+          title: '알림',
+          template: msg,
+          okText : '확인',
+          okType : 'button-balanced'
+        });
+        
+        alertPopup.then(function(res) {
+          if (goTo != undefined && goTo != '') $state.go(goTo);
         });
       };
     }

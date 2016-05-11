@@ -13,13 +13,27 @@ define([
     '$rootScope',
     'SessionSvc',
     'ENV',
-    function (apiSvc, $scope, $ionicHistory, $state, $ionicPlatform, $rootScope, sessionSvc, env) {
+    '$ionicPopup',
+    function (apiSvc, $scope, $ionicHistory, $state, $ionicPlatform, $rootScope, sessionSvc, env, $ionicPopup) {
+
+      var loginMainPage = 'myclass.ingCourseList';
+      var platformType = 'Unknown';
+      
+      function showAlert(msg, goTo) {
+        var alertPopup = $ionicPopup.alert({
+          title: '알림',
+          template: msg,
+          okText : '확인',
+          okType : 'button-balanced'
+        });
+        alertPopup.then(function(res) {
+          if (goTo != undefined && goTo != '') $state.go(goTo);
+        });
+      };
 
       $ionicPlatform.ready(function() {
 
         commonUtil.bindCheckBox();
-
-        var loginMainPage = 'myclass.ingCourseList';
 
         // var deviceInformation = ionic.Platform.device();
         // console.log(deviceInformation);
@@ -41,7 +55,6 @@ define([
         // console.log(currentPlatformVersion);
 
         // 앱 정보 조회/체크
-        var platformType = 'Unknown';
         if (ionic.Platform.isWebView()) platformType = 'Web';
         else if (ionic.Platform.isIPad()) platformType = 'IPad';
         else if (ionic.Platform.isIOS()) platformType = 'IOS';
@@ -77,58 +90,6 @@ define([
           }
         );
 
-        $scope.loginData = {userid : null, password : null};
-
-        // 로그인
-        $scope.login = function(form) {
-
-          // 쿠키 저장 처리
-          if ($rootScope.settings.isSaveId) {
-            $rootScope.settings.loginData = {
-              userid : $scope.loginData.userid
-            };
-          };
-
-          if ($rootScope.settings.isAutoLogin) {
-            $rootScope.settings.loginData = $scope.loginData;
-          }else {
-            if ($rootScope.settings.loginData != null && $rootScope.settings.loginData.password != null) {
-              $rootScope.settings.loginData.password = null;
-            };
-          };
-
-          window.localStorage.setItem(env.LOCAL_SETTING_KEY, JSON.stringify($rootScope.settings));
-
-          if(!$rootScope.settings.isAutoLogin && form.$invalid) {
-            alert('아이디/비밀번호를 정확히 입력하세요.');
-            return false;
-          }
-
-          // 로그인 액선 처리
-          apiSvc.call('doLogin', $scope.loginData).then(function(res) {
-            console.log(res);
-            if (res != null && res.RET_CODE != null) {
-              switch ( res.RET_CODE ) {
-                case '1' : 
-                  console.log('login OK : ' + res.RET_CODE);
-                  sessionSvc.setSessionInfo(res.USER_INFO);
-                  $state.go(loginMainPage);
-                  break;
-                case '2' : 
-                  console.log('login Fail (ID/PW 인증실패): ' + res.RET_CODE);
-                  alert('아이디/비밀번호가 일치하지 않습니다.');
-                  break;
-                default : 
-                  console.log('login Fail (알수없는 오류) : ' + res.RET_CODE);
-                  alert('로그인에 실패하였습니다.');
-                  // TODO 임시 로그인 처리
-                  $state.go(loginMainPage);
-                  break;
-              }
-            }
-          });
-        };
-
         // 쿠키 로딩
         $rootScope.settings = JSON.parse(window.localStorage.getItem(env.LOCAL_SETTING_KEY) || "{}");
 
@@ -144,13 +105,66 @@ define([
             $scope.loginData.userid = $rootScope.settings.loginData.userid ;
           };
         };
-        
-        // ID/PW 찾기
-        $scope.goSearch = function() {
-          console.log('ID/PW 찾기');
-          $state.go('searchId');
-        };
       });
+
+      $scope.loginData = {userid : null, password : null};
+
+      // 로그인
+      $scope.login = function(form) {
+
+        // 쿠키 저장 처리
+        if ($rootScope.settings.isSaveId) {
+          $rootScope.settings.loginData = {
+            userid : $scope.loginData.userid
+          };
+        };
+
+        if ($rootScope.settings.isAutoLogin) {
+          $rootScope.settings.loginData = $scope.loginData;
+        }else {
+          if ($rootScope.settings.loginData != null && $rootScope.settings.loginData.password != null) {
+            $rootScope.settings.loginData.password = null;
+          };
+        };
+
+        window.localStorage.setItem(env.LOCAL_SETTING_KEY, JSON.stringify($rootScope.settings));
+
+        if(!$rootScope.settings.isAutoLogin && form.$invalid) {
+          showAlert('아이디/비밀번호를 정확히 입력하세요.');
+          return false;
+        }
+
+        // 로그인 액선 처리
+        apiSvc.call('doLogin', $scope.loginData).then(function(res) {
+          console.log(res);
+          if (res != null && res.RET_CODE != null) {
+            switch ( res.RET_CODE ) {
+              case '1' : 
+                console.log('login OK : ' + res.RET_CODE);
+                sessionSvc.setSessionInfo(res.USER_INFO);
+                $state.go(loginMainPage);
+                break;
+              case '2' : 
+                console.log('login Fail (ID/PW 인증실패): ' + res.RET_CODE);
+                showAlert('아이디/비밀번호가 일치하지 않습니다.');
+                break;
+              default : 
+                console.log('login Fail (알수없는 오류) : ' + res.RET_CODE);
+                showAlert('로그인에 실패하였습니다.');
+                // TODO 임시 로그인 처리
+                $state.go(loginMainPage);
+                break;
+            }
+          }
+        });
+      };
+
+      // ID/PW 찾기
+      $scope.goSearch = function() {
+        console.log('ID/PW 찾기');
+        $state.go('search');
+      };
+
     }
   ]);
 });

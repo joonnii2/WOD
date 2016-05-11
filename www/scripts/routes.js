@@ -48,20 +48,27 @@ define([
 				controller: 'MessageCtrl',
 				authenticate : false
 			})
-			// 로그인전 아이디 찾기
-			.state('searchId', {
-				url: '/searchId',
-				templateUrl: 'templates/main/searchId.html',
+			// 로그인전 아이디/비밀번호 찾기
+			.state('search', {
+				url: '/search',
+				templateUrl: 'templates/main/search.html',
 				controller: 'SearchCtrl',
 				authenticate : false
 			})
-			// 로그인전 비밀번호 찾기
-			.state('searchPw', {
-				url: '/searchPw',
-				templateUrl: 'templates/main/searchPw.html',
-				controller: 'SearchCtrl',
-				authenticate : false
-			})
+			// // 로그인전 아이디 찾기
+			// .state('searchId', {
+			// 	url: '/searchId',
+			// 	templateUrl: 'templates/main/searchId.html',
+			// 	controller: 'SearchCtrl',
+			// 	authenticate : false
+			// })
+			// // 로그인전 비밀번호 찾기
+			// .state('searchPw', {
+			// 	url: '/searchPw',
+			// 	templateUrl: 'templates/main/searchPw.html',
+			// 	controller: 'SearchCtrl',
+			// 	authenticate : false
+			// })
 			// 메인화면(메뉴 포함)
 			.state('main', {
 				url: '/main',
