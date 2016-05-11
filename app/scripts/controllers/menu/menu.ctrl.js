@@ -37,6 +37,10 @@ define([
         	jQuery('backBtn').hide();
         	console.log('stacks undefined');
         };*/
+        $scope.userInfo = {
+        	userName : sessionSvc.getSessionInfo().userName,
+        	userId : sessionSvc.getSessionInfo().userId
+        };
 
 		$scope.goBack = function() {
 			console.log('goBack...');

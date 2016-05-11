@@ -68,6 +68,14 @@ define([
         jQuery('#pwSearchForm').show();
       };
 
+      // 사이트코드 조회
+      apiSvc.call('doOrgCodeList').then(function(res) {
+        if (res != null && res.orgCodeList != null) {
+          $scope.orgCodeList = res.orgCodeList;
+        };
+      });
+
+      // ID 찾기
       $scope.idSearch = function (idSearchForm) {
         console.log(idSearchForm);
 
@@ -98,6 +106,7 @@ define([
         });
       };
 
+      // 비밀번호 찾기
       $scope.pwSearch = function(pwSearchForm) {
         console.log(pwSearchForm);
         if(pwSearchForm.$invalid) {

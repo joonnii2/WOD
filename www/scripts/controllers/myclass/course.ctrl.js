@@ -10,8 +10,10 @@ define([
     '$rootScope',
     'ApiSvc',
     function ($scope, $state, $stateParams, $rootScope, apiSvc) {
+
       $scope.doRefresh = function() {
-        console.log('doRefresh... ');
+        //Stop the ion-refresher from spinning
+        $scope.$broadcast('scroll.refreshComplete');
       };
 
       $scope.onPulling = function() {
@@ -21,6 +23,36 @@ define([
         } else if ($state.current.name == 'myclass.ingCourseDetail') {
           doIngCourseDetail($stateParams);
         }
+      };
+
+      // 수강중인 강의 > 강의 목록
+      if ($state.current.name == 'myclass.ingCourseList') {
+        //jQuery('#courseMenu').css('display', 'none');
+        jQuery('#courseMenu').hide();
+        $rootScope.isShowBackButton = false;
+$scope.courseList = null;
+$scope.examList = null;
+
+        doIngCourseList($stateParams);
+
+      // 수강중인 강의 > 강의 정보
+      } else if ($state.current.name == 'myclass.ingCourseDetail') {
+        
+        doIngCourseDetail($stateParams);
+        /*
+         * if given group is the selected group, deselect it
+         * else, select the given group
+         */
+        $scope.toggleGroup = function(group) {
+          if ($scope.isGroupShown(group)) {
+            $scope.shownGroup = null;
+          } else {
+            $scope.shownGroup = group;
+          }
+        };
+        $scope.isGroupShown = function(group) {
+          return $scope.shownGroup === group;
+        };
       };
 
       // 강의목록 조회
@@ -34,7 +66,7 @@ define([
           if (res != null && res.EXAM_LIST != null) {
             console.log('EXAM_LIST received.');
             console.log(res.EXAM_LIST);
-            $scope.examList = EXAM_LIST; // 온라인 자격시험 목록
+            $scope.examList = res.EXAM_LIST; // 온라인 자격시험 목록
           }
         });
       };
@@ -61,34 +93,6 @@ define([
             $scope.studyResult = STUDY_RESULT; // 성적 조회
           }
         });
-      }
-
-      // 수강중인 강의 > 강의 목록
-      if ($state.current.name == 'myclass.ingCourseList') {
-        //jQuery('#courseMenu').css('display', 'none');
-        jQuery('#courseMenu').hide();
-        $rootScope.isShowBackButton = false;
-
-        doIngCourseList($stateParams);
-
-      // 수강중인 강의 > 강의 정보
-      } else if ($state.current.name == 'myclass.ingCourseDetail') {
-        
-        doIngCourseDetail($stateParams);
-        /*
-         * if given group is the selected group, deselect it
-         * else, select the given group
-         */
-        $scope.toggleGroup = function(group) {
-          if ($scope.isGroupShown(group)) {
-            $scope.shownGroup = null;
-          } else {
-            $scope.shownGroup = group;
-          }
-        };
-        $scope.isGroupShown = function(group) {
-          return $scope.shownGroup === group;
-        };
       };
     }
   ]);

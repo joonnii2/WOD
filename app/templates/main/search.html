@@ -17,10 +17,10 @@
 							<div class="tcell">
 								<div class="tcell_td w33p">
 									<div class="select">
-										<select title="사이트 선택" name="orgSuffixUrl" ng-model="idSearchData.orgSuffixUrl" required>
+										<select title="사이트 선택" name="orgSuffixUrl" 
+											ng-options="orgCode.orgSuffixUrl as orgCode.orgName for orgCode in orgCodeList"
+											ng-model="idSearchData.orgSuffixUrl" required>
 											<option value="" ng-selected="selected">사이트 선택</option>
-											<option value="edu">평생교육원</option>
-									        <option value="mil">군교육지원센터</option>
 										</select>
 									</div>
 								</div>
@@ -170,10 +170,10 @@
 							<div class="tcell">
 								<div class="tcell_td w33p">
 									<div class="select">
-										<select title="사이트 선택" name="orgSuffixUrl" ng-model="pwSearchData.orgSuffixUrl" required>
+										<select title="사이트 선택" name="orgSuffixUrl" 
+											ng-options="orgCode.orgSuffixUrl as orgCode.orgName for orgCode in orgCodeList"
+											ng-model="pwSearchData.orgSuffixUrl" required>
 											<option value="" ng-selected="selected">사이트 선택</option>
-											<option value="edu">평생교육원</option>
-									        <option value="mil">군교육지원센터</option>
 										</select>
 									</div>
 								</div>
