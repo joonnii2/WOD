@@ -30,8 +30,8 @@ define([
         //jQuery('#courseMenu').css('display', 'none');
         jQuery('#courseMenu').hide();
         $rootScope.isShowBackButton = false;
-$scope.courseList = null;
-$scope.examList = null;
+        $scope.courseList = null;
+        $scope.examList = null;
 
         doIngCourseList($stateParams);
 
