@@ -13,10 +13,25 @@
 /*.copyright {margin-top:20px; color:#fff; font-size:11px; text-align:center;}
 .copyright.dark {color:#333;}*/
 .list .item.item-accordion {
-  line-height: 38px;
+  line-height: 50px;
   padding-top: 0;
   padding-bottom: 0;
-  transition: 0.09s all linear;
+  transition: 0.05s ease-out;
+}
+.indent_1 {
+  padding-left : 10px;
+}
+.indent_2 {
+  padding-left : 20px;
+}
+.indent_3 {
+  padding-left : 30px;
+}
+.toc_disabled {
+  color : gray;
+}
+.toc_enabled {
+  color : black;
 }
 .list .item.item-accordion.ng-hide {
   line-height: 0px;

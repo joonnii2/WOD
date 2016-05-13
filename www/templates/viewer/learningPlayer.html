@@ -1,6 +1,6 @@
-<ion-view view-title="아이템명"  on-touch="onTouch()" >
+<ion-view view-title="{{tocName}}"  on-touch="onTouch()" >
   <ion-header-bar id="playerHeader" class="bar-dark ion_nav_header">
-    <h1 class="title">아이템명</h1>
+    <h1 class="title">{{tocName}}</h1>
     <div class="buttons">
       <button class="btn_close" ng-click="showConfirm()" style="margin-top: 5px;"><span class="hide">학습종료</span></button>
     </div>
@@ -8,7 +8,7 @@
 
   <ion-content class="scu_player" style="margin-top: -45px;" scroll="false">
     <div class="player_info_panel" id="infoPanel">
-      <div class="player_panel_txt"><span>아이템명</span></div>
+      <div class="player_panel_txt"><span>{{tocName}}</span></div>
       <div class="player_panel_btn">
         <button class="btn_exit" ng-click="showConfirm()"><span class="hide">학습종료</span></button>
       </div>

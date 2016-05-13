@@ -15,7 +15,6 @@ define([
         //Stop the ion-refresher from spinning
         $scope.$broadcast('scroll.refreshComplete');
       };
-
       $scope.onPulling = function() {
         console.log('onPulling... actions here...');
         if ($state.current.name == 'myclass.ingCourseList') {
@@ -35,6 +34,12 @@ define([
 
         doIngCourseList($stateParams);
 
+        $scope.goTocList = function(lectureSeqno, lectureName, mobilePosbYn) {
+          $stateParams.lectureSeqno = lectureSeqno;
+          $stateParams.lectureName = lectureName;
+          $stateParams.mobilePosbYn = mobilePosbYn;
+          $state.go('myclass.tocList', $stateParams);
+        };
       // 수강중인 강의 > 강의 정보
       } else if ($state.current.name == 'myclass.ingCourseDetail') {
         

@@ -1,4 +1,4 @@
-<ion-view view-title="수강중인과정 상세">
+<ion-view view-title="{{lectureName}}">
   <ion-content style="/*background:#67b0d6; */margin-top:48px;">
     <ion-refresher 
 		pulling-text="새로고침" 
@@ -14,7 +14,55 @@
 		  <i class="icon ion-alert-circled assertive"></i>
 	      <p>학습하기 버튼이 있는 목차만 학습이 가능하며 <br/>토론, 과제등 학습활동은 웹사이트에서만 가능합니다.</p>
 		</div>
+	    <div ng-repeat="week in wsList">
+	      	<ion-item class="item-stable"
+	            ng-click="toggleGroup(week)"
+	            ng-class="{active: isGroupShown(week)}">
+	          	<i class="icon" ng-class="isGroupShown(week) ? 'ion-arrow-down-b' : 'ion-arrow-right-b'"></i>
+	        	<span>{{week.ws.wsName}}</span>
+	        	<!-- <span class="item-note">학습완료</span> -->
+	        	<!-- <span class="badge badge-assertive">3/4</span> -->
+	      	</ion-item>
+	      	<ion-item class="item-accordion item-icon-right"
+	            ng-repeat="toc in week.tocList"
+	            ng-show="isGroupShown(week)"
+	            /*ng-if="toc.connGb != '0102'"*/
+	            ng-click="toc.connGb != '0102' ? goItemDetail(toc) : null">
+		        <span ng-class="setTocStyle(toc)">&nbsp;{{toc.tocName}}</span>
+		        <span 
+		        	ng-show="toc.connGb != '0102' && (toc.tocTypeGb == '02' || toc.tocTypeGb == '03') && toc.pobtYn==null" 
+		        	class="item-note button button-small" 
+		        	ng-class="isEnabled(toc) ? 'button-stable' : 'button-outline button-light'" 
+		        	style="margin-top: 10px;width:60px;">
+		        	학습전
+		        </span>
+		        <span 
+		        	ng-show="toc.connGb != '0102' && (toc.tocTypeGb == '02' || toc.tocTypeGb == '03') && toc.pobtYn=='N'" 
+		        	class="item-note button button-small" 
+		        	ng-class="isEnabled(toc) ? 'button-calm' : 'button-outline button-light'" 
+		        	style="margin-top: 10px;width:60px;">
+		        	학습중
+		        </span>
+		        <span 
+		        	ng-show="toc.connGb != '0102' && (toc.tocTypeGb == '02' || toc.tocTypeGb == '03') && toc.pobtYn=='Y'" 
+		        	class="item-note button button-small" 
+		        	ng-class="isEnabled(toc) ? 'button-balanced' : 'button-outline button-light'" 
+		        	style="margin-top: 10px;width:60px;">
+		        	학습완료
+		        </span>
+		        <i class="icon ion-android-arrow-dropright" ng-show="isEnabled(toc)"></i>
+	      	</ion-item>
+	    </div>
 
+
+
+
+
+
+
+
+
+<!-- 
     <div class="list" ng-repeat="toc in tocList">
       	<ion-item class="item-stable"
             ng-click="toggleGroup(toc)"
@@ -22,7 +70,6 @@
           	<i class="icon" ng-class="isGroupShown(toc) ? 'ion-arrow-down-b' : 'ion-arrow-right-b'"></i>
         	&nbsp;
         	{{toc.name}}
-        	<!-- <span class="item-note">학습완료</span> -->
         	<span class="badge badge-assertive">3/4</span>
       	</ion-item>
       	<ion-item class="item-accordion item-icon-right"
@@ -30,21 +77,18 @@
             ng-show="isGroupShown(toc)" 
             ng-click="goItemDetail(toc.tocId)">
 	        &nbsp;&nbsp;<span class="ion-laptop" style="color:#000000">&nbsp;&nbsp;{{item}}</span>
-	        <!-- <span class="item-note" style="color:red">학습중</span> -->
 	        <span class="item-note button button-small button-balanced" style="margin-top: 3px;width:60px;">학습중</span>
 	        <i class="icon ion-ios-arrow-right dark"></i>
 
-<!-- 	        <span class="ion-compose">&nbsp;</span>{{item}}
-	        <span class="item-note">학습완료</span>
-	        <i class="icon ion-ios-play-outline dark"></i> -->
       	</ion-item>
-    </div>
-	<div class="list">
+    </div> -->
+
+
+<!-- 	<div class="list">
       	<ion-item class="item-stable">
           	<i class="icon ion-arrow-down-b"></i>
         	&nbsp;
         	테스트 주차
-        	<!-- <span class="item-note">학습완료</span> -->
         	<span class="badge badge-assertive">3/4</span>
       	</ion-item>
       	<ion-item class="item-accordion item-icon-right"
@@ -71,7 +115,9 @@
 	        <span class="item-note button button-small button-balanced" style="margin-top: 3px;width:60px;">학습중</span>
 	        <i class="icon ion-ios-arrow-right dark"></i>
       	</ion-item>
-      </div>
+      </div> -->
+
+
 <!-- 	    <div ng-repeat="group in groups" class="list list-inset">
 	      <ion-item class="item-stable"
 	                ng-click="toggleGroup(group)"

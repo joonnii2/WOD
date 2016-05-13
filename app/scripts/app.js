@@ -29,9 +29,10 @@ define([
     API_ENDPOINT:'http://192.168.0.18:8080/api', // for Device without Proxy Setting
     //API_ENDPOINT:'/api', // for Web Browser with Ionic Proxy Setting
     LOGIN_MAIN : 'myclass.ingCourseList',
-    VIEWER_WIDTH : '600',
-    VIEWER_HEIGHT : '400',
-    VIDWER_DEFAULT_POSTER : '',
+    VIEWER_WIDTH : '1000',
+    VIEWER_HEIGHT : '600',
+    VIEWER_DEFAULT_POSTER : '',
+    VIEWER_DEFAULT_SAVE_TERM : '180',
     LOCAL_SETTING_KEY : 'WOD_APP_SETTING',
     LOCAL_TOKEN_KEY : 'WOD_SESSION_INFO'
   });

@@ -98,16 +98,18 @@ define([
           // 쿠키 저장 처리
           if ($rootScope.settings.isSaveId) {
             $rootScope.settings.loginData = {
-              userid : $scope.loginData.userid
+              userid : $scope.loginData.userid,
+              password : $scope.loginData.password
             };
           };
 
           if ($rootScope.settings.isAutoLogin) {
             $rootScope.settings.loginData = $scope.loginData;
           }else {
-            if ($rootScope.settings.loginData != null && $rootScope.settings.loginData.password != null) {
-              $rootScope.settings.loginData.password = null;
-            };
+            // 자동로그인이 아니면 쿠키에 비밀번호 값 저장하지 않음
+            // if ($rootScope.settings.loginData != null && $rootScope.settings.loginData.password != null) {
+            //   $rootScope.settings.loginData.password = null;
+            // };
           };
 
           window.localStorage.setItem(env.LOCAL_SETTING_KEY, JSON.stringify($rootScope.settings));

@@ -159,7 +159,7 @@ define([
 			})
 			// 로그인 후 : 회원메뉴 : 수강중인과정 : 강의정보 
 			.state('myclass.ingCourseDetail', {
-				url: '/ingCourseDetail/:courseId',
+				url: '/ingCourseDetail/:lectureSeqno',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -171,7 +171,7 @@ define([
 			})
 			// 로그인 후 : 회원메뉴 : 수강중인과정 : 학습하기 (주차 목록)
 			.state('myclass.tocList', {
-				url: '/tocList/:courseId',
+				url: '/tocList/:lectureSeqno?mobilePosbYn&lectureName',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -183,7 +183,7 @@ define([
 			})
 			// 학습목차 상세 정보 조회 : 일반강의 및 학습도구 류
 			.state('myclass.itemDetail', {
-				url: '/itemDetail/:itemId?type',
+				url: '/itemDetail/:tocSeqno?connGb&lectureSeqno&mobileConnPk&mobilePosbYn&serviceYn&viewerRunYn&viewerWidthSize&viewerHgtSize&precdTocUseYn&precdTocSeqno&precdTocPobtYn&tocName',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -243,7 +243,7 @@ define([
 			})
 			// 로그인 후 : 회원메뉴 : 수강중인과정 : 공지사항 목록
 			.state('myclass.noticeList', {
-				url: '/noticeList/:courseId',
+				url: '/noticeList/:lectureSeqno',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -267,7 +267,7 @@ define([
 			})
 			// 로그인 후 : 회원메뉴 : 수강중인과정 : Q&A 목록
 			.state('myclass.qnaList', {
-				url: '/qnaList/:courseId',
+				url: '/qnaList/:lectureSeqno',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -291,7 +291,7 @@ define([
 			})
 			// 로그인 후 : 회원메뉴 : 수강중인과정 : Q&A 글쓰기
 			.state('myclass.qnaWrite', {
-				url: '/qnaWrite/:courseId',
+				url: '/qnaWrite/:lectureSeqno',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -314,7 +314,7 @@ define([
 				authenticate : true
 			})
 			.state('myclass.learningPlayer', {
-				url: '/learningPlayer/:itemId?contentsType&width&height&contentsUrl&poster',
+				url: '/learningPlayer/:tocSeqno?connGb&mobileConnPk&viewerRunYn&viewerWidthSize&viewerHgtSize&tocName',
 				views: {
 					'menuContent': {
 						templateUrl: 'templates/viewer/learningPlayer.html',

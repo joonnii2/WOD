@@ -1,4 +1,4 @@
-<ion-view view-title="수강중인 강의">
+<ion-view view-title="수강중인 강좌">
 
   <ion-content style="/*background:#67b0d6;*/">
     <ion-refresher 
@@ -8,57 +8,42 @@
 		spinner="crescent" 
 		pulling-icon="ion-ios-arrow-up">
 	</ion-refresher>
-	<div class="card" ng-show="courseList.length > 0">
+	<div class="card">
 	  <div class="item item-divider item-icon-left">
 	    <i class="icon ion-ios-monitor calm"></i>
-	    일반강의
+	    일반 강좌
 	    <!-- <span class="badge badge-assertive">0</span> -->
 	  </div>
-	  <div>
-	    <a class="item" href="#/myclass/tocList/{{course.lectureSeqno}}" ng-repeat="course in courseList">
+	  <!-- /myclass/tocList/{{course.lectureSeqno}} -->
+	  <div ng-show="courseList.length > 0">
+	    <a class="item" href="#" ng-repeat="course in courseList" ng-click="goTocList(course.lectureSeqno, course.lectureName, course.mobilePosbYn)">
 	      <span class="item-note dark">{{course.lectureOrd}}</span>
 	      <h2>{{course.lectureName}}</h2>
-	      <span class="item-note dark">{{course.learnTypeGbNm}}</span>
+	      <span class="item-note dark">
+	      	<span ng-show="course.mobilePosbYn != 'Y'">{{course.learnTypeGbNm}}</span>
+	      	<i ng-show="course.mobilePosbYn == 'Y'" class="icon ion-ipad positive">&nbsp;&nbsp;모바일 지원 {{course.learnTypeGbNm}}</i>
+	      </span>
 	      <p>{{course.lectureStartDttm | limitTo:10}} ~ {{course.lectureEndDttm | limitTo:10}}</p>
 	    </a>
-<!-- 	    <a class="item balanced" href="#/myclass/tocList/1">
-	      <span class="item-note dark">1기</span>
-	      <h2>강좌명</h2>
-	      <span class="item-note dark">온라인강의</span>
-	      <p>2016-02-23 ~ 2016-05-08</p>
-	    </a>
-	    <a class="item balanced" href="#/myclass/tocList/1">
-	      <span class="item-note dark">2기</span>
-	      <h2>강좌명</h2>
-	      <span class="item-note dark">온라인강의</span>
-	      <p>2016-02-23 ~ 2016-05-08</p>
-	    </a> -->
-	  </div>
+	  </div>	  
+	  <div ng-show="courseList.length == 0" style="text-align: center;height:60px;padding-top: 20px;">수강중인 강좌가 없습니다.</div>
 	</div>
 
-	<div class="card" ng-show="examList.length > 0">
+	<div class="card">
 	  <div class="item item-divider item-icon-left">
 	  <i class="icon ion-ios-compose calm"></i>
 	    온라인 자격시험
 	  <!-- <span class="badge badge-assertive">0</span> -->
 	  </div>
-	  <div>
+	  <div ng-show="examList.length > 0">
 	    <a class="item" href="#/myclass/examDetail/1?type=EXAM" ng-repeat="exam in examList">
 	      <h2>시험명</h2>
 	      <span class="item-note dark">자격증명</span>
+	      <i ng-show="course.mobilePosbYn == 'Y'" class="icon ion-ipad positive">&nbsp;&nbsp;모바일 지원 자격증명</i>
 	      <p>2016-02-23 ~ 2016-05-08</p>
 	    </a>
-<!-- 	    <a class="item" href="#/myclass/examDetail/1?type=EXAM">
-	      <h2>시험명</h2>
-	      <span class="item-note dark">자격증명</span>
-	      <p>2016-02-23 ~ 2016-05-08</p>
-	    </a>
-	    <a class="item" href="#/myclass/examDetail/1?type=EXAM">
-	      <h2>시험명</h2>
-	      <span class="item-note dark">자격증명</span>
-	      <p>2016-02-23 ~ 2016-05-08</p>
-	    </a> -->
-	  </div>
+	  </div>	  
+	  <div ng-show="examList.length == 0" style="text-align: center;height:60px;padding-top: 20px;">응시가능한 자격시험이 없습니다.</div>
 	</div>
   </ion-content>
 </ion-view>

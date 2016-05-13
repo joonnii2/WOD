@@ -21,15 +21,25 @@ define([
     function ($ionicPlatform, $scope, $state, $stateParams, $ionicHistory, $sce, env, $rootScope, $ionicLoading, $timeout, apiSvc, $window, $ionicPopup, $cordovaInAppBrowser) {
       
       $rootScope.settings = JSON.parse($window.localStorage.getItem(env.LOCAL_SETTING_KEY) || "{}");
+      
       $scope.startTimestamp = null;       // 학습 시작 시간
       $scope.endTimestamp = null;         // 학습 종료 시간
       $scope.totalTime = 0;               // 총 학습 시간
       $scope.lastPlayTimestamp = null;    // 최근 다시 시작한 시간
       $scope.lastPausedTimestamp = null;  // 최근 일시 중지한 시간
-      $scope.isPlaying = false;
-      $scope.isMedia = false;
-      $scope.isLearningStarted = false;
-      $scope.isLearningEnded = false;
+
+      $scope.isMedia = false;             // 미디어인지 여부
+      $scope.isPlaying = false;           // 학습중인지 여부
+      $scope.isLearningStarted = false;   // 학습을 시작 했는지 여부
+      $scope.isLearningEnded = false;     // 학습이 종료 됬는지 여부
+
+      $scope.tocSeqno = $stateParams.tocSeqno;          // 학습목차 일련번호
+      $scope.connGb = $stateParams.connGb;              // 학습자원 종류
+      $scope.mobileConnPk = $stateParams.mobileConnPk;  // 모바일 리소스 연계 키
+      $scope.viewerRunYn = $stateParams.viewerRunYn;    // 학습창내 실행 여부(학습창/새창 여부)
+      $scope.viewerWidthSize = $stateParams.viewerWidthSize ? $stateParams.viewerWidthSize : env.VIEWER_WIDTH;  // 학습창 넓이
+      $scope.viewerHgtSize = $stateParams.viewerHgtSize ? $stateParams.viewerHgtSize : env.VIEWER_HEIGHT;       // 학습창 높이
+      $scope.tocName = $stateParams.tocName;            // 목차타이틀
 
       // Setup the loader
       $ionicLoading.show({

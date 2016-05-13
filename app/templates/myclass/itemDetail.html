@@ -1,4 +1,4 @@
-<ion-view view-title="수강중인과정 상세">
+<ion-view view-title="{{tocName}}">
 <!-- <ion-tabs class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
 
   <ion-tab class="tab-item active" title="학습하기" href="#/weekList/1">
@@ -74,16 +74,22 @@
 				<tbody>
 					<tr>
 						<th scope="row">학습유형</th>
-						<td>온라인 학습</td>
+						<td>
+							<span>{{itemDetail.connGbName}}</span>
+							<!-- <span>( 권장 학습시간 : {{itemDetail.tocEdTimeTxt}} )</span> -->
+						</td>
 					</tr>
 					<tr>
-						<th scope="row">출석인정기간</th>
-						<td>oooooo</td>
+						<th scope="row">출석 인정 기준</th>
+						<td>
+							</span>{{itemDetail.pobtTypeName}}</span>
+							<span ng-show="itemDetail.pobtTypeGb == '01'">{{itemDetail.tocAttendBasisTimeTxt}}</span>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		</div>
+	  </div>
 	</div>
 	<div class="card">
 	  <div class="item item-divider item-icon-left">
@@ -101,20 +107,24 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">진도현황</th>
-								<td>oooooo</td>
+								<th scope="row">진도 현황</th>
+								<td>
+									<span ng-show="itemDetail.pobtYn == 'Y'">완료</span>
+									<span ng-show="itemDetail.pobtYn != 'Y'">미완료</span>
+									<span ng-show="itemDetail.pobtTypeGb == '01'"> ( 진도율 : {{itemDetail.prgss | limitTo : 2}} % / 학습시간 : {{itemDetail.learnTimeSumTxt}} )</span>
+								</td>
+							</tr>
+							<tr ng-show="itemDetail.pobtTypeGb == '03'">
+								<th scope="row">채점 결과</th>
+								<td>{{itemDetail.mbrScore}} 점</td>
 							</tr>
 							<tr>
-								<th scope="row">채점결과</th>
-								<td>oooooo</td>
+								<th scope="row">학습 횟수</th>
+								<td>{{itemDetail.learnNot}} 회</td>
 							</tr>
 							<tr>
-								<th scope="row">접속횟수</th>
-								<td>oooooo</td>
-							</tr>
-							<tr>
-								<th scope="row">최근접속시간</th>
-								<td>oooooo</td>
+								<th scope="row">최근 학습시간</th>
+								<td>{{itemDetail.moddateDisp | limitTo : 19}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -127,7 +137,11 @@
 <!-- 			<div class="card">
 			<div class="item item-divider item-icon-left">
 				<i class="icon ion-alert-circled assertive"></i> -->
-				<p class="desc_txt" style="/*color:white*/">모바일 학습은 학습하기 버튼이 있는 목차만 학습이 가능합니다.<br />토론, 과제 등 학습활동은 웹사이트에서만 가능합니다.</p>
+				<p class="desc_txt" style="/*color:white*/">
+					<span style="color:red;">{{learnableMsg}}</span>
+					<br/>- 모바일 학습은 학습하기 버튼이 있는 목차만 학습이 가능합니다.
+					<br/>- 토론, 과제 등 학습활동은 웹사이트에서만 가능합니다.
+				</p>
 <!-- 			</div> -->
 	</div>
 				<!-- <a href="#" class="btn_block btn_primary" ng-click="goStudy()">학습하기</a> -->
