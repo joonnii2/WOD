@@ -35,12 +35,6 @@ define([
         CREDENTIAL : true
       };
 
-      var DATA_DEFAULT_ORG = {orgCode : sessionSvc.getSessionInfo().userOrgCode, orgSuffixUrl : sessionSvc.getSessionInfo().orgSuffixUrl};
-        console.log('DATA_DEFAULT_ORG');
-      console.log(DATA_DEFAULT_ORG);
-      var DATA_DEFAULT_SESSION = sessionSvc.getSessionInfo();
-      console.log('DATA_DEFAULT_SESSION');
-      console.log(DATA_DEFAULT_SESSION);
       var API_SET = {
         // 어플리케이션 유효성 검증
         doCheckApplication : {URL : '/checkApplication.scu', DATA : ENV},
@@ -57,11 +51,11 @@ define([
         // 메인 : 비밀번호 찾기
         doPwSearch : {URL : '/doPwSearch.scu'},
         // 공지사항 > 목록 조회
-        doMainNoticeList : {URL : '/doMainNoticeList.scu', DATA : DATA_DEFAULT_ORG},
+        doMainNoticeList : {URL : '/doMainNoticeList.scu'},
         // 공지사항 > 상세 조회
         doMainNoticeDetail : {URL : '/doMainNoticeDetail.scu'},
         // FAQ > 목록 조회
-        doFaqList : {URL : '/doFaqList.scu', DATA : DATA_DEFAULT_ORG},
+        doFaqList : {URL : '/doFaqList.scu'},
         // 나의 문의사항 > 목록 조회
         doCounselingList : {URL : '/doCounselingList.scu'},
         // 나의 문의사항 > 상세 조회
@@ -73,7 +67,7 @@ define([
         // 나의 문의사항 > 삭제
         doDeleteCounseling : {URL : '/doDeleteCounseling.scu'},
         // 수강중인 강의 > 강의 목록 조회
-        doIngCourseList : {URL : '/doIngCourseList.scu', DATA : DATA_DEFAULT_ORG},
+        doIngCourseList : {URL : '/doIngCourseList.scu'},
         // 수강중인 강의 > 강의 상세 정보 조회
         doIngCourseDetail : {URL : '/doIngCourseDetail.scu'},
         // 수강중인 강의 > 강의 목록 > 주차 목록 조회
@@ -106,13 +100,14 @@ define([
         doOrgCodeList : {URL : '/doOrgCodeList.scu'},
 
         // 학습창 로딩
-        doLearningWindow : {URL : '/doLearningWindow.scu'},        
+        doLoadingServiceInfo : {URL : '/doLoadingServiceInfo.scu'},        
         // 학습창 > 학습이력 저장
         doSaveLearnerHistory : {URL : '/doSaveLearnerHistory.scu'}
       };
 
       return {
         call : function(apiName, data) {
+
           if (API_SET[apiName]) {
             // Setup the loader
             $ionicLoading.show({
@@ -122,6 +117,12 @@ define([
               maxWidth: 200,
               showDelay: 0
             });
+
+            if (data == undefined || data == null) {
+                data = {orgCode : $rootScope.sessionInfo.userOrgCode, orgSuffixUrl : $rootScope.sessionInfo.orgSuffixUrl};
+            }else {
+                data = $.extend({orgCode : $rootScope.sessionInfo.userOrgCode, orgSuffixUrl : $rootScope.sessionInfo.orgSuffixUrl}, data);
+            }
             var param = function () {
                 if (API_SET[apiName].DATA) {
                     if (data) return $httpParamSerializerJQLike($.extend(API_SET[apiName].DATA, data));

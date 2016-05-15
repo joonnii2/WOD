@@ -183,7 +183,7 @@ define([
 			})
 			// 학습목차 상세 정보 조회 : 일반강의 및 학습도구 류
 			.state('myclass.itemDetail', {
-				url: '/itemDetail/:tocSeqno?connGb&lectureSeqno&mobileConnPk&mobilePosbYn&serviceYn&viewerRunYn&viewerWidthSize&viewerHgtSize&precdTocUseYn&precdTocSeqno&precdTocPobtYn&tocName',
+				url: '/itemDetail/:tocSeqno?connGb&lectureSeqno&wsSeqno&mobileConnPk&mobilePosbYn&viewingYn&viewerRunYn&viewerWidthSize&viewerHgtSize&precdTocUseYn&precdTocSeqno&precdTocPobtYn&tocName',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -314,7 +314,7 @@ define([
 				authenticate : true
 			})
 			.state('myclass.learningPlayer', {
-				url: '/learningPlayer/:tocSeqno?connGb&mobileConnPk&viewerRunYn&viewerWidthSize&viewerHgtSize&tocName',
+				url: '/learningPlayer/:tocSeqno?lectureSeqno&wsSeqno&prgssRateCompleteBasis&connGb&mobileConnPk&viewerRunYn&viewerWidthSize&viewerHgtSize&tocName',
 				views: {
 					'menuContent': {
 						templateUrl: 'templates/viewer/learningPlayer.html',

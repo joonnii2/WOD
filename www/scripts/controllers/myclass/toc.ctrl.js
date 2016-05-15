@@ -10,16 +10,19 @@ define([
     '$rootScope',
     'ApiSvc',
     '$ionicLoading',
-    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicLoading) {
+    'ENV',
+    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicLoading, env) {
 
-      // 모바일에서 사용가능한 학습 자원 유형
-      var ENABLE_CONNGB_TYPE = [
-        '0002', // 동영상 CDN
-        '0004', // 오디오 CDN
-        '0008', // 웹 링크 유형
-        '0009', // 웹 콘텐츠 유형
-        '1009'  // 평가 유형
-      ];
+      // // 모바일에서 사용가능한 학습 자원 유형
+      // var ENABLE_CONNGB_TYPE = [
+      //   //'0001', // 동영상 파일
+      //   '0002', // 동영상 CDN
+      //   //'0003', // 음성 파일
+      //   '0004', // 오디오 CDN
+      //   '0008', // 웹 링크 유형
+      //   '0009', // 웹 콘텐츠 유형
+      //   '1009'  // 평가 유형
+      // ];
 
       var CONNGB_TYPE = {
         '0001' : '동영상 파일',
@@ -64,7 +67,7 @@ define([
 
       // 모바일용 학습자원 인지 여부
       $scope.isEnabled = function(toc) {
-        if (toc.tocTypeGb == '02' && ENABLE_CONNGB_TYPE.indexOf(toc.connGb) > -1) return true;
+        if (toc.tocTypeGb == '02' && env.ENABLE_CONN_GB.indexOf(toc.connGb) > -1) return true;
         else return false;
       };
 
@@ -95,7 +98,7 @@ define([
         $scope.goItemDetail = function(toc) {
           $stateParams.tocSeqno = toc.tocSeqno;               // 학습목차 일련번호
           $stateParams.connGb = toc.connGb;                   // 학습자원 종류
-          $stateParams.serviceYn = toc.serviceYn;             // 학습창 서비스 가능 유무
+          $stateParams.viewingYn = toc.viewingYn;             // 학습창 보기 가능 유무
           $stateParams.viewerWidthSize = toc.viewerWidthSize; // 학습창 넓이
           $stateParams.viewerHgtSize = toc.viewerHgtSize;     // 학습창 높이
           $stateParams.precdTocUseYn = toc.precdTocUseYn;     // 선행학습 사용여부
@@ -104,6 +107,7 @@ define([
           $stateParams.tocName = toc.tocName;                 // 목차타이틀
           $stateParams.mobileConnPk = toc.mobileConnPk;       // 모바일 리소스 연계 키
           $stateParams.viewerRunYn = toc.viewerRunYn          // 학습창내 실행 여부(학습창/새창 여부)
+          $stateParams.wsSeqno = toc.wsSeqno                  // 주차 일련번호
 
           $state.go('myclass.itemDetail', $stateParams);
         };
@@ -122,7 +126,7 @@ define([
           $scope.learnableMsg = '* 모바일 학습 자원이 등록되어 있지 않습니다.';
         };
         // 2.모바일 학습 가능한 자원 유형일 경우만 버튼 노출
-        if ($stateParams.connGb == undefined || ENABLE_CONNGB_TYPE.indexOf($stateParams.connGb) == -1) {
+        if ($stateParams.connGb == undefined || env.ENABLE_CONN_GB.indexOf($stateParams.connGb) == -1) {
           $scope.isLearnableToc = false;
           $scope.learnableMsg = '* 모바일 학습 환경을 지원하지 않는 학습 목차 입니다.';
         };
@@ -134,7 +138,7 @@ define([
           };
         };
         // 4.서비스 기간에 따른 학습창 서비스 가능할 경우만 버튼 노출 (Y:기간이 지나지 않았음, N:기간이 지났음)
-        if ($stateParams.serviceYn == undefined || $stateParams.serviceYn != 'Y') {
+        if ($stateParams.viewingYn == undefined || $stateParams.viewingYn != 'Y') {
           $scope.isLearnableToc = false;
           $scope.learnableMsg = '* 학습 가능한 기간이 아닙니다.';
         };
@@ -150,6 +154,8 @@ define([
         doItemDetail($stateParams);
 
         $scope.goStudy = function() {
+
+          $stateParams.prgssRateCompleteBasis = $scope.itemDetail.prgssRateCompleteBasis;  // 콘텐츠 이수 기준 진도율
           //'2','https://www.youtube.com/embed/4iHlfXHnN94?autoplay=1'
           // if ($scope.itemDetail != null) {
           //   //$stateParams.itemId = $scope.itemDetail.itemId;
@@ -275,7 +281,7 @@ define([
         if (prgssRateCompleteBasis != null && parseInt(prgssRateCompleteBasis) > 0 && sec != null && parseInt(sec) > 0) {
           retTime = getTime(parseInt(sec*prgssRateCompleteBasis/100)) + ' 이상';
         }else {
-          retTime = '학습 시작시';
+          retTime = '100 %';
         };
         return retTime;
       };

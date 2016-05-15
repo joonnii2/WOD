@@ -20,438 +20,484 @@ define([
     '$cordovaInAppBrowser',
     function ($ionicPlatform, $scope, $state, $stateParams, $ionicHistory, $sce, env, $rootScope, $ionicLoading, $timeout, apiSvc, $window, $ionicPopup, $cordovaInAppBrowser) {
       
-      $rootScope.settings = JSON.parse($window.localStorage.getItem(env.LOCAL_SETTING_KEY) || "{}");
-      
-      $scope.startTimestamp = null;       // 학습 시작 시간
-      $scope.endTimestamp = null;         // 학습 종료 시간
-      $scope.totalTime = 0;               // 총 학습 시간
-      $scope.lastPlayTimestamp = null;    // 최근 다시 시작한 시간
-      $scope.lastPausedTimestamp = null;  // 최근 일시 중지한 시간
-
-      $scope.isMedia = false;             // 미디어인지 여부
-      $scope.isPlaying = false;           // 학습중인지 여부
-      $scope.isLearningStarted = false;   // 학습을 시작 했는지 여부
-      $scope.isLearningEnded = false;     // 학습이 종료 됬는지 여부
-
-      $scope.tocSeqno = $stateParams.tocSeqno;          // 학습목차 일련번호
-      $scope.connGb = $stateParams.connGb;              // 학습자원 종류
-      $scope.mobileConnPk = $stateParams.mobileConnPk;  // 모바일 리소스 연계 키
-      $scope.viewerRunYn = $stateParams.viewerRunYn;    // 학습창내 실행 여부(학습창/새창 여부)
-      $scope.viewerWidthSize = $stateParams.viewerWidthSize ? $stateParams.viewerWidthSize : env.VIEWER_WIDTH;  // 학습창 넓이
-      $scope.viewerHgtSize = $stateParams.viewerHgtSize ? $stateParams.viewerHgtSize : env.VIEWER_HEIGHT;       // 학습창 높이
-      $scope.tocName = $stateParams.tocName;            // 목차타이틀
-
-      // Setup the loader
-      $ionicLoading.show({
-        content: 'Loading',
-        animation: 'fade-in',
-        showBackdrop: true,
-        maxWidth: 200,
-        showDelay: 0
-      });
-
-      // 학습 일시 중지
-      $scope.doPauseStudy = function() {
-        if ($scope.isPlaying) {
-          console.log("일시 중지");
-// alert('currentTime : ' + document.getElementById("media").currentTime);
-          $scope.isPlaying = false;
-          $scope.lastPausedTimestamp = Math.floor(Date.now() / 1000);
-          $scope.totalTime += ($scope.lastPausedTimestamp - $scope.lastPlayTimestamp);
-
-          if ($scope.isMedia) {
-            if (learningObj) learningObj.pause();
-          }else {
-          };
-
-          console.log('$scope.totalTime:'+$scope.totalTime);
-          console.log('$scope.lastPlayTimestamp:'+$scope.lastPlayTimestamp);
-          console.log('$scope.lastPausedTimestamp:'+$scope.lastPausedTimestamp);
-        };
-      };
-
-      // 학습 재개
-      $scope.doResumeStudy = function() {
-        if (!$scope.isPlaying) {
-          console.log("다시 시작");
-
-          $scope.isPlaying = true;
-          $scope.lastPlayTimestamp = Math.floor(Date.now() / 1000);
-
-          if ($scope.isMedia) {
-            if (learningObj) learningObj.play();
-          }else {
-
-          };
-
-          console.log('$scope.totalTime:'+$scope.totalTime);
-          console.log('$scope.lastPlayTimestamp:'+$scope.lastPlayTimestamp);
-          console.log('$scope.lastPausedTimestamp:'+$scope.lastPausedTimestamp);
-        };
-      };
-
-      // 학습 종료
-      $scope.doStopStudy = function() {
-        if ($scope.isPlaying) {
-          console.log("종료");
-
-          $scope.isPlaying = false;
-          $scope.lastPausedTimestamp = Math.floor(Date.now() / 1000);
-          $scope.totalTime += ($scope.lastPausedTimestamp - $scope.lastPlayTimestamp);
-
-          if ($scope.isMedia) {
-            if (learningObj) learningObj.pause();
-          }else {
-
-          };
-
-          console.log('$scope.totalTime:'+$scope.totalTime);
-          console.log('$scope.lastPlayTimestamp:'+$scope.lastPlayTimestamp);
-          console.log('$scope.lastPausedTimestamp:'+$scope.lastPausedTimestamp);
-        };
-      };
-
-      // 학습 뷰어 종료
-      $scope.doExit = function() {
-        $scope.isLearningEnded = true;
-        $scope.doStopStudy();
-        $scope.endTimestamp = Math.floor(Date.now() / 1000);
-
-        console.log('$scope.startTimestamp:'+$scope.startTimestamp);
-        console.log('$scope.endTimestamp:'+$scope.endTimestamp);
-        console.log('$scope.totalTime:'+$scope.totalTime);
-        console.log('$scope.lastPlayTimestamp:'+$scope.lastPlayTimestamp);
-        console.log('$scope.lastPausedTimestamp:'+$scope.lastPausedTimestamp);
-      };
-
-      // 학습 시작
-      $scope.doStartStudy = function() {
-        // document.getElementById("media").currentTime = 10;
-        // alert('currentTime : ' + document.getElementById("media").currentTime);
-        if (!$scope.isPlaying) {
-          if (!$scope.isLearningStarted) {
-            $scope.startTimestamp = Math.floor(Date.now() / 1000);
-            $scope.isLearningStarted = true;
-          }
-          console.log("시작");
-
-          $scope.isPlaying = true;
-          $scope.lastPlayTimestamp = Math.floor(Date.now() / 1000);
-
-          if ($scope.isMedia) {
-            if (learningObj) learningObj.play();
-          }else {
-
-          };
-
-          console.log('$scope.totalTime:'+$scope.totalTime);
-          console.log('$scope.lastPlayTimestamp:'+$scope.lastPlayTimestamp);
-          console.log('$scope.lastPausedTimestamp:'+$scope.lastPausedTimestamp);
-        };
-      };
-
-      // 화면 터치
-      $scope.onTouch = function() {
-        if ($scope.isMedia) {
-          if (jQuery('#infoPanel').css('display') == 'none') {
-            jQuery('#infoPanel').slideDown();
-            $timeout(function() {
-              jQuery('#infoPanel').slideUp();
-            }, 7000, true);
-          }else {
-            jQuery('#infoPanel').slideUp();
-          };
-        };
-      };
-
-      $scope.showConfirm = function() {
-        $scope.doPauseStudy();
-
-        var confirmPopup = $ionicPopup.confirm({
-          title: '학습종료',
-          template: '학습을 종료하시겠습니까?'
-        });
-        
-        confirmPopup.then(function(res) { 
-          if(res) {
-            $scope.doExit();
-            $ionicHistory.goBack(-2);
-          } else {
-            $scope.doResumeStudy();
-          }
-        });
-      };
+      var learningObj = null;
 
       $ionicPlatform.ready(function() {
 
-        setContents();
+        // Setup the loader
+        $ionicLoading.show({
+          content: 'Loading',
+          animation: 'fade-in',
+          showBackdrop: true,
+          maxWidth: 200,
+          showDelay: 0
+        });
+        //var learningObj = document.getElementById('media');
+        $rootScope.settings = JSON.parse($window.localStorage.getItem(env.LOCAL_SETTING_KEY) || "{}");
+
+        /* 학습자 정보 */
+        $scope.learner = {
+          startTimestamp : null,          // 학습 시작 시간
+          endTimestamp : null,            // 학습 종료 시간
+          totalLearningTime : 0,          // 총 학습 시간
+          lastStartTimestamp : null,      // 최근 다시 시작한 시간
+          lastPausedTimestamp : null,     // 최근 일시 중지한 시간
+          isLearningStarted : false,      // 학습을 시작 했는지 여부
+          isLearningEnded : false         // 학습이 종료 됬는지 여부
+        };
+
+        /* 학습 아이템 정보 */
+        $scope.item = {
+          lectureSeqno : $stateParams.lectureSeqno,     // 강좌 일련번호
+          wsSeqno : $stateParams.wsSeqno,               // 주차 일련번호
+          tocSeqno : $stateParams.tocSeqno,             // 학습목차 일련번호
+          connGb : $stateParams.connGb,                 // 학습자원 종류 -------------
+          mobileConnPk : $stateParams.mobileConnPk,     // 모바일 리소스 연계 키
+          prgssRateCompleteBasis : $stateParams.prgssRateCompleteBasis, // 콘텐츠 완료 기준 진도율
+          viewerRunYn : $stateParams.viewerRunYn,       // 학습창내 실행 여부(학습창/새창 여부)  ----------
+          viewerWidthSize : $stateParams.viewerWidthSize ? $stateParams.viewerWidthSize : env.VIEWER_WIDTH,  // 학습창 넓이 -----------
+          viewerHgtSize : $stateParams.viewerHgtSize ? $stateParams.viewerHgtSize : env.VIEWER_HEIGHT,// 학습창 높이 -----------
+          tocName : $stateParams.tocName,                // 목차타이틀
+          saveTerm : null,                               // 학습이력 저장 간격 (초)
+          defaultContentsCdn : null,                     // 웹 콘텐츠 기본 경로
+          itemDetail : null,                             // 주차의 학습 목차 목록
+          resourceList : null,                           // 학습목차에 연결된 학습 자원 목록
+          isMedia : false,                               // 미디어인지 여부
+          isPlaying : false,                             // 학습중인지 여부
+          tocEdTime : null,                              // 목차 권장 학습 시간
+          serviceYn : 'Y',                               // 학습 이력 저장 가능 여부
+          viewingYn : 'Y',                               // 학습창 보기 가능 여부
+          rscTypeGb : null,                              // 학습자원 유형 ('0001' : 동영상 파일, '0002' : 동영상 CDN, '0003' : 음성파일, '0004' : 음성 CDN, '0008' : 웹링크, '0009' : 웹콘텐츠)
+          rscDetailTypeGb : null,                        // 학습자원 상세 유형 ('000001' : 자막 파일)
+          rscDetailPath : null,                          // 학습자원 경로
+          rscDetailFileName : null,                      // 학습자원 파일명
+          cdnUrl : null,                                 // 미디어 스트리밍 CDN URL
+          contentsServiceUrl : null,                     // 콘텐츠 서비스 Full URL
+          vttYn : null,                                  // 자막 유무
+          vttRscDetailPath : null,                       // 기본 자막파일 경로
+          vttRscDetailFileName : null,                   // 기본 자막파일 명
+          vttLangGb : null,                              // 기본 자막 언어 코드
+          vttLangName : null,                            // 기본 자막 언어 명
+          vttServiceUrl : null,                          // 자막 서비스 Full URL
+          poster : env.VIEWER_DEFAULT_POSTER             // 미디어 썸네일 이미지
+        };
+        
+        //$scope.webContentsServiceUrl = null;
+        //$scope.mediaServiceUrl = null;
+
+        /* 학습 데이터 조회 및 설정 시작*/
+        apiSvc.call('doLoadingServiceInfo', $stateParams).then(function(res) {
+          if (res != null) {
+            $scope.item.saveTerm = res.SAVE_TERM;
+            $scope.item.defaultContentsCdn = res.DEFAULT_CONTENTS_CDN;
+            $scope.item.resourceList = res.RESOURCE_LIST;
+            if (res.ITEM_LIST != undefined && res.ITEM_LIST != null) {
+              var isBreak = false;
+              angular.forEach(res.ITEM_LIST, function(itm, idx){
+                if (!isBreak && $scope.item.tocSeqno == itm.tocSeqno) {
+                  isBreak = true;
+                  $scope.item.itemDetail = itm;
+                  $scope.item.finalLearnPst = itm.finalLearnPst;
+                  $scope.item.serviceYn = itm.serviceYn;
+                  $scope.item.viewingYn = itm.viewingYn;
+                };
+              });
+            };
+            if ($scope.item.viewingYn != 'Y') showAlert('학습 가능 기간이 아닙니다.', true);
+
+            setResource();  // resourceList로 부터 사용할 콘텐츠 resource 정보 설정
+            setContents();  // 학습창에 콘텐츠 로딩
+          };
+        });
+        /* 학습 데이터 조회 및 설정 끝 */
+
+        // 화면 터치
+        $scope.onTouch = function() {
+          if ($scope.item.isMedia) {
+            if (jQuery('#infoPanel').css('display') == 'none') {
+              jQuery('#infoPanel').slideDown();
+              $timeout(function() {
+                jQuery('#infoPanel').slideUp();
+              }, 7000, true);
+            }else {
+              jQuery('#infoPanel').slideUp();
+            };
+          };
+        };
+
+
+
+        $scope.showConfirm = function() {
+          //$scope.doPauseStudy();
+          control.pause();
+
+          var confirmPopup = $ionicPopup.confirm({
+            title: '학습종료',
+            template: '학습을 종료하시겠습니까?'
+          });
+          
+          confirmPopup.then(function(res) { 
+            if(res) {
+              //$scope.doExit();
+              control.exit();
+              $ionicHistory.goBack(-2);
+            } else {
+              //$scope.doResumeStudy();
+              control.resume();
+            }
+          });
+        };
 
         $window.addEventListener("orientationchange", function() {
-          doOnOrientationChange();
+          switch($window.orientation) {  
+            case -90: // 가로모드 landscape
+
+              $scope.viewerOrientation = 'landscape';
+
+              if ($scope.item.isMedia) {
+                onResizeWindow();
+              }else {
+                $scope.webContentsWidth = $window.innerWidth;
+              }
+              break;
+            case 90: // 가로모드 landscape
+              $scope.viewerOrientation = 'landscape';
+              if ($scope.item.isMedia) {
+                onResizeWindow();
+              }else {
+                $scope.webContentsWidth = $window.innerWidth;
+              }
+              break; 
+            case 0: // 세로모드 Portrait
+              $scope.viewerOrientation = 'portrait';
+              if ($scope.item.isMedia) {
+                onResizeWindow();
+              }else {
+                $scope.webContentsWidth = $window.innerWidth;
+              }
+              break; 
+            case 180: // 세로모드 Portrait
+              $scope.viewerOrientation = 'portrait';
+              if ($scope.item.isMedia) {
+                onResizeWindow();
+              }else {
+                $scope.webContentsWidth = $window.innerWidth;
+              }
+              break; 
+            default: // 세로모드 Portrait
+              $scope.viewerOrientation = 'portrait';
+              if ($scope.item.isMedia) {
+                onResizeWindow();
+              }else {
+                $scope.webContentsWidth = $window.innerWidth;
+              }
+              break; 
+          };
         }, false);
 
         $window.addEventListener("resume", function() {
-          $scope.doResumeStudy();
+          //$scope.doResumeStudy();
+          control.resume();
         }, false);
         
         $window.addEventListener("pause", function() {
-          $scope.doPauseStudy();
+          //$scope.doPauseStudy();
+          control.pause();
         }, false);
-
       });
+      
+      // 아이템 콘텐츠 리소스 정보 세팅
+      function setResource() {
+        if ($scope.item.resourceList != undefined && $scope.item.resourceList != null) {
+          angular.forEach($scope.item.resourceList, function(rsc, idx){
+            if ($scope.item.mobileConnPk == rsc.rscSeqno) {
+              // 미디어 파일
+              if (rsc.rscTypeGb == '0001' || rsc.rscTypeGb == '0003') {
+                if (rsc.rscDetailTypeGb != '000001' && $scope.item.rscTypeGb == null) {
+                  $scope.item.rscTypeGb = rsc.rscTypeGb;
+                  $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                  $scope.item.rscDetailPath = rsc.rscDetailPath;
+                  $scope.item.rscDetailFileName = rsc.rscDetailFileName;
+                  $scope.item.cdnUrl = rsc.cdnUrl;
+                  $scope.item.contentsServiceUrl = $scope.item.defaultContentsCdn + rsc.rscDetailPath + '/' + rsc.rscDetailFileName;
+                }else if (rsc.rscDetailTypeGb == '000001' && rsc.rscStartFileYn == 'Y') {
+                  if ($scope.item.vttYn == null || $scope.item.vttYn != 'Y') {
+                    $scope.item.vttYn = 'Y';
+                    $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                    $scope.item.vttRscDetailPath = rsc.rscDetailPath;
+                    $scope.item.vttRscDetailFileName = rsc.rscDetailFileName;
+                    $scope.item.vttLangGb = rsc.langGb;
+                    $scope.item.vttLangName = rsc.LangName;
+                    $scope.item.vttServiceUrl = $scope.item.defaultContentsCdn + rsc.rscDetailPath + '/' + rsc.rscDetailFileName;
+                  };
+                };
+              // 미디어 CDN
+              }else if (rsc.rscTypeGb == '0002' || rsc.rscTypeGb == '0004') {
+                // CDN 경로
+                if (rsc.rscDetailTypeGb != '000001' && $scope.item.rscTypeGb == null) {
+                  $scope.item.rscTypeGb = rsc.rscTypeGb;
+                  $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                  $scope.item.rscDetailFileName = rsc.rscDetailFileName;
+                  $scope.item.cdnUrl = rsc.cdnUrl;
 
-      var learningObj = document.getElementById('media');
-
-      // 앱 가로/세로 변경
-      function doOnOrientationChange() {
-
-        switch($window.orientation) {  
-          case -90: // 가로모드 landscape
-
-            $scope.viewerOrientation = 'landscape';
-
-            if ($scope.isMedia) {
-              onResizeWindow();
-            }else {
-              $scope.webContentsWidth = $window.innerWidth;
-            }
-            break;
-          case 90: // 가로모드 landscape
-            $scope.viewerOrientation = 'landscape';
-            if ($scope.isMedia) {
-              onResizeWindow();
-            }else {
-              $scope.webContentsWidth = $window.innerWidth;
-            }
-            break; 
-          case 0: // 세로모드 Portrait
-            $scope.viewerOrientation = 'portrait';
-            if ($scope.isMedia) {
-              onResizeWindow();
-            }else {
-              $scope.webContentsWidth = $window.innerWidth;
-            }
-            break; 
-          case 180: // 세로모드 Portrait
-            $scope.viewerOrientation = 'portrait';
-            if ($scope.isMedia) {
-              onResizeWindow();
-            }else {
-              $scope.webContentsWidth = $window.innerWidth;
-            }
-            break; 
-          default: // 세로모드 Portrait
-            $scope.viewerOrientation = 'portrait';
-            if ($scope.isMedia) {
-              onResizeWindow();
-            }else {
-              $scope.webContentsWidth = $window.innerWidth;
-            }
-            break; 
+                  if (rsc.cdnUrl != null) {
+                    if (rsc.rscDetailFileName.indexOf('://') > -1) {
+                      $scope.item.contentsServiceUrl = rsc.rscDetailFileName;
+                    }else {
+                      if (rsc.cdnUrl.substring(rsc.cdnurl.length-1, 1) == '/') $scope.item.contentsServiceUrl = rsc.rscDetailFileName.startWith('/') ? rsc.cdnUrl.substring(0, rsc.cdnUrl.length-1) + rsc.rscDetailFileName : rsc.cdnUrl + rsc.rscDetailFileName;
+                      else $scope.item.contentsServiceUrl = rsc.rscDetailFileName.startWith('/') ? rsc.cdnUrl + rsc.rscDetailFileName : rsc.cdnUrl.substring(0, rsc.cdnUrl.length-1) + rsc.rscDetailFileName;
+                    };
+                  }else {
+                    $scope.item.contentsServiceUrl = rsc.rscDetailFileName;
+                  };
+                // 자막 파일
+                }else if (rsc.rscDetailTypeGb == '000001' && rsc.rscStartFileYn == 'Y') {
+                  if ($scope.item.vttYn == null || $scope.item.vttYn != 'Y') {
+                    $scope.item.vttYn = 'Y';
+                    $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                    $scope.item.vttRscDetailPath = rsc.rscDetailPath;
+                    $scope.item.vttRscDetailFileName = rsc.rscDetailFileName;
+                    $scope.item.vttLangGb = rsc.langGb;
+                    $scope.item.vttLangName = rsc.LangName;
+                    $scope.item.vttServiceUrl = $scope.item.defaultContentsCdn + rsc.rscDetailPath + '/' + rsc.rscDetailFileName;
+                  };
+                };
+              // 웹링크
+              }else if (rsc.rscTypeGb == '0008') {
+                if ($scope.item.rscTypeGb == null) {
+                  $scope.item.rscTypeGb = rsc.rscTypeGb;
+                  $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                  $scope.item.rscDetailFileName = rsc.rscDetailFileName;
+                  $scope.item.vttYn = 'N';
+                  $scope.item.contentsServiceUrl = rsc.rscDetailFileName;
+                };
+              // 웹 콘텐츠
+              }else if (rsc.rscTypeGb == '0009') {
+                //콘텐츠 URL + Index
+                if ($scope.item.rscTypeGb == null && $scope.item.rscStartFileYn == 'Y') {
+                  $scope.item.rscTypeGb = rsc.rscTypeGb;
+                  $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                  $scope.item.vttRscDetailPath = rsc.rscDetailPath;
+                  $scope.item.rscDetailFileName = rsc.rscDetailFileName;
+                  $scope.item.vttYn = 'N';
+                  $scope.item.contentsServiceUrl = $scope.item.defaultContentsCdn + rsc.rscDetailPath + '/' + rsc.rscDetailFileName;
+                };
+              };
+            };
+          });
         };
-        console.log('viewerOrientation : ' + $scope.viewerOrientation );
-        console.log('window Width : '+$window.innerWidth);
-        console.log('window Height : '+$window.innerHeight);
-        console.log('video Width : '+$scope.mediaWidth);
-        console.log('video Height : '+$scope.mediaHeight);
       };
 
+
+      // 콘텐츠 정보 세팅
       function setContents() {
 
+        console.log($scope.item.contentsServiceUrl);
+        console.log('contents width:'+$scope.item.viewerWidthSize);
+        console.log('contents height:'+$scope.item.viewerHgtSize);
+        console.log('$scope.item.isMedia:'+$scope.item.isMedia);
+
         try {
-          $scope.contentsUrl = $sce.getTrustedResourceUrl($stateParams.contentsUrl); // 콘텐츠 경로 검사
+          $sce.getTrustedResourceUrl($scope.item.contentsServiceUrl); // 콘텐츠 경로 검사
         }catch (err) {
           console.log(err);
-          alert('콘텐츠를 로딩할 수 없습니다.');
-
           $ionicLoading.hide();
-          $ionicHistory.goBack(-1);
+          showAlert('검증되지 않은 경로의 콘텐츠를 로딩할 수 없습니다.', true);
+          
         };
 
-        if ($stateParams.contentsType != undefined) {
+        /*
+        - connGb 유형
+        '0001', // 동영상 파일
+        '0002', // 동영상 CDN
+        '0003', // 음성 파일
+        '0004', // 오디오 CDN
+        '0008', // 웹 링크 유형
+        '0009', // 웹 콘텐츠 유형
+        '1009'  // 평가 유형
+         */
+        
+        if ($scope.item.connGb != undefined && $scope.item.connGb != null && env.ENABLE_CONN_GB.indexOf($scope.item.connGb) > -1) {
+          console.log('$scope.item.connGb : '+$scope.item.connGb);
+          /* 0. 학습창 기본 설정 */
+          jQuery('#playerHeader').hide(); // 헤더 바 미디어 임베드로 변경
 
-          console.log('-----window width : '+$window.innerWidth);
-          console.log('media width : '+$stateParams.width);
-          console.log('window height : '+$window.innerHeight);
-          console.log('media height : '+$stateParams.height);
+          /* 1. 학습창 내 또는 새창 연결 여부 확인 */
+          if ($scope.item.viewerRunYn == 'Y') {
 
-          jQuery('#playerHeader').hide();
+          }else {
 
-          // 미디어 유형일 경우
-          if ($stateParams.contentsType == 'VIDEO' || $stateParams.contentsType == 'AUDIO') {
+          };
+                    
+          /* 2. 미디어 유형 공통 HTML5 Video Tag 설정 (connGb : 0001, 0002, 0003, 0004) */
+          if ($scope.item.connGb == '0001' 
+              || $scope.item.connGb == '0002' 
+              || $scope.item.connGb == '0003' 
+              || $scope.item.connGb == '0004') {
 
             learningObj = document.getElementById('media');
+            learningObj.src = $scope.item.contentsServiceUrl;
 
-            $scope.isMedia = true;
-            $scope.mediaUrl = $scope.contentsUrl;
-            $scope.poster = $stateParams.poster != null ? $stateParams.poster : env.VIDWER_DEFAULT_POSTER;
-            
-            if ($stateParams.contentsType == 'VIDEO') {
-              $scope.mediaType = 'video/mp4';
-            }else if ($stateParams.contentsType == 'AUDIO') {
-              $scope.mediaType = 'audio/mp3';
-            };
+            $scope.item.isMedia = true;
+            //$scope.mediaUrl = $scope.item.contentsServiceUrl;
+            //$scope.item.poster = $stateParams.poster != null ? $stateParams.poster : env.VIDWER_DEFAULT_POSTER;
 
             onResizeWindow();
-            
+
+            console.log('media type : '+$scope.mediaUrl);
+
+            console.log(learningObj);
+
             learningObj.addEventListener("loadedmetadata", function () {
               if ($rootScope.settings.autoPlay != undefined 
                 && $rootScope.settings.autoPlay == 'autoplay') 
-                  $scope.doStartStudy();
+                  //$scope.doStartStudy();
+                  control.start();
 
               $ionicLoading.hide();
-              console.log('loadedmetadata');
+              console.log('listener loadedmetadata');
             }, false);
 
             //  paused and playing events to control buttons
             learningObj.addEventListener("pause", function () {
-              console.log('pause');
-              $scope.doPauseStudy();
+              console.log('listener pause');
+              //$scope.doPauseStudy();
+              control.pause();
             }, false);
 
             learningObj.addEventListener("playing", function () {
-              console.log('playing');
-              $scope.doStartStudy();
+              console.log('listener playing');
+              //$scope.doStartStudy();
+              control.start();
             }, false);
 
             learningObj.addEventListener("ended", function () {
               // document.getElementById("ndd").textContent = "Playback ended";
-              console.log('ended');
-              $scope.doStopStudy();
+              console.log('listener ended');
+              //$scope.doStopStudy();
+              control.stop();
             }, false);
 
             learningObj.addEventListener("error", function (err) {
               console.log('error');
               console.log(err);
-              $scope.doStopStudy();
+              //$scope.doStopStudy();
+              control.stop();
             }, true);
-
-          // 웹 콘텐츠 유형일 경우
-          }else {
-            
+          };
+          
+          /* 3. 그외 유형 iFrame 설정 (connGb : 0008, 0009, 1009) */
+          if ($scope.item.connGb == '0009' || $scope.item.connGb == '1009') {
+            console.log('그외 : '+$scope.item.connGb);
             learningObj = document.getElementById('webContents');
+            
             jQuery('#playerHeader').show();
 
-            $scope.isMedia = false;
+            $scope.item.isMedia = false;
 
-            if ($stateParams.contentsType == 'WEB') {
-              $scope.webContentsUrl = $scope.contentsUrl;
-              $scope.webContentsWidth = $stateParams.width != null ? $stateParams.width : env.VIEWER_WIDTH;
-              $scope.webContentsWidth = $window.innerWidth;
-
-              learningObj.onload = function() {
-                //autoResize('webContents');
-                $ionicLoading.hide();
-                $scope.doStartStudy();
-              };
-            }else if ($stateParams.contentsType == 'URL') {
-
+            learningObj.onload = function() {
+              //autoResize('webContents');
               $ionicLoading.hide();
-              $scope.doStartStudy();
-              //showAlert('새창에서 실행되었습니다.');
-              
-              //openBrowser($scope.contentsUrl);
-              //$scope.openInExternalBrowser($scope.contentsUrl);
-              //$scope.openInAppBrowser($scope.contentsUrl);
-              //$scope.openCordovaWebView($scope.contentsUrl);
-              //
-              // learningObj = $window.open($scope.contentsUrl, '_self', 'location=yes');
-              // return false;
-              // $scope.doStartStudy();
-              
-              var ref = $window.open($scope.contentsUrl, '_blank', 'location=no');
+              //$scope.doStartStudy();
+              control.start();
+            };
+          };
 
-              ref.addEventListener("loadstart", function() {
+          /* 4. 각 유형별 설정 */
+          // 동영상 CDN
+          if ($scope.item.connGb == '0002') {
+            $scope.mediaType = 'video/mp4';
+          // 음성 CDN
+          }else if ($scope.item.connGb == '0004') {
+            $scope.mediaType = 'audio/mp3';
+          // 동영상 파일
+          }else if ($scope.item.connGb == '0001') {
+            $scope.mediaType = 'video/mp4';
+          // 음성 파일
+          }else if ($scope.item.connGb == '0003') {
+            $scope.mediaType = 'audio/mp3';
+          // 웹 링크
+          }else if ($scope.item.connGb == '0008') {
+            /*
+            window.open(‘http://example.com’, ‘_system’); Loads in the system browser
+            window.open(‘http://example.com’, ‘_blank’);  Loads in the InAppBrowser
+            window.open(‘http://example.com’, ‘_blank’, ‘location=no’); Loads in the InAppBrowser with no location bar
+            window.open(‘http://example.com’, ‘_self’); Loads in the Cordova web view
+             */
+
+            var ref = null;
+            $scope.item.isMedia = false;
+
+            console.log('$scope.item.viewerRunYn : ' + $scope.item.viewerRunYn);
+
+            // if ($scope.item.viewerRunYn == 'Y') {
+            //   ref = document.getElementById('webContents');
+            //   jQuery('#playerHeader').show();
+            //   ref.src = $scope.item.contentsServiceUrl;
+            //   ref.onload = function(event) {
+            //     console.log('웹링크 학습창 Onload: ');
+            //     //autoResize('webContents');
+            //     $ionicLoading.hide();
+            //     //$scope.doStartStudy();
+            //     control.start();
+            //     console.log(event);
+            //   };
+            // }else {
+            //   ref = $window.open($scope.item.contentsServiceUrl, '_blank', 'location=no');//새창
+            // };
+            
+            ref = $window.open($scope.item.contentsServiceUrl, '_blank', 'location=no');//새창
+            
+            if (ref != undefined) {
+              ref.addEventListener("loadstart", function(event) {
                 console.log('browser loadstart');
+                control.start();
               }, false);
 
-              ref.addEventListener("loadstop", function() {
+              ref.addEventListener("loadstop", function(event) {
                 console.log('browser loadstop');
-                $ionicLoading.hide();
+                control.stop();
               }, false);
 
-              ref.addEventListener("loaderror", function() {
+              ref.addEventListener("loaderror", function(event) {
                 console.log('browser loaderror');
-                $ionicLoading.hide();
+                control.stop();
                 showAlert('콘텐츠를 로딩할 수 없습니다. 존재하지 않는 URL 이거나, 네트워크 문제일 수 있습니다.');
               }, false);
 
-              ref.addEventListener("exit", function() {
+              ref.addEventListener("exit", function(event) {
                 //showAlert('');
                 console.log('browser exit');
-                $scope.doExit();
+                //$scope.doExit();
+                control.exit();
                 $ionicHistory.goBack(-2);
               }, false);
-            }else {
-
-            }
+            };
+            $ionicLoading.hide();
+          // 웹 콘텐츠
+          }else if ($scope.item.connGb == '0009') {
+            learningObj.src = $scope.item.contentsServiceUrl;
+            //$scope.webContentsUrl = $scope.item.contentsServiceUrl;
+          // 평가
+          }else if ($scope.item.connGb == '1009') {
+            learningObj.src = $scope.item.contentsServiceUrl;
+            //$scope.webContentsUrl = $scope.item.contentsServiceUrl;            
           };
         };
       };
 
-      // function openBrowser(url) {
-      //   var options = {
-      //     location: 'no',
-      //     clearcache: 'yes',
-      //     toolbar: 'no'
-      //   };
-
-      //   $cordovaInAppBrowser.open(url, '_self', options)
-      //   .then(function(event) {
-      //     // success
-      //     console.log('contents load success');
-      //   })
-      //   .catch(function(event) {
-      //     // error
-      //     console.log(event);
-      //   });
-
-        
-      // };
-
-// $scope.openInExternalBrowser = function(url)
-// {
-//  // Open in external browser
-//  window.open(url,'_system','location=yes'); 
-// };
- 
-// $scope.openInAppBrowser = function(url)
-// {
-//  // Open in app browser
-//  window.open(url,'_blank','location=no'); 
-// };
- 
-// $scope.openCordovaWebView = function(url)
-// {
-//  // Open cordova webview if the url is in the whitelist otherwise opens in app browser
-//  window.open(url,'_self','location=no'); 
-// };
-
-
-      function showAlert(msg) {
+      function showAlert(msg, isGoBack) {
         var alertPopup = $ionicPopup.alert({
           title: '알림',
-          template: msg
+          template: msg,
+          okText : '확인',
+          okType : 'button-balanced'
         });
         
         alertPopup.then(function(res) {
-          // $scope.doExit();
-          // $ionicHistory.goBack(-2);
-           // console.log('Thank you for advice.');
+          if (isGoBack) $ionicHistory.goBack(-1);
         });
       };
-
-      // 화면 사이즈 변경
-      function onResizeWindow() {
-        if ($scope.isMedia) {
-          console.log('isMedia : '+$scope.isMedia);
-          var video = jQuery("#media");
-          if (learningObj) resizeVideo(video);
-        }else {
-          if (learningObj) resizeFrame();
-        };
-      };
-
       // 프레임 사이즈 변경
       function resizeFrame() {
 
@@ -459,10 +505,7 @@ define([
 
       // 미디어 사이즈 변경
       function resizeVideo(videoObject) {
-        console.log('resizeVideo : ');
           var percentWidth = videoObject.clientWidth * 100 / videoObject.videoWidth;
-          console.log('percentWidth : '+percentWidth);
-          console.log('videoObject.videoHeight : '+videoObject.videoHeight);
           var videoHeight = videoObject.videoHeight * percentWidth / 100;
           
           if (videoHeight == 0 || videoHeight > $window.innerHeight) videoHeight = $window.innerHeight;
@@ -472,126 +515,222 @@ define([
           videoObject.height(videoHeight);
       };
 
+      // 학습창 로딩시 필요 정보 조회
+      function doLoadingServiceInfo(param) {
+        apiSvc.call('doLoadingServiceInfo', param).then(function(res) {
+          if (res != null) {
+            $scope.item.saveTerm = res.SAVE_TERM;
+            $scope.item.defaultContentsCdn = res.DEFAULT_CONTENTS_CDN;
+            $scope.item.resourceList = res.RESOURCE_LIST;
+            if (res.ITEM_LIST != undefined && res.ITEM_LIST != null) {
+              var isBreak = false;
+              angular.forEach(res.ITEM_LIST, function(itm, idx){
+                if (!isBreak && $scope.item.tocSeqno == itm.tocSeqno) {
+                  isBreak = true;
+                  $scope.item.itemDetail = itm;
+                  $scope.item.finalLearnPst = itm.finalLearnPst;
+                  $scope.item.serviceYn = itm.serviceYn;
+                  $scope.item.viewingYn = itm.viewingYn;
+                };
+              });
+            };
+            if ($scope.item.viewingYn != 'Y') showAlert('학습 가능 기간이 아닙니다.', true);
+            if (res.RESOURCE_LIST != undefined && res.RESOURCE_LIST != null) {
+              angular.forEach(res.RESOURCE_LIST, function(rsc, idx){
+                if ($scope.item.mobileConnPk == rsc.rscSeqno) {
+                  // 미디어 파일
+                  if (rsc.rscTypeGb == '0001' || rsc.rscTypeGb == '0003') {
+                    if (rsc.rscDetailTypeGb != '000001' && $scope.item.rscTypeGb == null) {
+                      $scope.item.rscTypeGb = rsc.rscTypeGb;
+                      $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                      $scope.item.rscDetailPath = rsc.rscDetailPath;
+                      $scope.item.rscDetailFileName = rsc.rscDetailFileName;
+                      $scope.item.cdnUrl = rsc.cdnUrl;
+                      $scope.item.contentsServiceUrl = $scope.item.defaultContentsCdn + rsc.rscDetailPath + '/' + rsc.rscDetailFileName;
+                    }else if (rsc.rscDetailTypeGb == '000001' && rsc.rscStartFileYn == 'Y') {
+                      if ($scope.item.vttYn == null || $scope.item.vttYn != 'Y') {
+                        $scope.item.vttYn = 'Y';
+                        $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                        $scope.item.vttRscDetailPath = rsc.rscDetailPath;
+                        $scope.item.vttRscDetailFileName = rsc.rscDetailFileName;
+                        $scope.item.vttLangGb = rsc.langGb;
+                        $scope.item.vttLangName = rsc.LangName;
+                        $scope.item.vttServiceUrl = $scope.item.defaultContentsCdn + rsc.rscDetailPath + '/' + rsc.rscDetailFileName;
+                      };
+                    };
+                  // 미디어 CDN
+                  }else if (rsc.rscTypeGb == '0002' || rsc.rscTypeGb == '0004') {
+                    // CDN 경로
+                    if (rsc.rscDetailTypeGb != '000001' && $scope.item.rscTypeGb == null) {
+                      $scope.item.rscTypeGb = rsc.rscTypeGb;
+                      $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                      $scope.item.rscDetailFileName = rsc.rscDetailFileName;
+                      $scope.item.cdnUrl = rsc.cdnUrl;
 
+                      if (rsc.cdnUrl != null) {
+                        if (rsc.rscDetailFileName.indexOf('://') > -1) {
+                          $scope.item.contentsServiceUrl = rsc.rscDetailFileName;
+                        }else {
+                          if (rsc.cdnUrl.substring(rsc.cdnurl.length-1, 1) == '/') $scope.item.contentsServiceUrl = rsc.rscDetailFileName.startWith('/') ? rsc.cdnUrl.substring(0, rsc.cdnUrl.length-1) + rsc.rscDetailFileName : rsc.cdnUrl + rsc.rscDetailFileName;
+                          else $scope.item.contentsServiceUrl = rsc.rscDetailFileName.startWith('/') ? rsc.cdnUrl + rsc.rscDetailFileName : rsc.cdnUrl.substring(0, rsc.cdnUrl.length-1) + rsc.rscDetailFileName;
+                        };
+                      }else {
+                        $scope.item.contentsServiceUrl = rsc.rscDetailFileName;
+                      };
+                    // 자막 파일
+                    }else if (rsc.rscDetailTypeGb == '000001' && rsc.rscStartFileYn == 'Y') {
+                      if ($scope.item.vttYn == null || $scope.item.vttYn != 'Y') {
+                        $scope.item.vttYn = 'Y';
+                        $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                        $scope.item.vttRscDetailPath = rsc.rscDetailPath;
+                        $scope.item.vttRscDetailFileName = rsc.rscDetailFileName;
+                        $scope.item.vttLangGb = rsc.langGb;
+                        $scope.item.vttLangName = rsc.LangName;
+                        $scope.item.vttServiceUrl = $scope.item.defaultContentsCdn + rsc.rscDetailPath + '/' + rsc.rscDetailFileName;
+                      };
+                    };
+                  // 웹링크
+                  }else if (rsc.rscTypeGb == '0008') {
+                    if ($scope.item.rscTypeGb == null) {
+                      $scope.item.rscTypeGb = rsc.rscTypeGb;
+                      $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                      $scope.item.rscDetailFileName = rsc.rscDetailFileName;
+                      $scope.item.vttYn = 'N';
+                      $scope.item.contentsServiceUrl = rsc.rscDetailFileName;
+                    };
+                  // 웹 콘텐츠
+                  }else if (rsc.rscTypeGb == '0009') {
+                    //콘텐츠 URL + Index
+                    if ($scope.item.rscTypeGb == null && $scope.item.rscStartFileYn == 'Y') {
+                      $scope.item.rscTypeGb = rsc.rscTypeGb;
+                      $scope.item.rscDetailTypeGb = rsc.rscDetailTypeGb;
+                      $scope.item.vttRscDetailPath = rsc.rscDetailPath;
+                      $scope.item.rscDetailFileName = rsc.rscDetailFileName;
+                      $scope.item.vttYn = 'N';
+                      $scope.item.contentsServiceUrl = $scope.item.defaultContentsCdn + rsc.rscDetailPath + '/' + rsc.rscDetailFileName;
+                    };
+                  };
+                };
+              });
+            };
+          };
+        });
+      };
 
+      // 화면 사이즈 변경
+      function onResizeWindow() {
+          console.log('onResizeWindow isMedia : '+$scope.item.isMedia);
+        if ($scope.item.isMedia) {
+          console.log('isMedia : '+$scope.item.isMedia);
+          var video = jQuery('#media');
+          console.log('video.clientWidth : '+video.clientWidth);
+          console.log('video.videoWidth : '+video.videoWidth);
+          console.log('video.videoHeight : '+video.videoHeight);
+          console.log('$window.innerHeight : '+$window.innerHeight);
+          video.width($window.innerWidth);
+          //resizeVideo(video);
 
-      //autoResize('webContents');
-// function autoResize(id){
-//     var newheight;
-//     var newwidth;
+        }else {
+          resizeFrame();
+        };
+      };
 
-//     if(document.getElementById){
-//         newheight = document.getElementById(id).contentWindow.document.body.scrollHeight;
-//         newwidth = document.getElementById(id).contentWindow.document.body.scrollWidth;
-//         console.log('newheight:'+document.getElementById(id).contentWindow.document.body.scrollHeight);
-//         console.log('newwidth:'+document.getElementById(id).contentWindow.document.body.scrollWidth);
-//         document.getElementById(id).contentWindow.document.body.width = newwidth;
-//         document.getElementById(id).contentWindow.document.body.height = newheight;
-//     }
+      // 학습 뷰어 콘트롤러
+      var control = {
+        /* 학습 시작 */
+        start : function () {
+          if (!$scope.item.isPlaying) {
+            if (!$scope.learner.isLearningStarted) {
+              $scope.learner.startTimestamp = Math.floor(Date.now() / 1000);
+              $scope.learner.isLearningStarted = true;
+            }
+            console.log("시작");
 
-//     document.getElementById(id).height = (newheight) + "px";
-//     document.getElementById(id).width = (newwidth) + "px";
-// }
-      // 학습창 종료시 주차 목록 화면으로 이동
-      // $scope.exitViewer = function () {
-      //   console.log('exitViewer');
-      //   if (confirm('학습을 종료하시겠습니까?')) {
-      //     console.log('confirmed');
-      //     $scope.doExit();
-      //     $ionicHistory.goBack(-2);
-      //     // var i,
-      //     //     currentHistoryId = $ionicHistory.currentHistoryId(),
-      //     //     history = $ionicHistory.viewHistory();
-      //     // if (history.histories[currentHistoryId] != undefined && history.histories[currentHistoryId] != null)
-      //     // var stack = history.histories[currentHistoryId].stack;
+            $scope.item.isPlaying = true;
+            $scope.learner.lastStartTimestamp = Math.floor(Date.now() / 1000);
 
-      //     // if (stack != undefined && stack[stack.length-1] != undefined) {
-      //     //   $ionicHistory.backView(stack[stack.length-1]);
-      //     //   $ionicHistory.goBack(-1);
-      //     // }else {
-      //     //   if (!$ionicHistory.goBack(-1)) $state.go('myclass.tocList', $stateParams);
-      //     // };
-      //   };
-      //   // for (i = 0; i < stack.length; i += 1) {
-      //   //   console.log(stack[i].stateId);
+            if ($scope.item.isMedia) {
+              if (learningObj) learningObj.play();
+            }else {
 
+            };
 
-      //   //     if (stack[i].stateId.indexOf("member.ingCourseDetail_") == 0) {
-      //   //         $ionicHistory.backView(stack[i]);
-      //   //         $ionicHistory.goBack(-1);
-      //   //         break;
-      //   //     }
-      //   // }
-      // };
+            console.log('$scope.learner.totalLearningTime:'+$scope.learner.totalLearningTime);
+            console.log('$scope.learner.lastStartTimestamp:'+$scope.learner.lastStartTimestamp);
+            console.log('$scope.learner.lastPausedTimestamp:'+$scope.learner.lastPausedTimestamp);
+          };
+        },
+        /* 학습 재개 */
+        resume : function () {
+          if (!$scope.item.isPlaying) {
+            console.log("다시 시작");
 
+            $scope.item.isPlaying = true;
+            $scope.learner.lastStartTimestamp = Math.floor(Date.now() / 1000);
 
+            if ($scope.item.isMedia) {
+              if (learningObj) learningObj.play();
+            }else {
+
+            };
+
+            console.log('$scope.learner.totalLearningTime:'+$scope.learner.totalLearningTime);
+            console.log('$scope.learner.lastStartTimestamp:'+$scope.learner.lastStartTimestamp);
+            console.log('$scope.learner.lastPausedTimestamp:'+$scope.learner.lastPausedTimestamp);
+          };
+        },
+        /* 학습 일시 중지 */
+        pause : function () {
+          if ($scope.item.isPlaying) {
+            console.log("일시 중지");
+            $scope.item.isPlaying = false;
+            $scope.learner.lastPausedTimestamp = Math.floor(Date.now() / 1000);
+            $scope.learner.totalLearningTime += ($scope.learner.lastPausedTimestamp - $scope.learner.lastStartTimestamp);
+
+            if ($scope.item.isMedia) {
+              if (learningObj) learningObj.pause();
+            }else {
+            };
+
+            console.log('$scope.learner.totalLearningTime:'+$scope.learner.totalLearningTime);
+            console.log('$scope.learner.lastStartTimestamp:'+$scope.learner.lastStartTimestamp);
+            console.log('$scope.learner.lastPausedTimestamp:'+$scope.learner.lastPausedTimestamp);
+          };
+        },
+        /* 학습 종료 */
+        stop : function () {
+          if ($scope.item.isPlaying) {
+            console.log("종료");
+
+            $scope.item.isPlaying = false;
+            $scope.learner.lastPausedTimestamp = Math.floor(Date.now() / 1000);
+            $scope.learner.totalLearningTime += ($scope.learner.lastPausedTimestamp - $scope.learner.lastStartTimestamp);
+
+            if ($scope.item.isMedia) {
+              if (learningObj) learningObj.pause();
+            }else {
+
+            };
+
+            console.log('$scope.learner.totalLearningTime:'+$scope.learner.totalLearningTime);
+            console.log('$scope.learner.lastStartTimestamp:'+$scope.learner.lastStartTimestamp);
+            console.log('$scope.learner.lastPausedTimestamp:'+$scope.learner.lastPausedTimestamp);
+          };          
+        }, 
+        /* 뷰어 종료 */
+        exit : function () {
+          $scope.learner.isLearningEnded = true;
+          $scope.learner.endTimestamp = Math.floor(Date.now() / 1000);
+          //$scope.doStopStudy();
+          control.stop();
+
+          console.log('$scope.learner.startTimestamp:'+$scope.learner.startTimestamp);
+          console.log('$scope.learner.endTimestamp:'+$scope.learner.endTimestamp);
+          console.log('$scope.learner.totalLearningTime:'+$scope.learner.totalLearningTime);
+          console.log('$scope.learner.lastStartTimestamp:'+$scope.learner.lastStartTimestamp);
+          console.log('$scope.learner.lastPausedTimestamp:'+$scope.learner.lastPausedTimestamp);
+        }
+      };
     }
   ]);
 });
-          // Video Events
-          // // content has loaded, display buttons and set up events
-          // mediaObj.addEventListener("canplay", function () {
-          //   console.log('canplay');
-          // }, false);
-
-          // //  display the current and remaining times
-          // mediaObj.addEventListener("timeupdate", function () {
-          //   //  Current time  
-          //   // var vTime = video.currentTime;
-          //   // document.getElementById("curTime").textContent = vTime.toFixed(1);
-          //   // document.getElementById("vRemaining").textContent = (vLength - vTime).toFixed(1);
-          //   console.log('timeupdate');
-          // }, false);
-
-          // mediaObj.addEventListener("volumechange", function () {
-          //   if (video.muted) {
-          //     // if muted, show mute image
-          //     document.getElementById("mute").innerHTML = "<img alt='volume off button' src='mute2.png' />";
-          //     console.log('');
-          //   } else {
-          //     // if not muted, show not muted image
-          //     document.getElementById("mute").innerHTML = "<img alt='volume on button' src='vol2.png' />";
-          //     console.log('');
-          //   }
-          //   console.log('volumechange');
-          // }, false);
-          // //  Download and playback status events.
-          // mediaObj.addEventListener("loadstart", function () {
-          //   // document.getElementById("ls").textContent = "Started";
-          //   console.log('loadstart');
-          // }, false);
-          // mediaObj.addEventListener("loadeddata", function () {
-          //   // document.getElementById("ld").textContent = "Data was loaded";
-          //   console.log('loadeddata');
-          // }, false);
-
-          // mediaObj.addEventListener("emptied", function () {
-          //   // document.getElementById("mt").textContent = "Video reset";
-          //   console.log('emptied');
-          // }, false);
-
-          // mediaObj.addEventListener("stalled", function () {
-          //   // document.getElementById("stall").textContent = "Download was stalled";
-          //   console.log('stalled');
-          // }, false);
-          // mediaObj.addEventListener("waiting", function () {
-          //   // document.getElementById("waiting").textContent = "Player waited for content";
-          //   console.log('waiting');
-          // }, false);
-
-          // mediaObj.addEventListener("durationchange", function () {
-          //   // document.getElementById("dc").textContent = "Duration has changed";
-          //   console.log('durationchange');
-          // }, false);
-          // mediaObj.addEventListener("canplaythrough", function () {
-          //   // document.getElementById("cpt").textContent = "Ready to play whole video";
-          //   console.log('canplaythrough');
-          // }, false);
-          // mediaObj.addEventListener("progress", function () {
-          //   // pgFlag += "+";
-          //   // if (pgFlag.length > 10) {
-          //   //   pgFlag = "+";
-          //   // }
-          //   // document.getElementById("pg").textContent = pgFlag;
-          //   console.log('progress');
-          // }, false);

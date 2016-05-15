@@ -1,6 +1,6 @@
-<ion-view view-title="{{tocName}}"  on-touch="onTouch()" >
+<ion-view view-title="{{item.tocName}}"  on-touch="onTouch()" >
   <ion-header-bar id="playerHeader" class="bar-dark ion_nav_header">
-    <h1 class="title">{{tocName}}</h1>
+    <h1 class="title">{{item.tocName}}</h1>
     <div class="buttons">
       <button class="btn_close" ng-click="showConfirm()" style="margin-top: 5px;"><span class="hide">학습종료</span></button>
     </div>
@@ -8,15 +8,14 @@
 
   <ion-content class="scu_player" style="margin-top: -45px;" scroll="false">
     <div class="player_info_panel" id="infoPanel">
-      <div class="player_panel_txt"><span>{{tocName}}</span></div>
+      <div class="player_panel_txt"><span>{{item.tocName}}</span></div>
       <div class="player_panel_btn">
         <button class="btn_exit" ng-click="showConfirm()"><span class="hide">학습종료</span></button>
       </div>
     </div>
     <iframe id="webContents" 
       class="webcontents_frame" 
-      ng-show="!isMedia"
-      ng-src="{{webContentsUrl}}" 
+      ng-show="!item.isMedia"
       allowfullscreen 
       width="100%" style="height: 100vh;margin-top: 44px;"
       frameborder="0"
@@ -25,15 +24,13 @@
     </iframe>
     <!-- <div id="mediaContents" class="contentsLayer"> -->
     <video id="media" 
-      ng-show="isMedia"
+      ng-show="item.isMedia"
       preload="auto" 
-      poster="{{poster}}" 
+      poster="{{item.poster}}" 
       webkit-playsinline 
       width="100%"
       controls>
-        <source 
-          src="{{mediaUrl}}" 
-          type="{{mediaType}}">
+        <source type="{{mediaType}}">
         <!-- <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"> -->
         <p>Your user agent does not support the HTML5 Video element.</p>
     </video>
