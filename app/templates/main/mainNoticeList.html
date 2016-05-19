@@ -8,16 +8,18 @@
 		pulling-icon="ion-ios-arrow-up">
 	</ion-refresher>
 	<ion-list>
-		<div class="list card list-inset" ng-repeat="notice in stickyList" >
+		<div class="list card list-inset" ng-repeat="sticky in stickyList" >
          <ion-item class="item item-text-wrap">
-          <div ng-class="isItemShown(notice) ? 'item-expand active' : 'item-expand inactive'">
-            <h2><span class="icon icon_noti">필독</span> {{ notice.title }}</h2>
-            <p>{{notice.mbrName}}({{notice.mbrId}}) | {{notice.regdt}}</p>
-            <p>{{ notice.cntn }}</p>
+          <div ng-class="isItemShown(sticky) ? 'item-expand active' : 'item-expand inactive'">
+            <h2><span class="icon icon_noti">필독</span> {{ sticky.title }}</h2>
+            <p>{{sticky.mbrName | asterisk}}({{sticky.mbrId | asterisk}}) | {{sticky.regdt | dateFormat : '-'}}</p>
+            <p ng-bind-html="sticky.cntn"></p>
+            <br/>
+            <p class="attch_file" ng-repeat="attach in sticky.attachFileList"><a href="{{fileDownloadUrl('lms', 'lms.file.bbs.phpath', attach.filePath, attach.filePhsclName, attach.fileLogicalName)}}">{{attach.fileLogicalName}}</a></p>
           </div>
-          <div ng-click="toggleItem(notice)" class="item-expand-footer">
-            <i ng-class="isItemShown(notice) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
-            {{ isItemShown(notice) ? '닫기' : '더보기' }}
+          <div ng-click="toggleItem(sticky)" class="item-expand-footer">
+            <i ng-class="isItemShown(sticky) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
+            {{ isItemShown(sticky) ? '닫기' : '더보기' }}
           </div>
         </ion-item>
         </div>
@@ -25,8 +27,8 @@
          <ion-item class="item item-text-wrap">
           <div ng-class="isItemShown(notice) ? 'item-expand active' : 'item-expand inactive'">
             <h2>{{ notice.title }}</h2>
-            <p>{{notice.mbrName}}({{notice.mbrId}}) | {{notice.regdt}}</p>
-            <p>{{ notice.cntn }}</p>
+            <p>{{notice.mbrName | asterisk}}({{notice.mbrId | asterisk}}) | {{notice.regdt | dateFormat : '-'}}</p>
+            <p ng-bind-html="notice.cntn"></p>
           </div>
           <div ng-click="toggleItem(notice)" class="item-expand-footer">
             <i ng-class="isItemShown(notice) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
@@ -58,7 +60,7 @@
         </div> -->
 
 	</ion-list>
-
+<ion-infinite-scroll ng-if"!noMoreItemsAvailable" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
 
 <!-- 	<div class="list card">
 	  <div class="item">

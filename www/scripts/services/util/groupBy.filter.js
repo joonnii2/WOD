@@ -9,7 +9,7 @@ define([
         return items.filter(function(element, index, array) {
           return parseInt(element.time) == group;
         });
-      }
+      };
     }
-  ]);
+  );
 });
