@@ -156,6 +156,9 @@ define([
         $scope.goStudy = function() {
 
           $stateParams.prgssRateCompleteBasis = $scope.itemDetail.prgssRateCompleteBasis;  // 콘텐츠 이수 기준 진도율
+          $stateParams.pobtTypeGb = $scope.itemDetail.pobtTypeGb; // 콘텐츠 학습 완료 기준 구분
+          $stateParams.tocEdTime = $scope.itemDetail.tocEdTime; // 콘텐츠 권장 학습시간
+          $stateParams.pobtYn = $scope.itemDetail.pobtYn;       // 콘텐츠 학습 완료 여부
           //'2','https://www.youtube.com/embed/4iHlfXHnN94?autoplay=1'
           // if ($scope.itemDetail != null) {
           //   //$stateParams.itemId = $scope.itemDetail.itemId;
@@ -271,6 +274,7 @@ define([
             $scope.itemDetail.tocAttendBasisTimeTxt = setTime($scope.itemDetail.tocEdTime, $scope.itemDetail.prgssRateCompleteBasis);
             $scope.itemDetail.pobtTypeName = POBT_TYPE[$scope.itemDetail.pobtTypeGb];
             $scope.itemDetail.learnTimeSumTxt = getTime($scope.itemDetail.learnTimeSum);
+            $scope.itemDetail.prgss = parseInt($scope.itemDetail.prgss);
           }
         });
       };

@@ -314,7 +314,7 @@ define([
 				authenticate : true
 			})
 			.state('myclass.learningPlayer', {
-				url: '/learningPlayer/:tocSeqno?lectureSeqno&wsSeqno&prgssRateCompleteBasis&connGb&mobileConnPk&viewerRunYn&viewerWidthSize&viewerHgtSize&tocName',
+				url: '/learningPlayer/:tocSeqno?lectureSeqno&wsSeqno&prgssRateCompleteBasis&pobtTypeGb&tocEdTime&pobtYn&connGb&mobileConnPk&viewerRunYn&viewerWidthSize&viewerHgtSize&tocName',
 				views: {
 					'menuContent': {
 						templateUrl: 'templates/viewer/learningPlayer.html',

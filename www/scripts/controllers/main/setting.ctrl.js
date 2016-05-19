@@ -21,6 +21,9 @@ define([
             if ($rootScope.settings.isAutoPlay) $rootScope.settings.autoPlay = 'autoplay';
             else $rootScope.settings.autoPlay = '';
             window.localStorage.setItem(env.LOCAL_SETTING_KEY, JSON.stringify($rootScope.settings));
+          }else if (optionName == 'isLastPosPlay') {
+            //$rootScope.settings.isLastPosPlay = !$rootScope.settings.isLastPosPlay;
+            window.localStorage.setItem(env.LOCAL_SETTING_KEY, JSON.stringify($rootScope.settings));
           };
         };
 

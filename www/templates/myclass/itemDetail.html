@@ -107,11 +107,11 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">진도 현황</th>
+								<th scope="row" style="vertical-align: middle;">진도 현황</th>
 								<td>
 									<span ng-show="itemDetail.pobtYn == 'Y'">완료</span>
 									<span ng-show="itemDetail.pobtYn != 'Y'">미완료</span>
-									<span ng-show="itemDetail.pobtTypeGb == '01'"> ( 진도율 : {{itemDetail.prgss | limitTo : 2}} % / 학습시간 : {{itemDetail.learnTimeSumTxt}} )</span>
+									<span ng-show="itemDetail.pobtTypeGb == '01'"><br/>- 완료율 : {{itemDetail.prgss | limitTo : 3}} %<br/>- 학습시간 : {{itemDetail.learnTimeSumTxt}}</span>
 								</td>
 							</tr>
 							<tr ng-show="itemDetail.pobtTypeGb == '03'">
