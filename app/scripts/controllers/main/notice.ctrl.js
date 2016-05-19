@@ -12,7 +12,8 @@ define([
     '$stateParams',
     '$sce',
     'ENV',
-    function ($scope, apiSvc, $state, $stateParams, $sce, env) {
+    '$ionicPlatform',
+    function ($scope, apiSvc, $state, $stateParams, $sce, env, $ionicPlatform) {
       $scope.baseUrl = env.SERVER_URL;
       if ($state.current.name == 'main.noticeList') {
 
@@ -116,16 +117,44 @@ define([
           };
         });
       };
-      $scope.fileDownload = function (system, key, filePath, fileSaveName, fileOriginName) {
-        console.log('fileDownload...');
-//http://192.168.0.18:8080/lms/file/download.scu?_fdKey_=lms.file.bbs.phpath&_fdSubPath_=/&_fdFileName_=fda865d6-349d-403f-92bc-c3a7ae14075a.jpg&_fdFileOriName_=DSCF1143.JPG
+//       $scope.fileDownload = function (system, key, filePath, fileSaveName, fileOriginName) {
+//         console.log('fileDownload...');
+// //http://192.168.0.18:8080/lms/file/download.scu?_fdKey_=lms.file.bbs.phpath&_fdSubPath_=/&_fdFileName_=fda865d6-349d-403f-92bc-c3a7ae14075a.jpg&_fdFileOriName_=DSCF1143.JPG
+//         var url = env.SERVER_URL + system + '/file/download.scu?_fdKey_='+key+'&_fdSubPath_='+filePath+'&_fdFileName_='+fileSaveName+'&_fdFileOriName_='+fileOriginName;
+//         window.open(url, '_blank', 'location=no');
+//       };      
+      $scope.fileDownloadUrl = function(system, key, filePath, fileSaveName, fileOriginName) {
         var url = env.SERVER_URL + system + '/file/download.scu?_fdKey_='+key+'&_fdSubPath_='+filePath+'&_fdFileName_='+fileSaveName+'&_fdFileOriName_='+fileOriginName;
-        window.open(url);
+        window.open(url, '_system');
       };
 
-      $scope.fileDownloadUrl = function(system, key, filePath, fileSaveName, fileOriginName) {
-        return env.SERVER_URL + system + '/file/download.scu?_fdKey_='+key+'&_fdSubPath_='+filePath+'&_fdFileName_='+fileSaveName+'&_fdFileOriName_='+fileOriginName;
+      
+      $scope.fileDownload = function (system, key, filePath, fileSaveName, fileOriginName) {
+        var downloadUrl = encodeURI(cordova.file.dataDirectory + fileOriginName);
+        var hostUrl = encodeURI(env.SERVER_URL + system + '/file/download.scu?_fdKey_='+key+'&_fdSubPath_='+filePath+'&_fdFileName_='+fileSaveName+'&_fdFileOriName_='+fileOriginName);
+        var fileTransfer = new FileTransfer();
+        fileTransfer.download(
+          hostUrl,
+          downloadUrl,
+          function(entry) {
+            alert('다운로드를 완료하였습니다.');
+          },
+          function(error) {
+            alert('파일을 다운로드할 수 없습니다.');
+          },
+          true
+        );
+
       };
+
+
+      $ionicPlatform.ready(function() {
+        if (window.cordova && window.cordova.plugins.FileTransfer) {
+          console.log('Cordova FileTransfer Plugin...')
+        }else {
+          console.log('Cordova FileTransfer Not Exist....')
+        };
+      });
     }
   ]);
 });

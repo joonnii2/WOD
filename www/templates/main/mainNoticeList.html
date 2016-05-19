@@ -16,7 +16,7 @@
             <p ng-bind-html="sticky.cntn"></p>
             <br/>
             <p class="attch_file" ng-repeat="attach in sticky.attachFileList">
-            	<a href="#" ng-click="fileDownload('lms', 'lms.file.bbs.phpath', attach.filePath, attach.filePhsclName, attach.fileLogicalName)">{{attach.fileLogicalName}}</a>
+            	<a href="#" ng-click="fileDownloadUrl('lms', 'lms.file.bbs.phpath', attach.filePath, attach.filePhsclName, attach.fileLogicalName)">{{attach.fileLogicalName}}</a>
            	</p>
           </div>
           <div ng-click="toggleItem(sticky)" class="item-expand-footer">
