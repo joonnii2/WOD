@@ -19,7 +19,7 @@
             	<a href="#" ng-click="fileDownloadUrl('lms', 'lms.file.bbs.phpath', attach.filePath, attach.filePhsclName, attach.fileLogicalName)">{{attach.fileLogicalName}}</a>
            	</p>
           </div>
-          <div ng-click="toggleItem(sticky)" class="item-expand-footer">
+          <div ng-click="toggleItem(sticky)" class="item-expand-footer" style="text-align: right;">
             <i ng-class="isItemShown(sticky) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
             {{ isItemShown(sticky) ? '닫기' : '더보기' }}
           </div>
@@ -32,7 +32,7 @@
             <p>{{notice.mbrName | asterisk}}({{notice.mbrId | asterisk}}) | {{notice.regdt | dateFormat : '-'}}</p>
             <p ng-bind-html="notice.cntn"></p>
           </div>
-          <div ng-click="toggleItem(notice)" class="item-expand-footer">
+          <div ng-click="toggleItem(notice)" class="item-expand-footer" style="text-align: right;">
             <i ng-class="isItemShown(notice) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
             {{ isItemShown(notice) ? '닫기' : '더보기' }}
           </div>

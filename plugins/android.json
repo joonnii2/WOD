@@ -21,6 +21,9 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.example.WOD"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.example.WOD"
         }
     },
     "dependent_plugins": {
