@@ -11,8 +11,9 @@
 		<div class="list card list-inset" ng-repeat="sticky in stickyList" >
          <ion-item class="item item-text-wrap">
           <div ng-class="isItemShown(sticky) ? 'item-expand active' : 'item-expand inactive'">
-            <h2><span class="icon icon_noti">필독</span> {{ sticky.title }}</h2>
+            <h2 ><span class="icon icon_noti">필독</span>&nbsp;<span ng-bind-html="sticky.title"></span></h2>
             <p>{{sticky.mbrName | asterisk}}({{sticky.mbrId | asterisk}}) | {{sticky.regdt | dateFormat : '-'}}</p>
+            <br/>
             <p ng-bind-html="sticky.cntn"></p>
             <br/>
             <p class="attch_file" ng-repeat="attach in sticky.attachFileList">
@@ -28,9 +29,14 @@
 		<div class="list card list-inset" ng-repeat="notice in noticeList" >
          <ion-item class="item item-text-wrap">
           <div ng-class="isItemShown(notice) ? 'item-expand active' : 'item-expand inactive'">
-            <h2>{{ notice.title }}</h2>
+            <h2><span ng-bind-html="notice.title"></span></h2>
             <p>{{notice.mbrName | asterisk}}({{notice.mbrId | asterisk}}) | {{notice.regdt | dateFormat : '-'}}</p>
+            <br/>
             <p ng-bind-html="notice.cntn"></p>
+            <br/>
+            <p class="attch_file" ng-repeat="attach in notice.attachFileList">
+            	<a href="#" ng-click="fileDownloadUrl('lms', 'lms.file.bbs.phpath', attach.filePath, attach.filePhsclName, attach.fileLogicalName)">{{attach.fileLogicalName}}</a>
+           	</p>
           </div>
           <div ng-click="toggleItem(notice)" class="item-expand-footer" style="text-align: right;">
             <i ng-class="isItemShown(notice) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>

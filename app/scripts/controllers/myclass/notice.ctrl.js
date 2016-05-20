@@ -1,86 +1,162 @@
 define([
   'app'
+  ,'services/util/asterisk.filter'
+  ,'services/util/dateFormat.filter' 
 ], function (app) {
   'use strict';
 
   app.controller('NoticeCtrl', [
-    '$scope', '$rootScope', 'ApiSvc', '$state', '$stateParams',
-    function ($scope, $rootScope, apiSvc, $state, $stateParams) {
-      // $rootScope.isShowBackButton = true;
-      // console.log('run notice.ctrl : '+$rootScope.showList);
-      // jQuery('#courseMenu').show();
+    '$scope',
+    'ApiSvc',
+    '$state',
+    '$stateParams',
+    '$sce',
+    'ENV',
+    '$ionicPlatform',
+    function ($scope, apiSvc, $state, $stateParams, $sce, env, $ionicPlatform) {
+      $ionicPlatform.ready(function() {
 
-    	$scope.doRefresh = function() {
-    		console.log('doRefresh... ');
-    	};
+        $scope.baseUrl = env.SERVER_URL;
+        if ($state.current.name == 'myclass.noticeList') {
 
-    	$scope.onPulling = function() {
-    		console.log('onPulling... actions here...');
-    	};
+          $scope.totalCnt = 0;
+          $scope.stickyList = null;
+          $scope.noticeList = null;
+          $scope.pageIndex = 1;
+          $scope.listCount = 10;
+          $scope.totalPage = 1;
+          $scope.noMoreItemsAvailable = false;
+          $scope.isLoading = false;
 
-      // 온라인 강의 공지사항 목록 조회
-      function doCourseNoticeList(param) {
-        apiSvc.call('doCourseNoticeList', param).then(function(res) {
-          if (res != null && res.LIST != null) {
-            console.log('LIST received.');
-            console.log(res.LIST);
-            $scope.courseNoticeList = res.LIST;
-          }
-        });
-//TODO 샘플
-  $scope.items = [{
-      title: '[필독] 공지사항',
-      text: '가나다라마바사아자차카타파하 안녕하세요.... 공지사항입니다. 내용이 좀 깁니다.공지사항입니다. 내용이 좀 깁니다.공지사항입니다. 내용이 좀 깁니다.'
-    },{
-      title: '[필독] 공지사항',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    },{
-      title: '[필독] 공지사항',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    },{
-      title: '[필독] 공지사항',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    },{
-      title: '[필독] 공지사항',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit'
-  }];
-  $scope.courseNoticeList = $scope.items;
-      };
+          doCourseNoticeList();
 
-      // 온라인 강의 공지사항 상세 조회
-      function doCourseNoticeDetail(param) {
-        apiSvc.call('doCourseNoticeDetail', param).then(function(res) {
-          if (res != null && res.DATA != null) {
-            console.log('DATA received.');
-            console.log(res.DATA);
-            $scope.courseNoticeDetail = res.DATA; 
-          }
-        });
-      };
+          $scope.loadMore = function () {
+            if (!$scope.isLoading) {
+              if ($scope.pageIndex < $scope.totalPage) {
+                $scope.noMoreItemsAvailable = false;
+                $scope.pageIndex ++;
+                doCourseNoticeList();
+              }else {
+                $scope.noMoreItemsAvailable = true;
+              };
+              $scope.$broadcast('scroll.infiniteScrollComplete');
+            };
+          };
 
-      if ($state.current.name == 'myclass.noticeList') {
-        doCourseNoticeList($stateParams);
-      }else if ($state.current.name == 'myclass.noticeDetail') {
-        doCourseNoticeDetail($stateParams);
-      };
+          $scope.doRefresh = function() {
+          };
+
+          $scope.onPulling = function() {
+            console.log('onPulling... actions here...');
+            $scope.totalCnt = 0;
+            $scope.stickyList = null;
+            $scope.noticeList = null;
+            $scope.pageIndex = 1;
+            $scope.totalPage = 1;
+            $scope.noMoreItemsAvailable = false;
+            doCourseNoticeList();
+          };
+          
+          /*
+           * if given group is the selected group, deselect it
+           * else, select the given group
+           */
+          $scope.toggleItem= function(notice) {
+            if ($scope.isItemShown(notice)) {
+              $scope.shownItem = null;
+            } else {
+              $scope.shownItem = notice;
+            }
+          };
+          $scope.isItemShown = function(notice) {
+            return $scope.shownItem === notice;
+          };
+        }else if ($state.current.name == 'myclass.noticeDetail') {
+          doCourseNoticeDetail($stateParams);
+        };
+
+        // 공지사항 목록
+        function doCourseNoticeList() {
+          $stateParams.pageIndex = $scope.pageIndex;
+          $stateParams.listCount = $scope.listCount;
+          $scope.isLoading = true;
+          apiSvc.call('doCourseNoticeList', $stateParams).then(function(res) {
+            if (res != null) {
+              if (res.TOTCNT != null) $scope.totalCount = res.TOTCNT;
+
+              $scope.totalPage = parseInt($scope.totalCount/$scope.listCount) + 1;
+              if (res.LIST2 != null) $scope.stickyList = res.LIST2;
+              if (res.LIST != null) {
+                if ($scope.noticeList != null) {
+                  angular.forEach(res.LIST, function(notice, idx) {
+                    $scope.noticeList.push(notice);
+                  });
+                }else {
+                  $scope.noticeList = res.LIST;
+                };
+              };
+
+              angular.forEach($scope.stickyList, function(item, idx) {
+                item.cntn = $sce.trustAsHtml(item.cntn);
+                console.log(item.cntn);
+              });
+              console.log('LIST received.');
+              //$scope.mainNoticeList = res.LIST;
+            };
+          }).finally(function() {
+            $scope.isLoading = false;
+            $scope.$broadcast('scroll.refreshComplete');
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+          });
+        };
+        // 공지사항 상세
+        function doCourseNoticeDetail(param) {
+          apiSvc.call('doCourseNoticeDetail', param).then(function(res) {
+            if (res != null && res.DATA != null) {
+              console.log('DATA received.');
+              console.log(res.DATA);
+              $scope.courseNoticeDetail = res.DATA;
+            };
+          });
+        };
+  //       $scope.fileDownload = function (system, key, filePath, fileSaveName, fileOriginName) {
+  //         console.log('fileDownload...');
+  // //http://192.168.0.18:8080/lms/file/download.scu?_fdKey_=lms.file.bbs.phpath&_fdSubPath_=/&_fdFileName_=fda865d6-349d-403f-92bc-c3a7ae14075a.jpg&_fdFileOriName_=DSCF1143.JPG
+  //         var url = env.SERVER_URL + system + '/file/download.scu?_fdKey_='+key+'&_fdSubPath_='+filePath+'&_fdFileName_='+fileSaveName+'&_fdFileOriName_='+fileOriginName;
+  //         window.open(url, '_blank', 'location=no');
+  //       };      
+        $scope.fileDownloadUrl = function(system, key, filePath, fileSaveName, fileOriginName) {
+          var url = env.SERVER_URL + system + '/file/download.scu?_fdKey_='+key+'&_fdSubPath_='+filePath+'&_fdFileName_='+fileSaveName+'&_fdFileOriName_='+fileOriginName;
+          window.open(url, '_system');
+        };
 
 
+        $scope.fileDownload = function (system, key, filePath, fileSaveName, fileOriginName) {
+          var downloadUrl = encodeURI(cordova.file.dataDirectory + fileOriginName);
+          var hostUrl = encodeURI(env.SERVER_URL + system + '/file/download.scu?_fdKey_='+key+'&_fdSubPath_='+filePath+'&_fdFileName_='+fileSaveName+'&_fdFileOriName_='+fileOriginName);
+          var fileTransfer = new FileTransfer();
+          fileTransfer.download(
+            hostUrl,
+            downloadUrl,
+            function(entry) {
+              alert('다운로드를 완료하였습니다.');
+            },
+            function(error) {
+              alert('파일을 다운로드할 수 없습니다.');
+            },
+            true
+          );
 
+        };
+      });
 
-  /*
-   * if given group is the selected group, deselect it
-   * else, select the given group
-   */
-  $scope.toggleItem= function(notice) {
-    if ($scope.isItemShown(notice)) {
-      $scope.shownItem = null;
-    } else {
-      $scope.shownItem = notice;
-    }
-  };
-  $scope.isItemShown = function(notice) {
-    return $scope.shownItem === notice;
-  };
+      // $ionicPlatform.ready(function() {
+      //   if (window.cordova && window.cordova.plugins.FileTransfer) {
+      //     console.log('Cordova FileTransfer Plugin...')
+      //   }else {
+      //     console.log('Cordova FileTransfer Not Exist....')
+      //   };
+      // });
     }
   ]);
 });

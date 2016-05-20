@@ -516,7 +516,11 @@ console.log('exit cancel------------------');
               learningObj.addEventListener("loadedmetadata", function () {
                 console.log('$rootScope.settings.isLastPosPlay : '+$rootScope.settings.isLastPosPlay);
                 console.log('$scope.item.finalLearnPst : '+$scope.item.finalLearnPst);
-
+                if ($rootScope.settings.isLastPosPlay) {
+                  console.log(learnignObj.currentTime);
+                  learningObj.currentTime = $scope.item.finalLearnPst;
+                  console.log('set time : '+learningObj.currentTime);
+                };
                 if ($rootScope.settings.autoPlay != undefined 
                   && $rootScope.settings.autoPlay == 'autoplay') {
 
@@ -526,19 +530,6 @@ console.log('exit cancel------------------');
 
                 $ionicLoading.hide();
                 console.log('listener loadedmetadata');
-              }, false);
-
-              var isSetPos = false;
-              //  paused and playing events to control buttons
-              learningObj.addEventListener("canplay", function () {
-                console.log('listener canplay');
-                if ($rootScope.settings.isLastPosPlay && !isSetPos) {
-                  var obj = document.getElementById('media');
-                  console.log(obj.currentTime);
-                  obj.currentTime = $scope.item.finalLearnPst;
-                  isSetPos = true;
-                  console.log('set time : '+obj.currentTime);
-                };
               }, false);
 
               //  paused and playing events to control buttons

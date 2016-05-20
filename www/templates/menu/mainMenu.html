@@ -15,10 +15,10 @@
     <ion-tabs id="courseMenu" 
       class="tabs-striped tabs-top tabs-background-dark tabs-color-light ion_nav_header" 
       style="display:none">
-      <ion-tab title="학습하기" href="#/myclass/tocList/1"></ion-tab>
-      <ion-tab title="강의공지" href="#/myclass/noticeList/1"></ion-tab>
-      <ion-tab title="강의정보" href="#/myclass/ingCourseDetail/1"></ion-tab>
-      <ion-tab title="Q&A" href="#/myclass/qnaList/1"></ion-tab>
+      <ion-tab title="학습하기" href="#/myclass/tocList/{{lectureSeqno}}?mobilePosbYn={{mobilePosbYn}}&lectureName={{lectureName}}"></ion-tab>
+      <ion-tab title="강의공지" href="#/myclass/noticeList/{{lectureSeqno}}"></ion-tab>
+      <ion-tab title="강의정보" href="#/myclass/ingCourseDetail/{{lectureSeqno}}"></ion-tab>
+      <ion-tab title="Q&A" href="#/myclass/qnaList/{{lectureSeqno}}"></ion-tab>
     </ion-tabs>
     <ion-nav-view name="menuContent"></ion-nav-view>
 

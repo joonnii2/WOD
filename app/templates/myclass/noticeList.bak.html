@@ -1,0 +1,28 @@
+<ion-view view-title="공지사항">
+  <ion-content style="/*background:#67b0d6; */margin-top:48px;">
+  	<ion-refresher 
+		pulling-text="새로고침" 
+		on-refresh="doRefresh()" 
+		on-pulling="onPulling()" 
+		spinner="crescent" 
+		pulling-icon="ion-ios-arrow-up">
+	</ion-refresher>
+	<ion-list>
+		<div class="list card list-inset" ng-repeat="notice in courseNoticeList" >
+         <ion-item class="item item-text-wrap">
+          <div ng-class="isItemShown(notice) ? 'item-expand active' : 'item-expand inactive'">
+            <h2>{{ notice.title }}</h2>
+            <p>admin | 2016-04-18</p>
+            <p>{{ notice.text }}</p>
+          </div>
+          <div ng-click="toggleItem(notice)" class="item-expand-footer">
+            <i ng-class="isItemShown(notice) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
+            {{ isItemShown(notice) ? '닫기' : '더보기' }}
+          </div>
+        </ion-item>
+        </div>
+	</ion-list>
+
+
+  </ion-content>
+</ion-view>

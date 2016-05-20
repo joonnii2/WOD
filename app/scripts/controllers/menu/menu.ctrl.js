@@ -11,7 +11,8 @@ define([
     '$rootScope',
     'ENV',
     'SessionSvc',
-    function (apiSvc, $scope, $state, $ionicHistory, $rootScope, env, sessionSvc) {
+    '$stateParams',
+    function (apiSvc, $scope, $state, $ionicHistory, $rootScope, env, sessionSvc, $stateParams) {
 
 /*	    var currentHistoryId = $ionicHistory.currentHistoryId();
 	    console.log('currentHistoryId : '+currentHistoryId);
@@ -84,6 +85,39 @@ define([
 	          		}
 	        	});
    			};
+	  	};
+            $rootScope.lectureSeqno = null;
+            $rootScope.lectureName = null;
+            $rootScope.mobilePosbYn = null;
+	  	$scope.goTocList = function() {
+	  		console.log('$rootScope.lectureSeqno:'+$rootScope.lectureSeqno);
+	  		console.log('$rootScope.lectureName:'+$rootScope.lectureName);
+	  		console.log('$rootScope.mobilePosbYn:'+$rootScope.mobilePosbYn);
+	  		console.log(JSON.stringify($stateParams));
+	  		var param = {
+	  			lectureSeqno : $rootScope.lectureSeqno,
+	  			lectureName : $rootScope.lectureName,
+	  			mobilePosbYn : $rootScope.mobilePosbYn
+	  		};
+	  		$state.go('myclass.tocList', param);
+	  	};
+
+	  	$scope.goCourseNoticeList = function () {
+	  		console.log(JSON.stringify($stateParams));
+	  		console.log('$rootScope.lectureSeqno:'+$rootScope.lectureSeqno);
+			$state.go('myclass.noticeList', {lectureSeqno : $rootScope.lectureSeqno});
+	  	};
+
+	  	$scope.goIngCourseDetail = function() {
+	  		console.log(JSON.stringify($stateParams));
+	  		console.log('$rootScope.lectureSeqno:'+$rootScope.lectureSeqno);
+			$state.go('myclass.ingCourseDetail', {lectureSeqno : $rootScope.lectureSeqno});
+	  	};
+
+	  	$scope.goCourseQnaList = function() {
+	  		console.log(JSON.stringify($stateParams));
+	  		console.log('$rootScope.lectureSeqno:'+$rootScope.lectureSeqno);
+			$state.go('myclass.qnaList', {lectureSeqno : $rootScope.lectureSeqno});
 	  	};
 
 	  	

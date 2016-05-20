@@ -46,7 +46,7 @@
 		<div id="contents">
 			<dl class="faq_list" ng-repeat="faq in faqList">
 				<dt ng-click="toggleGroup(faq)">{{getFaqQuesGbName(faq.faqQuesGb)}} > {{faq.title}}</dt>
-				<dd ng-class="{on: isGroupShown(faq)}">{{faq.answer}}</dd>
+				<dd ng-class="{on: isGroupShown(faq)}" ng-bind-html="faq.answer"></dd>
 			</dl>
 		</div>
   </ion-content>

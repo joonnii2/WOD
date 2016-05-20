@@ -125,7 +125,7 @@
 .item-expand {
   position: relative;
   width: 100%;
-  max-height: 46px;
+  max-height: 50px;
   transition: max-height 0.1s ease-out;
   overflow: hidden;
 }
