@@ -6,7 +6,7 @@
     </div>
   </ion-header-bar>
 
-  <ion-content class="scu_player" style="margin-top: -45px;" scroll="false">
+  <ion-content class="scu_player" style="margin-top: -45px;" scroll="false" drag-content="false">
     <div class="player_info_panel" id="infoPanel">
       <div class="player_panel_txt"><span>{{item.tocName}}</span></div>
       <div class="player_panel_btn">
@@ -28,7 +28,6 @@
       preload="auto" 
       poster="{{item.poster}}" 
       webkit-playsinline 
-      width="100%"
       controls>
         <source type="{{mediaType}}">
         <!-- <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"> -->

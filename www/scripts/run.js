@@ -27,6 +27,7 @@ define([
         var isWebView = ionic.Platform.isWebView();
         var isIPad = ionic.Platform.isIPad();
         var isIOS = ionic.Platform.isIOS();
+
         var isAndroid = ionic.Platform.isAndroid();
         var isWindowsPhone = ionic.Platform.isWindowsPhone();
 
