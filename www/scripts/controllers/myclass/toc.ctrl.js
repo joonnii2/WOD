@@ -249,6 +249,7 @@ define([
             });
           }
         });
+        console.log(wsList);
         return wsList;
       };
 

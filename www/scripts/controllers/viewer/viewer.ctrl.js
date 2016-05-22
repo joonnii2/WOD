@@ -501,7 +501,9 @@ console.log('exit cancel------------------');
                 || $scope.item.connGb == '0004') {
 
               learningObj = document.getElementById('media');
+
               learningObj.src = $scope.item.contentsServiceUrl;
+              //learningObj.src = 'http://wodcontents.iscu.ac.kr/contents/FMAM0001/01/01.mp4';
 
               $scope.item.isMedia = true;
               //$scope.mediaUrl = $scope.item.contentsServiceUrl;
