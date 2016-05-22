@@ -28,7 +28,7 @@
         </div> -->
 		<div class="list card list-inset" ng-repeat="notice in noticeList" >
          <ion-item class="item item-text-wrap">
-          <div ng-class="isItemShown(notice) ? 'item-expand active' : 'item-expand inactive'">
+          <div ng-class="isItemShown(notice) ? 'item-expand active' : 'item-expand inactive'" ng-click="toggleItem(notice)">
             <h2><span ng-bind-html="notice.title"></span></h2>
             <p >{{notice.mbrName | asterisk}}({{notice.mbrId | asterisk}}) | {{notice.regdt | dateFormat : '-'}}</p>
             <br/>
@@ -38,10 +38,10 @@
             	<a href="#" ng-click="fileDownloadUrl('lms', 'lms.file.bbs.phpath', attach.filePath, attach.filePhsclName, attach.fileLogicalName)">{{attach.fileLogicalName}}</a>
            	</p>
           </div>
-          <div ng-click="toggleItem(notice)" class="item-expand-footer" style="text-align: right;">
+          <!-- <div ng-click="toggleItem(notice)" class="item-expand-footer" style="text-align: right;">
             <i ng-class="isItemShown(notice) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
             {{ isItemShown(notice) ? '닫기' : '더보기' }}
-          </div>
+          </div> -->
         </ion-item>
         </div>
 	</ion-list>

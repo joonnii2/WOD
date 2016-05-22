@@ -9,8 +9,9 @@ define([
     'ApiSvc',
     '$state',
     '$stateParams',
-    function ($scope, $rootScope, apiSvc, $state, $stateParams) {
-
+    '$ionicTabsDelegate',
+    function ($scope, $rootScope, apiSvc, $state, $stateParams, $ionicTabsDelegate) {
+$ionicTabsDelegate.select(3); // 강의실 상단 탭 순번 지정
     	$scope.doRefresh = function() {
     		console.log('doRefresh... ');
     	};

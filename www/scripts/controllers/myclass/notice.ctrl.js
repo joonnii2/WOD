@@ -13,9 +13,10 @@ define([
     '$sce',
     'ENV',
     '$ionicPlatform',
-    function ($scope, apiSvc, $state, $stateParams, $sce, env, $ionicPlatform) {
+    '$ionicTabsDelegate',
+    function ($scope, apiSvc, $state, $stateParams, $sce, env, $ionicPlatform, $ionicTabsDelegate) {
       $ionicPlatform.ready(function() {
-
+        $ionicTabsDelegate.select(1); // 강의실 상단 탭 순번 지정
         $scope.baseUrl = env.SERVER_URL;
         if ($state.current.name == 'myclass.noticeList') {
 

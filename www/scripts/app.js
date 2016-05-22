@@ -26,6 +26,7 @@ define([
     APP_VER : '0.0.1',
     CHECK_URL : '/checkApplication.scu',
     SERVER_URL : 'http://192.168.0.18:8080/',
+    //SERVER_URL : 'http://wod.iscu.ac.kr/',
     //API_ENDPOINT:'http://wod.iscu.ac.kr/api', // for Device without Proxy Setting
     API_ENDPOINT:'http://192.168.0.18:8080/api', // for Device without Proxy Setting
     //API_ENDPOINT:'/api', // for Web Browser with Ionic Proxy Setting

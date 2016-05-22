@@ -123,6 +123,66 @@ define([
 				},
 				authenticate : true,
 				cache : false
+			})			
+			// 메뉴 : 나의 문의사항 > 등록
+			.state('main.counselingWrite', {
+				url: '/counselingWrite',
+				views: {
+					'menuContent': {
+						templateUrl: 'templates/main/counselingWrite.html',
+						controller: 'CounselingCtrl'
+					}
+				},
+				authenticate : true,
+				cache : false
+			})			
+			// 메뉴 : 나의 문의사항 > 수정
+			.state('main.counselingModify', {
+				url: '/counselingModify',
+				views: {
+					'menuContent': {
+						templateUrl: 'templates/main/counselingModify.html',
+						controller: 'CounselingCtrl'
+					}
+				},
+				authenticate : true,
+				cache : false
+			})
+			// 메뉴 : 나의 문의사항 > 조회
+			.state('main.counselingDetail', {
+				url: '/counselingDetail',
+				views: {
+					'menuContent': {
+						templateUrl: 'templates/main/counselingDetail.html',
+						controller: 'CounselingCtrl'
+					}
+				},
+				authenticate : true,
+				cache : false
+			})
+			// 메뉴 : 나의 문의사항 > 답글 작성
+			.state('main.counselingReplyWrite', {
+				url: '/counselingReplyWrite',
+				views: {
+					'menuContent': {
+						templateUrl: 'templates/main/counselingReplyWrite.html',
+						controller: 'CounselingCtrl'
+					}
+				},
+				authenticate : true,
+				cache : false
+			})
+			// 메뉴 : 나의 문의사항 > 답글 수정
+			.state('main.counselingReplyModify', {
+				url: '/counselingReplyModify',
+				views: {
+					'menuContent': {
+						templateUrl: 'templates/main/counselingReplyModify.html',
+						controller: 'CounselingCtrl'
+					}
+				},
+				authenticate : true,
+				cache : false
 			})
 			// 하단 탭 : 설정
 			.state('main.setting', {
@@ -195,7 +255,7 @@ define([
 			})
 			// 학습목차 상세 정보 조회 : 온라인 자격시험
 			.state('myclass.examDetail', {
-				url: '/examDetail/:examId',
+				url: '/examDetail/:lectureSeqno?mobilePosbYn&lectureName',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -207,7 +267,7 @@ define([
 			})
 			// 학습목차 상세 정보 조회 : 온라인 자격시험 > 자격시험 정보
 			.state('myclass.examInfo', {
-				url: '/examInfo/:examId',
+				url: '/examInfo/:lectureSeqno?mobilePosbYn&lectureName',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -219,7 +279,7 @@ define([
 			})
 			// 학습목차 상세 정보 조회 : 온라인 자격시험 > 자격시험 응시
 			.state('myclass.examApplication', {
-				url: '/examApplication/:examId',
+				url: '/examApplication/:lectureSeqno?mobilePosbYn&lectureName',
 				cache: false,
 				views: {
 					'menuContent': {
@@ -231,7 +291,7 @@ define([
 			})
 			// 학습목차 상세 정보 조회 : 온라인 자격시험 > 자격시험 결과
 			.state('myclass.examResult', {
-				url: '/examResult/:examId',
+				url: '/examResult/:lectureSeqno?mobilePosbYn&lectureName',
 				cache: false,
 				views: {
 					'menuContent': {

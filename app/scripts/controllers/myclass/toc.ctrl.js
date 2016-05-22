@@ -11,7 +11,8 @@ define([
     'ApiSvc',
     '$ionicLoading',
     'ENV',
-    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicLoading, env) {
+    '$ionicTabsDelegate',
+    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicLoading, env, $ionicTabsDelegate) {
 
       // // 모바일에서 사용가능한 학습 자원 유형
       // var ENABLE_CONNGB_TYPE = [
@@ -23,7 +24,7 @@ define([
       //   '0009', // 웹 콘텐츠 유형
       //   '1009'  // 평가 유형
       // ];
-
+      $ionicTabsDelegate.select(0); // 강의실 상단 탭 순번 지정
       var CONNGB_TYPE = {
         '0001' : '동영상 파일',
         '0002' : '동영상 스트리밍',

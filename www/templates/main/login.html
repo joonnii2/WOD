@@ -22,9 +22,9 @@
 	   							required/>
 							<div class="help-block" ng-messages="loginForm.userid.$error" 
 								ng-if="loginForm.userid.$touched">
-				    			<p ng-message="minlength">ID는 1자 이상 입력하세요.</p>
-				    			<p ng-message="maxlength">ID는 50자 이하로 입력하세요.</p>
-				    			<p ng-message="required">ID는 필수입니다.</p>
+				    			<p ng-message="minlength">1자 이상 입력하세요.&nbsp;</p>
+				    			<p ng-message="maxlength">50자 이하로 입력하세요.&nbsp;</p>
+				    			<p ng-message="required">필수입니다.&nbsp;</p>
 							</div>
 							</label>
 						</div>
@@ -40,9 +40,9 @@
 					   				required/>
 								<div class="help-block" ng-messages="loginForm.password.$error" 
 									ng-if="loginForm.password.$touched">
-								    <p ng-message="minlength">Password는 1자 이상 입력하세요.</p>
-								    <p ng-message="maxlength">Password는 25자 이하로 입력하세요.</p>
-								    <p ng-message="required">Password는 필수입니다.</p>
+								    <p ng-message="minlength">1자 이상 입력하세요.&nbsp;</p>
+								    <p ng-message="maxlength">25자 이하로 입력하세요.&nbsp;</p>
+								    <p ng-message="required">필수입니다.&nbsp;</p>
 								</div>
 					        </label>
 						</div>
@@ -51,8 +51,8 @@
 							<a href="#" class="btn_block btn_default" ng-click="goSearch()">아이디/비밀번호 찾기</a>
 						</div>
 						<ul class="check_control inp_check item2">
-							<li><label><input type="checkbox" id="idSave" name="idSave" class="check" ng-model="settings.isSaveId"/> ID 저장하기</label></li>
-							<li><label><input type="checkbox" id="autoLogin" name="autoLogin" class="check" ng-model="settings.isAutoLogin"/> 자동로그인</label></li>
+							<li><label><input type="checkbox" id="idSave" name="idSave" class="check" ng-model="settings.isSaveId"/><div style="width:100px;">ID 저장하기</div></label></li>
+							<li><label><input type="checkbox" id="autoLogin" name="autoLogin" class="check" ng-model="settings.isAutoLogin"/><div>자동로그인</div></label></li>
 						</ul>	
 					</fieldset>
 				</form>

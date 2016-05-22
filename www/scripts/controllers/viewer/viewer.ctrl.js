@@ -509,7 +509,7 @@ console.log('exit cancel------------------');
 
               onResizeWindow();
 
-              console.log('media type : '+$scope.mediaUrl);
+              //console.log('media type : '+$scope.mediaUrl);
 
               console.log(learningObj);
 
@@ -736,8 +736,8 @@ console.log('exit cancel------------------');
             // $scope.learner.lastLearnTimeSum += $scope.learner.lastLearnTime;
 
             if ($scope.item.isMedia) {
-              $scope.learner.finalLearnPst = parseInt(learningObj.currentTime);
               if (learningObj) learningObj.play();
+              // $scope.learner.finalLearnPst = parseInt(learningObj.currentTime);
             }else {
 
             };
@@ -768,7 +768,7 @@ console.log('exit cancel------------------');
 
             if ($scope.item.isMedia) {
               if (learningObj) learningObj.play();
-              $scope.learner.finalLearnPst = parseInt(learningObj.currentTime);
+              //$scope.learner.finalLearnPst = parseInt(learningObj.currentTime);
             }else {
 
             };

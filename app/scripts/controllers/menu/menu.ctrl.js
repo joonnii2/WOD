@@ -12,7 +12,8 @@ define([
     'ENV',
     'SessionSvc',
     '$stateParams',
-    function (apiSvc, $scope, $state, $ionicHistory, $rootScope, env, sessionSvc, $stateParams) {
+    '$ionicTabsDelegate',
+    function (apiSvc, $scope, $state, $ionicHistory, $rootScope, env, sessionSvc, $stateParams, $ionicTabsDelegate) {
 
 /*	    var currentHistoryId = $ionicHistory.currentHistoryId();
 	    console.log('currentHistoryId : '+currentHistoryId);
@@ -86,41 +87,28 @@ define([
 	        	});
    			};
 	  	};
-            $rootScope.lectureSeqno = null;
-            $rootScope.lectureName = null;
-            $rootScope.mobilePosbYn = null;
-	  	$scope.goTocList = function() {
-	  		console.log('$rootScope.lectureSeqno:'+$rootScope.lectureSeqno);
-	  		console.log('$rootScope.lectureName:'+$rootScope.lectureName);
-	  		console.log('$rootScope.mobilePosbYn:'+$rootScope.mobilePosbYn);
-	  		console.log(JSON.stringify($stateParams));
+	  	
+        $rootScope.lectureSeqno = null;
+        $rootScope.lectureName = null;
+        $rootScope.mobilePosbYn = null;
+
+        $scope.selectCourseTab = function(idx) {
+        	console.log('tab index : '+idx);
+        	$ionicTabsDelegate.select(idx);
 	  		var param = {
 	  			lectureSeqno : $rootScope.lectureSeqno,
 	  			lectureName : $rootScope.lectureName,
 	  			mobilePosbYn : $rootScope.mobilePosbYn
 	  		};
-	  		$state.go('myclass.tocList', param);
-	  	};
-
-	  	$scope.goCourseNoticeList = function () {
-	  		console.log(JSON.stringify($stateParams));
-	  		console.log('$rootScope.lectureSeqno:'+$rootScope.lectureSeqno);
-			$state.go('myclass.noticeList', {lectureSeqno : $rootScope.lectureSeqno});
-	  	};
-
-	  	$scope.goIngCourseDetail = function() {
-	  		console.log(JSON.stringify($stateParams));
-	  		console.log('$rootScope.lectureSeqno:'+$rootScope.lectureSeqno);
-			$state.go('myclass.ingCourseDetail', {lectureSeqno : $rootScope.lectureSeqno});
-	  	};
-
-	  	$scope.goCourseQnaList = function() {
-	  		console.log(JSON.stringify($stateParams));
-	  		console.log('$rootScope.lectureSeqno:'+$rootScope.lectureSeqno);
-			$state.go('myclass.qnaList', {lectureSeqno : $rootScope.lectureSeqno});
-	  	};
-
-	  	
+        	switch (idx) {
+        		case 0 : $state.go('myclass.tocList', param); break;
+        		case 1 : $state.go('myclass.noticeList', {lectureSeqno : $rootScope.lectureSeqno}); break;
+        		case 2 : $state.go('myclass.ingCourseDetail', {lectureSeqno : $rootScope.lectureSeqno}); break;
+        		case 3 : $state.go('myclass.qnaList', {lectureSeqno : $rootScope.lectureSeqno}); break;
+        		default : $state.go('myclass.tocList', param); break;
+        	};
+        	
+        };
     }
   ]);
 });

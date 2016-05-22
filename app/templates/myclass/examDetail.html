@@ -1,56 +1,12 @@
-<ion-view view-title="온라인 자격시험명">
-<!-- <ion-tabs class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
-
-  <ion-tab class="tab-item active" title="학습하기" href="#/weekList/1">
-    <ion-nav-view name="courseContent"></ion-nav-view>
-  </ion-tab>
-
-  <ion-tab class="tab-item" title="공지사항" href="#/main/weekList/1">
-    <ion-nav-view name="noticeContent"></ion-nav-view>
-  </ion-tab>
-
-  <ion-tab class="tab-item" title="강의정보" href="#/main/weekList/1">
-    <ion-nav-view name="courseInfoContent"></ion-nav-view>
-  </ion-tab>
-  <ion-tab class="tab-item" title="Q&A" href="#/main/weekList/1">
-    <ion-nav-view name="qnaContent"></ion-nav-view>
-  </ion-tab>
-</ion-tabs> -->
-
-<!-- 	<div class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
-		<div class="tabs">
-			<a class="tab-item active" href="#/main/weekList/1">
-			학습하기
-			</a>
-			
-			<a class="tab-item" href="#">
-			공지
-			</a>
-			<a class="tab-item" href="#">
-			강의정보
-			</a>
-			<a class="tab-item" href="#">
-			Q&A
-			</a>
-		</div>
-	</div>
-<ion-content style="margin-top:60px;">
-			<ion-nav-view name="courseContent">
-			<ion-view view-title="test">
-				<ion-content>Hello !</ion-content>
-			</ion-view>
-		</ion-nav-view>
-</ion-content> -->
-	
-
+<ion-view view-title="{{lectureName}}">
   <ion-content style="/*background:#67b0d6; */">
-    <ion-refresher 
+ <!--    <ion-refresher 
 		pulling-text="새로고침" 
 		on-refresh="doRefresh()" 
 		on-pulling="onPulling()" 
 		spinner="crescent" 
 		pulling-icon="ion-ios-arrow-up">
-	</ion-refresher>
+	</ion-refresher> -->
 
 <!-- 	<ion-list>
 		<div class="item item-divider">
@@ -73,24 +29,24 @@
 	  	</a>
 	</ion-list> -->
 		<div class="list">
-	  	<a class="item item-icon-left item-icon-right" href="#" 
-	  		ng-click="goExamInfo()">
-	    	<i class="icon ion-ios-calendar-outline calm"></i>
-	    	자격시험 정보
-	    	<i class="icon calm ion-ios-arrow-forward"></i>
-	  	</a>
-	  	<a class="item item-icon-left item-icon-right" href="#"
-	  		ng-click="goExamApplication()">
-	    	<i class="icon ion-ios-book-outline calm"></i>
-	    	시험응시
-	    	<i class="icon calm ion-ios-arrow-forward"></i>
-	  	</a>
-	  	<a class="item item-icon-left item-icon-right" href="#"
-	  		ng-click="goExamResult()">
-	    	<i class="icon ion-university calm"></i>
-	    	시험결과
-	    	<i class="icon calm ion-ios-arrow-forward"></i>
-	  	</a>
+		  	<a class="item item-icon-left item-icon-right" href="#" 
+		  		ng-click="goExamInfo()">
+		    	<i class="icon ion-ios-calendar-outline calm"></i>
+		    	자격시험 정보
+		    	<i class="icon ion-ios-arrow-right"></i>
+		  	</a>
+		  	<a class="item item-icon-left item-icon-right" href="#"
+		  		ng-click="goExamApplication()">
+		    	<i class="icon ion-ios-book-outline calm"></i>
+		    	시험응시
+		    	<i class="icon ion-ios-arrow-right"></i>
+		  	</a>
+		  	<a class="item item-icon-left item-icon-right" href="#"
+		  		ng-click="goExamResult()">
+		    	<i class="icon ion-university calm"></i>
+		    	시험결과
+		    	<i class="icon ion-ios-arrow-right"></i>
+		  	</a>
 	  	</div>
   </ion-content>
 </ion-view>

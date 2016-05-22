@@ -7,10 +7,25 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.example.WOD"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.example.WOD"
+        },
         "cordova-plugin-device-orientation": {
             "PACKAGE_NAME": "com.example.WOD"
         },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.example.WOD"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.example.WOD"
+        },
         "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.example.WOD"
+        },
+        "cordova-plugin-keyboard": {
             "PACKAGE_NAME": "com.example.WOD"
         },
         "cordova-plugin-media": {
@@ -19,24 +34,21 @@
         "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "com.example.WOD"
         },
-        "cordova-plugin-file-transfer": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.example.WOD"
         },
-        "cordova-plugin-whitelist": {
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.example.WOD"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.example.WOD"
+        },
+        "cordova-plugin-touchid": {
             "PACKAGE_NAME": "com.example.WOD"
         }
     },
     "dependent_plugins": {
-        "com.ionic.keyboard": {
-            "PACKAGE_NAME": "com.example.WOD"
-        },
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.example.WOD"
-        },
-        "org.apache.cordova.console": {
-            "PACKAGE_NAME": "com.example.WOD"
-        },
-        "org.apache.cordova.device": {
+        "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.example.WOD"
         }
     }

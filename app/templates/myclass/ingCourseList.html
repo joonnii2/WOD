@@ -21,7 +21,7 @@
 	      <h2>{{course.lectureName}}</h2>
 	      <span class="item-note dark">
 	      	<span ng-show="course.mobilePosbYn != 'Y'">{{course.learnTypeGbNm}}</span>
-	      	<i ng-show="course.mobilePosbYn == 'Y'" class="icon ion-ipad positive">&nbsp;&nbsp;모바일 지원 {{course.learnTypeGbNm}}</i>
+	      	<i ng-show="course.mobilePosbYn == 'Y'" class="icon ion-ipad positive">&nbsp;&nbsp;모바일 지원</i>
 	      </span>
 	      <p>{{course.lectureStartDttm | limitTo:10}} ~ {{course.lectureEndDttm | limitTo:10}}</p>
 	    </a>
@@ -35,11 +35,13 @@
 	    온라인 자격시험
 	  </div>
 	  <div ng-show="examList.length > 0">
-	    <a class="item" href="#/myclass/examDetail/1?type=EXAM" ng-repeat="exam in examList">
-	      <h2>시험명</h2>
-	      <span class="item-note dark">자격증명</span>
-	      <i ng-show="course.mobilePosbYn == 'Y'" class="icon ion-ipad positive">&nbsp;&nbsp;모바일 지원 자격증명</i>
-	      <p>2016-02-23 ~ 2016-05-08</p>
+	    <a class="item" href="#" ng-repeat="exam in examList" ng-click="goExamDetail(exam.lectureSeqno, exam.lectureName, exam.mobilePosbYn)">
+	      <span class="item-note dark">{{exam.lectureOrd}}</span>
+	      <h2>{{exam.concernLicenseName}} > {{exam.lectureName}}</h2>
+	      <span class="item-note dark">
+	      	<i ng-show="exam.mobilePosbYn == 'Y'" class="icon ion-ipad positive">&nbsp;&nbsp;모바일 지원</i>
+	      </span>
+	      <p>{{exam.lectureStartDttmDisp | limitTo : 10}} ~ {{exam.lectureEndDttmDisp | limitTo : 10}}</p>
 	    </a>
 	  </div>	  
 	  <div ng-show="examList.length == 0" style="text-align: center;height:60px;padding-top: 20px;">응시가능한 자격시험이 없습니다.</div>

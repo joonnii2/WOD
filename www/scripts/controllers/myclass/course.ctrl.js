@@ -10,7 +10,8 @@ define([
     '$rootScope',
     'ApiSvc',
     '$ionicPlatform',
-    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicPlatform) {
+    '$ionicTabsDelegate',
+    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicPlatform, $ionicTabsDelegate) {
       $ionicPlatform.ready(function() {
         $scope.doRefresh = function() {
           //Stop the ion-refresher from spinning
@@ -35,18 +36,29 @@ define([
 
           doIngCourseList($stateParams);
 
+          // 학습 목차 정보 페이지로 이동
           $scope.goTocList = function(lectureSeqno, lectureName, mobilePosbYn) {
             $stateParams.lectureSeqno = lectureSeqno;
             $stateParams.lectureName = lectureName;
             $stateParams.mobilePosbYn = mobilePosbYn;
+            /*강의실 하위 탭들에서 사용하기 위한 변수 세팅*/
             $rootScope.lectureSeqno = lectureSeqno;
             $rootScope.lectureName = lectureName;
             $rootScope.mobilePosbYn = mobilePosbYn;
+
             $state.go('myclass.tocList', $stateParams);
+          };
+
+          // 사험 상세 페이지로 이동
+          $scope.goExamDetail = function(lectureSeqno, lectureName, mobilePosbYn) {
+            $stateParams.lectureSeqno = lectureSeqno;
+            $stateParams.lectureName = lectureName;
+            $stateParams.mobilePosbYn = mobilePosbYn;
+            $state.go('myclass.examDetail', $stateParams);
           };
         // 수강중인 강의 > 강의 정보
         } else if ($state.current.name == 'myclass.ingCourseDetail') {
-          
+          $ionicTabsDelegate.select(2); // 강의실 상단 탭 순번 지정
           doIngCourseDetail($stateParams);
           /*
            * if given group is the selected group, deselect it
@@ -82,24 +94,44 @@ define([
 
         // 강의정보 조회
         function doIngCourseDetail(param) {
+
+          /*
+           * if given group is the selected group, deselect it
+           * else, select the given group
+           */
+          $scope.toggleGroup = function(group) {
+            if ($scope.isGroupShown(group)) {
+              $scope.shownGroup = null;
+            } else {
+              $scope.shownGroup = group;
+            }
+          };
+          $scope.isGroupShown = function(group) {
+            return $scope.shownGroup === group;
+          };
+
           apiSvc.call('doIngCourseDetail', param).then(function(res) {
             // 강의 정보
             if (res != null && res.COURSE_INFO != null) {
               console.log('COURSE_INFO received.');
               console.log(res.COURSE_INFO);
               $scope.courseInfo = res.COURSE_INFO; // 강의정보
+              $scope.basisList = new Array(0);
+              angular.forEach($scope.courseInfo.completeBasisList, function(basis, index) {
+                $scope.basisList.push(basis);
+              });
             }
             // 학습 현황
             if (res != null && res.STUDY_INFO != null) {
               console.log('STUDY_INFO received.');
               console.log(res.STUDY_INFO);
-              $scope.studyInfo = STUDY_INFO; // 학습 현황
+              $scope.studyInfo = res.STUDY_INFO; // 학습 현황
             }
             // 성적 조회
             if (res != null && res.STUDY_RESULT != null) {
               console.log('STUDY_RESULT received.');
               console.log(res.STUDY_RESULT);
-              $scope.studyResult = STUDY_RESULT; // 성적 조회
+              $scope.studyResult = res.STUDY_RESULT; // 성적 조회
             }
           });
         };

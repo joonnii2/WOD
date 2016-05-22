@@ -1,48 +1,4 @@
 <ion-view view-title="{{tocName}}">
-<!-- <ion-tabs class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
-
-  <ion-tab class="tab-item active" title="학습하기" href="#/weekList/1">
-    <ion-nav-view name="courseContent"></ion-nav-view>
-  </ion-tab>
-
-  <ion-tab class="tab-item" title="공지사항" href="#/main/weekList/1">
-    <ion-nav-view name="noticeContent"></ion-nav-view>
-  </ion-tab>
-
-  <ion-tab class="tab-item" title="강의정보" href="#/main/weekList/1">
-    <ion-nav-view name="courseInfoContent"></ion-nav-view>
-  </ion-tab>
-  <ion-tab class="tab-item" title="Q&A" href="#/main/weekList/1">
-    <ion-nav-view name="qnaContent"></ion-nav-view>
-  </ion-tab>
-</ion-tabs> -->
-
-<!-- 	<div class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
-		<div class="tabs">
-			<a class="tab-item active" href="#/main/weekList/1">
-			학습하기
-			</a>
-			
-			<a class="tab-item" href="#">
-			공지
-			</a>
-			<a class="tab-item" href="#">
-			강의정보
-			</a>
-			<a class="tab-item" href="#">
-			Q&A
-			</a>
-		</div>
-	</div>
-<ion-content style="margin-top:60px;">
-			<ion-nav-view name="courseContent">
-			<ion-view view-title="test">
-				<ion-content>Hello !</ion-content>
-			</ion-view>
-		</ion-nav-view>
-</ion-content> -->
-	
-
   <ion-content style="/*background:#67b0d6; */margin-top:48px;">
     <ion-refresher 
 		pulling-text="새로고침" 
@@ -51,12 +7,6 @@
 		spinner="crescent" 
 		pulling-icon="ion-ios-arrow-up">
 	</ion-refresher>
-<!-- 	<img src="images/demo/itemDetail.png" width="100%" ng-click="goStudy('2','http://mp4.iscu.ac.kr/iscu/Contents/13110001/289778/1028548/13110001_1_01.mp4')"/> -->
-<!-- 	<img src="images/demo/itemDetail.png" width="100%" ng-click="goStudy()"/> -->
-<!-- 		<div class="item item-divider item-icon-left">
-		  <i class="icon ion-alert-circled assertive"></i>
-	      <p>학습하기 버튼이 있는 목차만 학습이 가능하며 <br/>토론, 과제등 학습활동은 웹사이트에서만 가능합니다.</p>
-		</div> -->
 	<div class="card">
 	  <div class="item item-divider item-icon-left">
 	    <i class="icon ion-ios-paper-outline calm"></i>
@@ -92,58 +42,53 @@
 	  </div>
 	</div>
 	<div class="card">
-	  <div class="item item-divider item-icon-left">
-	    <i class="icon ion-ios-pulse calm"></i>
-	    내 진도현황
-	    <!-- <span class="badge badge-assertive">0</span> -->
-	  </div>
-			<div class="inner_cont">
-				<div class="data">
-					<table>
-						<caption>내 진도현황</caption>
-						<colgroup>
-							<col style="width:34%" />
-							<col style="width:auto" />
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row" style="vertical-align: middle;">진도 현황</th>
-								<td>
-									<span ng-show="itemDetail.pobtYn == 'Y'">완료</span>
-									<span ng-show="itemDetail.pobtYn != 'Y'">미완료</span>
-									<span ng-show="itemDetail.pobtTypeGb == '01'"><br/>- 완료율 : {{itemDetail.prgss | limitTo : 3}} %<br/>- 학습시간 : {{itemDetail.learnTimeSumTxt}}</span>
-								</td>
-							</tr>
-							<tr ng-show="itemDetail.pobtTypeGb == '03'">
-								<th scope="row">채점 결과</th>
-								<td>{{itemDetail.mbrScore}} 점</td>
-							</tr>
-							<tr>
-								<th scope="row">학습 횟수</th>
-								<td>{{itemDetail.learnNot}} 회</td>
-							</tr>
-							<tr>
-								<th scope="row">최근 학습시간</th>
-								<td>{{itemDetail.moddateDisp | limitTo : 19}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+		<div class="item item-divider item-icon-left">
+			<i class="icon ion-ios-pulse calm"></i>
+			내 진도현황
+			<!-- <span class="badge badge-assertive">0</span> -->
+		</div>
+		<div class="inner_cont">
+			<div class="data">
+				<table>
+					<caption>내 진도현황</caption>
+					<colgroup>
+						<col style="width:34%" />
+						<col style="width:auto" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="row" style="vertical-align: middle;">진도 현황</th>
+							<td>
+								<span ng-show="itemDetail.pobtYn == 'Y'">완료</span>
+								<span ng-show="itemDetail.pobtYn != 'Y'">미완료</span>
+								<span ng-show="itemDetail.pobtTypeGb == '01'"><br/>- 완료율 : {{itemDetail.prgss | number : 0}} %<br/>- 학습시간 : {{itemDetail.learnTimeSumTxt}}</span>
+							</td>
+						</tr>
+						<tr ng-show="itemDetail.pobtTypeGb == '03'">
+							<th scope="row">채점 결과</th>
+							<td>{{itemDetail.mbrScore}} 점</td>
+						</tr>
+						<tr>
+							<th scope="row">학습 횟수</th>
+							<td>{{itemDetail.learnNot}} 회</td>
+						</tr>
+						<tr>
+							<th scope="row">최근 학습시간</th>
+							<td>{{itemDetail.moddateDisp | limitTo : 19}}</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+		</div>
 	</div>
-			<div class="btn_area">
-				<a href="#" class="btn_block btn_primary" ng-click="goStudy()">학습하기</a>
-			</div>
-<!-- 			<div class="card">
-			<div class="item item-divider item-icon-left">
-				<i class="icon ion-alert-circled assertive"></i> -->
-				<p class="desc_txt" style="/*color:white*/">
-					<span style="color:red;">{{learnableMsg}}</span>
-					<br/>- 모바일 학습은 학습하기 버튼이 있는 목차만 학습이 가능합니다.
-					<br/>- 토론, 과제 등 학습활동은 웹사이트에서만 가능합니다.
-				</p>
-<!-- 			</div> -->
+	<div class="btn_area">
+		<a href="#" class="btn_block btn_primary" ng-click="goStudy()">학습하기</a>
 	</div>
-				<!-- <a href="#" class="btn_block btn_primary" ng-click="goStudy()">학습하기</a> -->
+	<p class="desc_txt" style="/*color:white*/">
+		<span style="color:red;">{{learnableMsg}}</span>
+		<br/>- 모바일 학습은 학습하기 버튼이 있는 목차만 학습이 가능합니다.
+		<br/>- 토론, 과제 등 학습활동은 웹사이트에서만 가능합니다.
+	</p>
+	<p style="height: 60px;">&nbsp;</p>
   </ion-content>
 </ion-view>

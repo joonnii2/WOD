@@ -1,49 +1,5 @@
 <ion-view view-title="수강중인과정 상세">
-<!-- <ion-tabs class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
-
-  <ion-tab class="tab-item active" title="학습하기" href="#/weekList/1">
-    <ion-nav-view name="courseContent"></ion-nav-view>
-  </ion-tab>
-
-  <ion-tab class="tab-item" title="공지사항" href="#/main/weekList/1">
-    <ion-nav-view name="noticeContent"></ion-nav-view>
-  </ion-tab>
-
-  <ion-tab class="tab-item" title="강의정보" href="#/main/weekList/1">
-    <ion-nav-view name="courseInfoContent"></ion-nav-view>
-  </ion-tab>
-  <ion-tab class="tab-item" title="Q&A" href="#/main/weekList/1">
-    <ion-nav-view name="qnaContent"></ion-nav-view>
-  </ion-tab>
-</ion-tabs> -->
-
-<!-- 	<div class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
-		<div class="tabs">
-			<a class="tab-item active" href="#/main/weekList/1">
-			학습하기
-			</a>
-			
-			<a class="tab-item" href="#">
-			공지
-			</a>
-			<a class="tab-item" href="#">
-			강의정보
-			</a>
-			<a class="tab-item" href="#">
-			Q&A
-			</a>
-		</div>
-	</div>
-<ion-content style="margin-top:60px;">
-			<ion-nav-view name="courseContent">
-			<ion-view view-title="test">
-				<ion-content>Hello !</ion-content>
-			</ion-view>
-		</ion-nav-view>
-</ion-content> -->
-	
-
-  <ion-content style="/*background:#67b0d6; */margin-top:48px;">
+  <ion-content style="/*background:#67b0d6;*/ margin-top:48px;">
     <ion-refresher 
 		pulling-text="새로고침" 
 		on-refresh="doRefresh()" 
@@ -51,257 +7,224 @@
 		spinner="crescent" 
 		pulling-icon="ion-ios-arrow-up">
 	</ion-refresher>
-
 	<div class="list fold_list learning_info">
-	  <div class="item item-divider item-icon-left item-icon-right">
-	    <i class="icon ion-document-text calm"></i>
-	    강의정보
-	    <i class="icon calm ion-ios-arrow-forward"></i>
-	  </div>
-	  <ion-item class="item-accordion">
-<div class="fold_cont">
-					<h3 class="tit_cont">기본정보</h3>
-					<div class="inner_cont cont_line">
-						<div class="data">
-							<table>
-								<caption>기본정보</caption>
-								<colgroup>
-									<col style="width:34%" />
-									<col style="width:auto" />
-								</colgroup>
-								<tbody>
-									<tr>
-										<th scope="row">강좌유형</th>
-										<td>온라인 강의</td>
-									</tr>
-									<tr>
-										<th scope="row">수강기간</th>
-										<td>oooooo</td>
-									</tr>
-									<tr>
-										<th scope="row">복습기간</th>
-										<td>oooooo</td>
-									</tr>
-									<tr>
-										<th scope="row">담당교수</th>
-										<td>oooooo</td>
-									</tr>
-									<tr>
-										<th scope="row">고용보험적용</th>
-										<td>oooooo</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<h3 class="tit_cont">수료기준</h3>
-					<div class="inner_cont cont_line">
-						<div class="data">
-							<table>
-								<caption>수료기준</caption>
-								<colgroup>
-									<col style="width:34%" />
-									<col style="width:auto" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th scope="col" class="line_r">항목</th>
-										<th scope="col">평가비율</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row" class="line_r">온라인 진도</th>
-										<td class="ct">% 이상</td>
-									</tr>
-									<tr>
-										<th scope="row" class="line_r">총점</th>
-										<td class="ct">0 점 이상</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+		<div class="item item-icon-left item-icon-right"
+	  		ng-click="toggleGroup('info')"
+	        ng-class="{active: isGroupShown('info')}">
+		    <i class="icon ion-document-text calm"></i>
+		    강의정보
+		    <i class="icon" ng-class="isGroupShown('info') ? 'ion-ios-arrow-down' : 'ion-ios-arrow-right'"></i>
+		</div>
+		<div class="fold_cont on" ng-show="isGroupShown('info')">
+			<h3 class="tit_cont">기본정보</h3>
+			<div class="inner_cont cont_line">
+				<div class="data">
+					<table>
+						<caption>기본정보</caption>
+						<colgroup>
+							<col style="width:34%" />
+							<col style="width:auto" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">강좌유형</th>
+								<td>{{courseInfo.learnTypeGbNm}}</td>
+							</tr>
+							<tr>
+								<th scope="row">수강기간</th>
+								<td>{{courseInfo.lectureStartDttm | limitTo : 10}} ~ {{courseInfo.lectureEndDttm | limitTo : 10}}</td>
+							</tr>
+							<tr>
+								<th scope="row">복습기간</th>
+								<td>{{courseInfo.reviewStartDttm | limitTo : 10}} ~ {{courseInfo.reviewEndDttm | limitTo : 10}}</td>
+							</tr>
+							<tr>
+								<th scope="row">담당교수</th>
+								<td>
+									<span ng-repeat="prof in courseInfo.courseProfList">{{prof.mbrName | asterisk}}</span>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">고용보험적용</th>
+								<td><span ng-show="courseInfo.einsAdptYn == 'Y'">적용</span><span ng-show="courseInfo.einsAdptYn != 'Y'">미적용</span></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-		</ion-item>
-<!-- 	</div>
-	<div class="card"> -->
-	  <div class="item item-divider item-icon-left item-icon-right">
-	    <i class="icon ion-stats-bars calm"></i>
-	    학습현황
-	    <i class="icon calm ion-ios-arrow-down"></i>
-	  </div>
-	  <ion-item class="item-accordion">
-<div class="fold_cont on">
-					<div class="inner_cont cont_line">
-						<div class="data">
-							<table>
-								<caption>학습현황</caption>
-								<colgroup>
-									<col style="width:19%" />
-									<col style="width:15%" />
-									<col style="width:auto" />
-								</colgroup>
-								<tbody>
-									<tr>
-										<th scope="row" colspan="2">최근 학습일</th>
-										<td class="ct">&nbsp;</td>
-									</tr>
-									<tr>
-										<th scope="row" colspan="2">나의 진도율</th>
-										<td class="ct">30%</td>
-									</tr>
-									<tr>
-										<th scope="row" colspan="2">권장 진도율</th>
-										<td class="ct">40%</td>
-									</tr>
-									<tr>
-										<th scope="rowgroup" rowspan="4" class="line_r noline_b">미제출<br />학습</th>
-										<th scope="row">과제</th>
-										<td class="ct">0건</td>
-									</tr>
-									<tr>
-										<th scope="row">토론</th>
-										<td class="ct">0건</td>
-									</tr>
-									<tr>
-										<th scope="row">평가</th>
-										<td class="ct">0건</td>
-									</tr>
-									<tr>
-										<th scope="row">설문</th>
-										<td class="ct">1건</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+			</div>
+			<h3 class="tit_cont">수료기준</h3>
+			<div class="inner_cont cont_line">
+				<div class="data">
+					<table>
+						<caption>수료기준</caption>
+						<colgroup>
+							<col style="width:34%" />
+							<col style="width:auto" />
+							<col style="width:auto" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col" class="line_r">항목</th>
+								<th scope="col">평가비율</th>
+								<th scope="col">수료기준</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="basis in courseInfo.completeBasisList">
+								<th scope="row" class="line_r">{{basis.apprTypeGbNm}}</th>
+								<td class="ct">{{basis.apprRate}}</td>
+								<td class="ct">{{basis.finishCutlineRate | number : 0}} %</td>
+							</tr>
+							<tr>
+								<th scope="row" class="line_r">총점</th>
+								<td class="ct">100</td>
+								<td class="ct">{{courseInfo.completeBasisList[0].totalFinishCutlineRate | number : 0}} %</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-		</ion-item>
-<!-- 	</div>
-	<div class="card"> -->
-	  <div class="item item-divider item-icon-left item-icon-right">
-	    <i class="icon ion-university calm"></i>
-	    성적조회
-	    <i class="icon calm ion-ios-arrow-down"></i>
-	  </div>
-	  <ion-item class="item-accordion">
-				<div class="fold_cont on">
-					<div class="inner_cont">
-						<div class="grade_info">
-							<p>채점 종료일 : 2016-00-00</p>
-							<p>수료여부 : 수료/미수료</p>
-						</div>
-						<div class="data_col">
-							<table>
-								<caption>성적현황</caption>
-								<colgroup>
-									<col style="width:auto" />
-									<col style="width:24%" />
-									<col style="width:26%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th scope="col">평가항목</th>
-										<th scope="col">배점</th>
-										<th scope="col" class="noline_r">취득점수</th>
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th scope="row">최종성적</th>
-										<td class="ct">&nbsp;</td>
-										<td class="ct noline_r">&nbsp;</td>
-									</tr>
-								</tfoot>
-								<tbody>
-									<tr>
-										<th scope="row">온라인진도</th>
-										<td class="ct">&nbsp;</td>
-										<td class="ct noline_r">&nbsp;</td>
-									</tr>
-									<tr>
-										<th scope="row">온라인시험</th>
-										<td class="ct">&nbsp;</td>
-										<td class="ct noline_r">&nbsp;</td>
-									</tr>
-									<tr>
-										<th scope="row">온라인과제</th>
-										<td class="ct">&nbsp;</td>
-										<td class="ct noline_r">&nbsp;</td>
-									</tr>
-									<tr>
-										<th scope="row">온라인토론</th>
-										<td class="ct">&nbsp;</td>
-										<td class="ct noline_r">&nbsp;</td>
-									</tr>
-									<tr>
-										<th scope="row">온라인학습활동</th>
-										<td class="ct">&nbsp;</td>
-										<td class="ct noline_r">&nbsp;</td>
-									</tr>
-									<tr>
-										<th scope="row">오프라인출석</th>
-										<td class="ct">&nbsp;</td>
-										<td class="ct noline_r">&nbsp;</td>
-									</tr>
-									<tr>
-										<th scope="row">오프라인시험</th>
-										<td class="ct">&nbsp;</td>
-										<td class="ct noline_r">&nbsp;</td>
-									</tr>
-									<tr>
-										<th scope="row">실습</th>
-										<td class="ct">&nbsp;</td>
-										<td class="ct noline_r">&nbsp;</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<p class="desc_noti">※ 수료증 출력은 웹사이트에서만 가능합니다.</p>
-					</div>
-				</div>	
-		</ion-item>
+			</div>
+		</div>
+	  	<div class="item item-icon-left item-icon-right"
+	  		ng-click="toggleGroup('stat')"
+	        ng-class="{active: isGroupShown('stat')}">
+		    <i class="icon ion-stats-bars calm"></i>
+		    학습현황
+		    <i class="icon" ng-class="isGroupShown('stat') ? 'ion-ios-arrow-down' : 'ion-ios-arrow-right'"></i>
+		</div>
+		<div class="fold_cont on" ng-show="isGroupShown('stat')">
+			<div class="inner_cont cont_line">
+				<div class="data">
+					<table>
+						<caption>학습현황</caption>
+						<colgroup>
+							<col style="width:19%" />
+							<col style="width:15%" />
+							<col style="width:auto" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row" colspan="2">최근 학습일</th>
+								<td class="ct">{{studyInfo.recentStudyDttm | limitTo : 19}}</td>
+							</tr>
+							<tr>
+								<th scope="row" colspan="2">나의 진도율</th>
+								<td class="ct">{{studyInfo.prgssRate | number : 0}} %</td>
+							</tr>
+							<tr>
+								<th scope="row" colspan="2">권장 진도율</th>
+								<td class="ct">{{studyInfo.getdayPrgss | number : 0}} %</td>
+							</tr>
+							<tr>
+								<th scope="rowgroup" rowspan="4" class="line_r noline_b">미제출<br />학습</th>
+								<th scope="row">과제</th>
+								<td class="ct">{{studyInfo.tTaskCnt}} 건</td>
+							</tr>
+							<tr>
+								<th scope="row">토론</th>
+								<td class="ct">{{studyInfo.tDiscussionCnt}} 건</td>
+							</tr>
+							<tr>
+								<th scope="row">평가</th>
+								<td class="ct">{{studyInfo.tApprCnt}} 건</td>
+							</tr>
+							<tr>
+								<th scope="row">설문</th>
+								<td class="ct">{{studyInfo.tSurveyCnt}} 건</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	  	<div class="item item-icon-left item-icon-right"
+	  		ng-click="toggleGroup('result')"
+	        ng-class="{active: isGroupShown('result')}">
+		    <i class="icon ion-university calm"></i>
+		    성적조회
+		    <i class="icon" ng-class="isGroupShown('result') ? 'ion-ios-arrow-down' : 'ion-ios-arrow-right'"></i>
+		</div>
+		<div class="fold_cont on" ng-show="isGroupShown('result')">
+			<div class="inner_cont">
+				<div class="grade_info">
+					<p>채점 종료일 : {{studyResult.apprTretEndDttm | limitTo : 19}}</p>
+					<p>수료여부 : <span ng-show="studyResult.completeStatusYn == 'Y'">수료</span><span ng-show="studyResult.completeStatusYn != 'Y'">미수료</span></p>
+				</div>
+				<div class="data_col">
+					<table>
+						<caption>성적현황</caption>
+						<colgroup>
+							<col style="width:auto" />
+							<col style="width:24%" />
+							<col style="width:26%" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">평가항목</th>
+								<th scope="col">배점</th>
+								<th scope="col" class="noline_r">취득점수</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th scope="row">최종성적</th>
+								<td class="ct">100 점</td>
+								<td class="ct noline_r">{{studyResult.scoreSum}} 점</td>
+							</tr>
+						</tfoot>
+						<tbody>
+							<tr>
+								<th scope="row">온라인진도</th>
+								<td class="ct">{{studyResult.apprRateInfo.apprRate01}} 점</td>
+								<td class="ct noline_r">{{studyResult.score01}} 점</td>
+							</tr>
+							<tr>
+								<th scope="row">온라인시험</th>
+								<td class="ct">{{studyResult.apprRateInfo.apprRate02}} 점</td>
+								<td class="ct noline_r">{{studyResult.score02}} 점</td>
+							</tr>
+							<tr>
+								<th scope="row">온라인과제</th>
+								<td class="ct">{{studyResult.apprRateInfo.apprRate03}} 점</td>
+								<td class="ct noline_r">{{studyResult.score03}} 점</td>
+							</tr>
+							<tr>
+								<th scope="row">온라인토론</th>
+								<td class="ct">{{studyResult.apprRateInfo.apprRate04}} 점</td>
+								<td class="ct noline_r">{{studyResult.score04}} 점</td>
+							</tr>
+							<tr>
+								<th scope="row">온라인학습활동</th>
+								<td class="ct">{{studyResult.apprRateInfo.apprRate05}} 점</td>
+								<td class="ct noline_r">{{studyResult.score05}} 점</td>
+							</tr>
+							<tr>
+								<th scope="row">오프라인출석</th>
+								<td class="ct">{{studyResult.apprRateInfo.apprRate06}} 점</td>
+								<td class="ct noline_r">{{studyResult.score06}} 점</td>
+							</tr>
+							<tr>
+								<th scope="row">오프라인시험</th>
+								<td class="ct">{{studyResult.apprRateInfo.apprRate07}} 점</td>
+								<td class="ct noline_r">{{studyResult.score07}} 점</td>
+							</tr>
+							<tr>
+								<th scope="row">실습</th>
+								<td class="ct">{{studyResult.apprRateInfo.apprRate08}} 점</td>
+								<td class="ct noline_r">{{studyResult.score08}} 점</td>
+							</tr>
+							<tr>
+								<th scope="row">기타</th>
+								<td class="ct">{{studyResult.apprRateInfo.apprRate09}} 점</td>
+								<td class="ct noline_r">{{studyResult.score09}} 점</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<p class="desc_noti">※ 수료증 출력은 웹사이트에서만 가능합니다.</p>
+			</div>
+		</div>	
 	</div>
-	<div style="height: 30px;"></div>
-
-
-
-<!-- 		<div class="list card list-inset">
-	  	<a class="item item-icon-left item-icon-right" href="#" 
-	  		ng-class="{active: isGroupShown('courseInfo')}"
-	  		ng-click="toggleGroup('courseInfo')">
-	    	<i class="icon ion-document-text calm"></i>
-	    	강의정보
-	    	<i class="icon calm" ng-class="isGroupShown('courseInfo') ? 'ion-ios-arrow-down' : 'ion-ios-arrow-forward'"></i>
-	  	</a>
-		<ion-item class="item-accordion item-icon-right"
-            ng-show="isGroupShown('courseInfo')">
-	        <div>강의정보 내용</div>
-      	</ion-item>
-	  	<a class="item item-icon-left item-icon-right" href="#"
-	  		ng-class="{active: isGroupShown('studyInfo')}"
-	  		ng-click="toggleGroup('studyInfo')">
-	    	<i class="icon ion-stats-bars calm"></i>
-	    	학습현황
-	    	<i class="icon calm" ng-class="isGroupShown('studyInfo') ? 'ion-ios-arrow-down' : 'ion-ios-arrow-forward'"></i>
-	  	</a>
-	  	<ion-item class="item-accordion item-icon-right"
-            ng-show="isGroupShown('studyInfo')">
-	        <div>학습현황 내용</div>
-      	</ion-item>
-	  	<a class="item item-icon-left item-icon-right" href="#"
-	  		ng-class="{active: isGroupShown('studyResult')}"
-	  		ng-click="toggleGroup('studyResult')">
-	    	<i class="icon ion-university calm"></i>
-	    	성적조회
-	    	<i class="icon calm" ng-class="isGroupShown('studyResult') ? 'ion-ios-arrow-down' : 'ion-ios-arrow-forward'"></i>
-	  	</a>
-	  	<ion-item class="item-accordion item-icon-right"
-            ng-show="isGroupShown('studyResult')">
-	        <div>성적조회 내용</div>
-      	</ion-item>
-	  	</div> -->
-
+	<p style="height: 60px;">&nbsp;</p>
   </ion-content>
 </ion-view>

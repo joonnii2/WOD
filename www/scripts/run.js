@@ -6,9 +6,21 @@ define([
   'use strict';
   // the run blocks
   app.run([
-    '$ionicPlatform', '$rootScope', '$state', 'SessionSvc', 'ENV',
-    function ($ionicPlatform, $rootScope, $state, sessionSvc, env) {
+    '$ionicPlatform', '$rootScope', '$state', 'SessionSvc', 'ENV', '$cordovaStatusbar', '$cordovaTouchID', 
+    function ($ionicPlatform, $rootScope, $state, sessionSvc, env, $cordovaStatusbar, $cordovaTouchID) {
       $ionicPlatform.ready(function() {
+
+        /* iOS TouchID 설정 */
+        // $cordovaTouchID.checkSupport().then(function() {
+        //     $cordovaTouchID.authenticate("You must authenticate").then(function() {
+        //         alert("The authentication was successful");
+        //     }, function(error) {
+        //         console.log(JSON.stringify(error));
+        //     });
+        // }, function(error) {
+        //     console.log(JSON.stringify(error));
+        // });
+
         //$rootScope.isShowBackButton = false;
         var deviceInformation = ionic.Platform.device();
 
@@ -28,6 +40,11 @@ define([
           cordova.plugins.Keyboard.disableScroll(true);
         }
         if (window.StatusBar) {
+          $cordovaStatusbar.overlaysWebView(true);
+          $cordovaStatusbar.style(1);
+          $cordovaStatusbar.styleColor('black');
+          $cordovaStatusbar.styleHex('#000');
+
           // org.apache.cordova.statusbar required
 //StatusBar.styleDefault();
           // StatusBar.style(3);
