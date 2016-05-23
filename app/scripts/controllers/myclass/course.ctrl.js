@@ -29,6 +29,7 @@ define([
         // 수강중인 강의 > 강의 목록
         if ($state.current.name == 'myclass.ingCourseList') {
           //jQuery('#courseMenu').css('display', 'none');
+          jQuery('#mainHeader').show();//상단 메인 헤더 보임
           jQuery('#courseMenu').hide();
           $rootScope.isShowBackButton = false;
           $scope.courseList = null;

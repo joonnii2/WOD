@@ -42,9 +42,9 @@ define([
         }
         if (window.StatusBar) {
           $cordovaStatusbar.overlaysWebView(true);
-          $cordovaStatusbar.style(1);
-          $cordovaStatusbar.styleColor('black');
-          $cordovaStatusbar.styleHex('#000');
+          // $cordovaStatusbar.style(1);
+          // $cordovaStatusbar.styleColor('black');
+          // $cordovaStatusbar.styleHex('#000');
 
           // org.apache.cordova.statusbar required
 //StatusBar.styleDefault();
@@ -96,13 +96,14 @@ define([
         // }, false);
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+          jQuery('#mainHeader').show();//상단 메인 헤더 보임
           // 수강중인 강좌 메뉴 진입시
           if (toState.name.indexOf('myclass.') > -1) {
             $rootScope.isShowBackButton = true; //뒤로가기 버튼
 
             // 온라인 자격시험 메뉴 진입시
             if (toState.name.indexOf('myclass.exam') > -1) {
-              jQuery('#mainHeader').show();//상단 메인 헤더 보임
+              //jQuery('#mainHeader').show();//상단 메인 헤더 보임
               jQuery('#courseMenu').hide();// 수강중인 강좌 서브 메뉴 숨김
               jQuery('#footerTab').show();// 하단 푸터 메뉴 보임
             // 학습창 진입시
@@ -111,12 +112,12 @@ define([
               jQuery('#courseMenu').hide();// 수강중인 강좌 서브 메뉴 숨김
               jQuery('#footerTab').hide();// 하단 푸터 메뉴 숨김
             }else {
-              jQuery('#mainHeader').show();//상단 메인 헤더 보임
+              //jQuery('#mainHeader').show();//상단 메인 헤더 보임
               jQuery('#courseMenu').show();// 수강중인 강좌 서브 메뉴 보임
               jQuery('#footerTab').show();// 하단 푸터 메뉴 보임
             };
           }else {
-            jQuery('#mainHeader').show();//상단 메인 헤더 보임
+            //jQuery('#mainHeader').show();//상단 메인 헤더 보임
             jQuery('#courseMenu').hide();// 수강중인 강좌 서브 메뉴 숨김
             jQuery('#footerTab').show();// 하단 푸터 메뉴 보임
             $rootScope.isShowBackButton = false;

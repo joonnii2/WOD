@@ -32,12 +32,16 @@ define([
         if ($stateParams.messageData) $scope.msg[$scope.messageId] = $stateParams.messageData;
 
     	$scope.goToHome = function() {
-            
+            $state.go('login');
     	};
 
     	$scope.retry = function() {
             
     	};
+
+        $scope.goLogin = function() {
+            $state.go('login');
+        };
     }
   ]);
 });

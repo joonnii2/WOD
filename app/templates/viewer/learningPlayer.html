@@ -8,7 +8,7 @@
 
   <ion-content class="scu_player" style="margin-top: -45px;" scroll="false" drag-content="false">
     <div class="player_info_panel" id="infoPanel">
-      <div class="player_panel_txt"><span>{{item.tocName}}</span></div>
+      <div class="player_panel_txt">{{item.tocName}}</div>
       <div class="player_panel_btn">
         <button class="btn_exit" ng-click="showConfirm()"><span class="hide">학습종료</span></button>
       </div>
@@ -27,8 +27,8 @@
       ng-show="item.isMedia"
       preload="auto" 
       poster="{{item.poster}}" 
-      webkit-playsinline 
       controls>
+      <!-- webkit-playsinline -->
         <source type="{{mediaType}}">
         <!-- <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"> -->
         <p>Your user agent does not support the HTML5 Video element.</p>

@@ -98,7 +98,7 @@
   transform: translateY(-50%);
 }
 .player_info_panel {
-	display : none;
+	/*display : none;*/
 	background-color: rgba(0,0,0,0.5);
     position : absolute;
     top : 0; left: 0;
@@ -137,6 +137,10 @@
   top:15px;
   left:15px;
   text-align: left;
+  width:300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
 }
 .player_panel_btn {
   color: #ffffff;
@@ -197,13 +201,13 @@
   margin-right: 10px;
 }
 
-/*video {
+video {
   position: relative;
-  top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-}*/
+  top: 50%;
+}
 
 /*.video-portrait {
   top: 50%;

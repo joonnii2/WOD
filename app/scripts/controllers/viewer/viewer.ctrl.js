@@ -165,14 +165,14 @@ console.log('isIOS : '+$scope.isIOS);
         // 화면 터치
         $scope.onTouch = function() {
           if ($scope.item.isMedia) {
-            if (jQuery('#infoPanel').css('display') == 'none') {
-              jQuery('#infoPanel').slideDown();
-              $timeout(function() {
-                jQuery('#infoPanel').slideUp();
-              }, 7000, true);
-            }else {
-              jQuery('#infoPanel').slideUp();
-            };
+            // if (jQuery('#infoPanel').css('display') == 'none') {
+            //   jQuery('#infoPanel').slideDown();
+            //   $timeout(function() {
+            //     jQuery('#infoPanel').slideUp();
+            //   }, 7000, true);
+            // }else {
+            //   jQuery('#infoPanel').slideUp();
+            // };
           };
         };
 
@@ -512,7 +512,24 @@ resizeVideo(learningObj);
               learningObj = document.getElementById('media');
 
               learningObj.src = $scope.item.contentsServiceUrl;
+              
+if (learningObj.requestFullscreen) {
+  console.log('learningObj.requestFullscreen');
+  learningObj.requestFullscreen();
+}else if (learningObj.mozRequestFullScreen) {
+  console.log('learningObj.requestFullscreen');
+  learningObj.mozRequestFullScreen();
+}else if (learningObj.webkitRequestFullscreen) {
+  console.log('learningObj.requestFullscreen');
+  learningObj.webkitRequestFullscreen();
+}else if (learningObj.msRequestFullscreen) {
+  console.log('learningObj.msRequestFullscreen');
+  learningObj.msRequestFullscreen();
+};
+
               learningObj.width = $window.innerWidth;
+
+
               //learningObj.src = 'http://wodcontents.iscu.ac.kr/contents/FMAM0001/01/01.mp4';
 
               $scope.item.isMedia = true;
@@ -798,6 +815,19 @@ video.height(height);
 
 
             if ($scope.item.isMedia) {
+if (learningObj.requestFullscreen) {
+  console.log('learningObj.requestFullscreen');
+  learningObj.requestFullscreen();
+}else if (learningObj.mozRequestFullScreen) {
+  console.log('learningObj.requestFullscreen');
+  learningObj.mozRequestFullScreen();
+}else if (learningObj.webkitRequestFullscreen) {
+  console.log('learningObj.requestFullscreen');
+  learningObj.webkitRequestFullscreen();
+}else if (learningObj.msRequestFullscreen) {
+  console.log('learningObj.msRequestFullscreen');
+  learningObj.msRequestFullscreen();
+};
               if (learningObj) learningObj.play();
               // $scope.learner.finalLearnPst = parseInt(learningObj.currentTime);
             }else {
