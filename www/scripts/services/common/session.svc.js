@@ -62,54 +62,6 @@ define([
           };
         }
       };
-
-
-
-
-
-
-
-
-
-
-
-      // var isAuthenticated = false;
-      // var authToken;
-      // var LOCAL_TOKEN_KEY = '_wodTokenKey';
-      // var userInfo = null;
-
-      // function loadUserCredentials() {
-      //   var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
-      //   if (token) {
-      //     useCredenticals(token);
-      //   };
-      // };
-
-      // function storeUserCredentials(token) {
-      //   window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
-      //   useCredenticals(token);
-      // };
-
-      // function useCreDentials(token) {
-      //   userInfo = token;
-      //   isAuthenticated = true;
-      //   authToken = token;
-
-      //   $http.defaults.headers.common['X-Auth-Token'] = token;
-
-      // };
-
-      // function destroyUserCredentials() {
-      //   authToken = undefined;
-      //   userInfo = null;
-      //   isAuthenticated = false;
-      //   $http.defaults.headers.common['X-Auth-Token'] = undefined;
-      //   window.localStorage.removeItem(LOCAL_TOKEN_KEY);
-      // };
-
-      // return {
-      	
-      // };
     }
   ]);
 });

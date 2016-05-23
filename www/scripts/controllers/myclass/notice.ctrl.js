@@ -120,12 +120,7 @@ define([
             };
           });
         };
-  //       $scope.fileDownload = function (system, key, filePath, fileSaveName, fileOriginName) {
-  //         console.log('fileDownload...');
-  // //http://192.168.0.18:8080/lms/file/download.scu?_fdKey_=lms.file.bbs.phpath&_fdSubPath_=/&_fdFileName_=fda865d6-349d-403f-92bc-c3a7ae14075a.jpg&_fdFileOriName_=DSCF1143.JPG
-  //         var url = env.SERVER_URL + system + '/file/download.scu?_fdKey_='+key+'&_fdSubPath_='+filePath+'&_fdFileName_='+fileSaveName+'&_fdFileOriName_='+fileOriginName;
-  //         window.open(url, '_blank', 'location=no');
-  //       };      
+  
         $scope.fileDownloadUrl = function(system, key, filePath, fileSaveName, fileOriginName) {
           var url = env.SERVER_URL + system + '/file/download.scu?_fdKey_='+key+'&_fdSubPath_='+filePath+'&_fdFileName_='+fileSaveName+'&_fdFileOriName_='+fileOriginName;
           window.open(url, '_system');
@@ -151,13 +146,6 @@ define([
         };
       });
 
-      // $ionicPlatform.ready(function() {
-      //   if (window.cordova && window.cordova.plugins.FileTransfer) {
-      //     console.log('Cordova FileTransfer Plugin...')
-      //   }else {
-      //     console.log('Cordova FileTransfer Not Exist....')
-      //   };
-      // });
     }
   ]);
 });

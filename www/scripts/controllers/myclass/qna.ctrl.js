@@ -149,26 +149,21 @@ $scope.courseQnaList = $scope.items;
           };
         };
       }
- 
 
-
-
-
-
-  /*
-   * if given group is the selected group, deselect it
-   * else, select the given group
-   */
-  $scope.toggleItem= function(qna) {
-    if ($scope.isItemShown(qna)) {
-      $scope.shownItem = null;
-    } else {
-      $scope.shownItem = qna;
-    }
-  };
-  $scope.isItemShown = function(qna) {
-    return $scope.shownItem === qna;
-  };
+      /*
+       * if given group is the selected group, deselect it
+       * else, select the given group
+       */
+      $scope.toggleItem= function(qna) {
+        if ($scope.isItemShown(qna)) {
+          $scope.shownItem = null;
+        } else {
+          $scope.shownItem = qna;
+        }
+      };
+      $scope.isItemShown = function(qna) {
+        return $scope.shownItem === qna;
+      };
 
     }
   ]);

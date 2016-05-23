@@ -15,30 +15,6 @@ define([
     '$ionicTabsDelegate',
     function (apiSvc, $scope, $state, $ionicHistory, $rootScope, env, sessionSvc, $stateParams, $ionicTabsDelegate) {
 
-/*	    var currentHistoryId = $ionicHistory.currentHistoryId();
-	    console.log('currentHistoryId : '+currentHistoryId);
-	    var history = $ionicHistory.viewHistory();
-	    var stack = null;
-	    if (history.histories[currentHistoryId] != null && history.histories[currentHistoryId] != undefined)
-	    	stack = history.histories[currentHistoryId].stack;
-
-        if (stack != undefined && stack[stack.length-1] != undefined) {
-            //$ionicHistory.backView(stack[stack.length-1]);
-            jQuery('backBtn').show();
-            console.log('stacks not undefined');
-	        for (var i = 0; i < stack.length; i += 1) {
-	            console.log('stateId : '+stack[i].stateId);
-	            if (stack[i].stateId == 'login') {
-		        	jQuery('backBtn').hide();
-		        	console.log('stacks undefined');
-
-		        	break;
-	            };
-	        }
-        }else {
-        	jQuery('backBtn').hide();
-        	console.log('stacks undefined');
-        };*/
         $scope.userInfo = {
         	userName : sessionSvc.getSessionInfo().userName,
         	userId : sessionSvc.getSessionInfo().userId
