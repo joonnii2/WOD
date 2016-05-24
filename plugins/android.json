@@ -34,16 +34,16 @@
         "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "com.example.WOD"
         },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.example.WOD"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.example.WOD"
-        },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.example.WOD"
         },
         "cordova-plugin-touchid": {
+            "PACKAGE_NAME": "com.example.WOD"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.example.WOD"
+        },
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.example.WOD"
         }
     },

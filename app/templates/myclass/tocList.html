@@ -1,14 +1,12 @@
 <ion-view view-title="{{lectureName}}">
-  <ion-content style="/*background:#67b0d6; */margin-top:48px;" drag-content="false">
-    <ion-refresher 
+  <ion-content style="/*background:#67b0d6; */margin-top:48px;" drag-content="false" scroll="true" overflow-scroll="false" has-bouncing="true">
+<!--     <ion-refresher 
 		pulling-text="새로고침" 
 		on-refresh="doRefresh()" 
 		on-pulling="onPulling()" 
 		spinner="crescent" 
 		pulling-icon="ion-ios-arrow-up">
-	</ion-refresher>
-
-
+	</ion-refresher> -->
 	<ion-list>
 		<div class="item item-divider item-icon-left">
 		  <i class="icon ion-alert-circled assertive"></i>
@@ -25,7 +23,7 @@
 	        	</span>
 	        	<!-- <span class="badge badge-assertive">3/4</span> -->
 	      	</ion-item>
-	      	<ion-item class="item-accordion item-icon-right item-text-nowrap"
+	      	<ion-item class="item-icon-right item-text-nowrap"
 	            ng-repeat="toc in week.tocList"
 	            ng-show="isGroupShown(week)"
 	            /*ng-if="toc.connGb != '0102'"*/
@@ -55,88 +53,8 @@
 	      	</ion-item>
 	    </div>
 
-
-
-
-
-
-
-
-
-<!-- 
-    <div class="list" ng-repeat="toc in tocList">
-      	<ion-item class="item-stable"
-            ng-click="toggleGroup(toc)"
-            ng-class="{active: isGroupShown(toc)}">
-          	<i class="icon" ng-class="isGroupShown(toc) ? 'ion-arrow-down-b' : 'ion-arrow-right-b'"></i>
-        	&nbsp;
-        	{{toc.name}}
-        	<span class="badge badge-assertive">3/4</span>
-      	</ion-item>
-      	<ion-item class="item-accordion item-icon-right"
-            ng-repeat="toc in itemList"
-            ng-show="isGroupShown(toc)" 
-            ng-click="goItemDetail(toc.tocId)">
-	        &nbsp;&nbsp;<span class="ion-laptop" style="color:#000000">&nbsp;&nbsp;{{item}}</span>
-	        <span class="item-note button button-small button-balanced" style="margin-top: 3px;width:60px;">학습중</span>
-	        <i class="icon ion-ios-arrow-right dark"></i>
-
-      	</ion-item>
-    </div> -->
-
-
-<!-- 	<div class="list">
-      	<ion-item class="item-stable">
-          	<i class="icon ion-arrow-down-b"></i>
-        	&nbsp;
-        	테스트 주차
-        	<span class="badge badge-assertive">3/4</span>
-      	</ion-item>
-      	<ion-item class="item-accordion item-icon-right"
-            ng-click="goItemDetail('1', 'TOOL')">
-	        &nbsp;&nbsp;<span class="ion-edit">&nbsp;&nbsp;과제</span>
-	        <span class="item-note button button-small button-stable" style="margin-top: 3px;width:60px;">학습완료</span>
-	        <i class="icon ion-ios-arrow-right dark"></i>
-      	</ion-item>
-      	<ion-item class="item-accordion item-icon-right"
-            ng-click="goItemDetail('2', 'CONTENTS')">
-	        &nbsp;&nbsp;<span class="ion-laptop">&nbsp;&nbsp;온라인학습</span>
-	        <span class="item-note button button-small button-stable" style="margin-top: 3px;width:60px;">학습완료</span>
-	        <i class="icon ion-ios-arrow-right dark"></i>
-      	</ion-item>
-      	<ion-item class="item-accordion item-icon-right"
-            ng-click="goItemDetail('2', 'CONTENTS')">
-	        &nbsp;&nbsp;<span class="ion-laptop">&nbsp;&nbsp;온라인학습</span>
-	        <span class="item-note button button-small button-balanced" style="margin-top: 3px;width:60px;">학습중</span>
-	        <i class="icon ion-ios-arrow-right dark"></i>
-      	</ion-item>
-      	<ion-item class="item-accordion item-icon-right"
-            ng-click="goItemDetail('3', 'EXAM', '1')">
-	        &nbsp;&nbsp;<span class="ion-ios-paper-outline">&nbsp;&nbsp;시험</span>
-	        <span class="item-note button button-small button-balanced" style="margin-top: 3px;width:60px;">학습중</span>
-	        <i class="icon ion-ios-arrow-right dark"></i>
-      	</ion-item>
-      </div> -->
-
-
-<!-- 	    <div ng-repeat="group in groups" class="list list-inset">
-	      <ion-item class="item-stable"
-	                ng-click="toggleGroup(group)"
-	                ng-class="{active: isGroupShown(group)}">
-			<i class="icon" ng-class="isGroupShown(group) ? 'ion-arrow-down-b' : 'ion-arrow-right-b'"></i>
-	        &nbsp;
-	        {{group.name}}
-	          <span class="badge badge-assertive">0/20</span>
-	      </ion-item>
-	      <ion-item class="item-accordion item-icon-right"
-	                ng-repeat="item in group.items"
-	                ng-show="isGroupShown(group)" ng-click="study()">
-	        <span class="ion-ios-checkmark-empty">&nbsp;</span>{{item}}
-	        <span class="item-note">학습완료</span>
-	        <i class="icon ion-ios-arrow-thin-right"></i>
-	      </ion-item>
-	    </div> -->
 	</ion-list>
-
+  <p style="height:60px;">&nbsp;</p>	
   </ion-content>
+
 </ion-view>

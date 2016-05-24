@@ -64,7 +64,8 @@ define([
           'http://wave.jicsaw.com/**',
           'http://google.co.kr/**',
           'https://google.co.kr/**',
-          'http://naver.com/**'
+          'http://naver.com/**',
+          'http://wodcontents.iscu.ac.kr/**'
           //new RegExp('^(http[s]?):\/\/(mp4\.)?iscu\.ac\.kr/.+$'),
         ]);
         $sceDelegateProvider.resourceUrlBlacklist([

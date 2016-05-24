@@ -12,7 +12,10 @@ define([
     '$ionicLoading',
     'ENV',
     '$ionicTabsDelegate',
-    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicLoading, env, $ionicTabsDelegate) {
+    '$ionicPlatform',
+    '$ionicScrollDelegate',
+    '$location',
+    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicLoading, env, $ionicTabsDelegate, $ionicPlatform, $ionicScrollDelegate, $location) {
 
       // // 모바일에서 사용가능한 학습 자원 유형
       // var ENABLE_CONNGB_TYPE = [
@@ -86,6 +89,9 @@ define([
         $scope.toggleGroup = function(toc) {
           if ($scope.isGroupShown(toc)) $scope.shownGroup = null;
           else $scope.shownGroup = toc;
+          //$ionicScrollDelegate.$getByHandle('ws_'+toc.ws.wsSeqno).scrollTop();
+          // $location.hash('ws_'+toc.ws.wsSeqno);
+          $ionicScrollDelegate.scrollTop(true);
         };
 
 

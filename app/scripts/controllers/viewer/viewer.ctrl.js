@@ -23,6 +23,21 @@ define([
       var learningObj = null;
       $scope.isIOS = false;
       $ionicPlatform.ready(function() {
+
+        console.log('Orientation : ' + $scope.viewerOrientation);
+        console.log('Width : ' + $scope.width);
+        console.log('Height : ' + $scope.height);
+
+        $scope.initSize = {
+          width : $window.innerWidth,
+          height : $window.innerHeight,
+          orientation : function() {
+            if ($window.innerWidth > $window.innerHeight) return 'landscape';
+            else return 'portrait';
+          }
+        };
+
+
 $scope.isIOS = ionic.Platform.isIOS();
 console.log('isIOS : '+$scope.isIOS);
         // Setup the loader
@@ -201,12 +216,17 @@ console.log('exit cancel------------------');
           });
         };
 
+
         $window.addEventListener("orientationchange", function() {
           switch($window.orientation) {  
             case -90: // 가로모드 landscape
 
               $scope.viewerOrientation = 'landscape';
-
+              $scope.width = $window.innerWidth;
+              $scope.height = $window.innerHeight;
+              console.log('Orientation : ' + $scope.viewerOrientation);
+              console.log('Width : ' + $scope.width);
+              console.log('Height : ' + $scope.height);
               if ($scope.item.isMedia) {
 resizeVideo(learningObj);
 
@@ -217,6 +237,11 @@ resizeVideo(learningObj);
               break;
             case 90: // 가로모드 landscape
               $scope.viewerOrientation = 'landscape';
+              $scope.width = $window.innerWidth;
+              $scope.height = $window.innerHeight;
+              console.log('Orientation : ' + $scope.viewerOrientation);
+              console.log('Width : ' + $scope.width);
+              console.log('Height : ' + $scope.height);
               if ($scope.item.isMedia) {
                 //onResizeWindow();
 resizeVideo(learningObj);
@@ -226,15 +251,26 @@ resizeVideo(learningObj);
               break; 
             case 0: // 세로모드 Portrait
               $scope.viewerOrientation = 'portrait';
+              $scope.width = $window.innerWidth;
+              $scope.height = $window.innerHeight;
+              console.log('Orientation : ' + $scope.viewerOrientation);
+              console.log('Width : ' + $scope.width);
+              console.log('Height : ' + $scope.height);
               if ($scope.item.isMedia) {
 resizeVideo(learningObj);
                 //onResizeWindow();
               }else {
                 $scope.webContentsWidth = $window.innerWidth;
+
               }
               break; 
             case 180: // 세로모드 Portrait
               $scope.viewerOrientation = 'portrait';
+              $scope.width = $window.innerWidth;
+              $scope.height = $window.innerHeight;
+              console.log('Orientation : ' + $scope.viewerOrientation);
+              console.log('Width : ' + $scope.width);
+              console.log('Height : ' + $scope.height);
               if ($scope.item.isMedia) {
 resizeVideo(learningObj);
                 //onResizeWindow();
@@ -244,6 +280,11 @@ resizeVideo(learningObj);
               break; 
             default: // 세로모드 Portrait
               $scope.viewerOrientation = 'portrait';
+              $scope.width = $window.innerWidth;
+              $scope.height = $window.innerHeight;
+              console.log('Orientation : ' + $scope.viewerOrientation);
+              console.log('Width : ' + $scope.width);
+              console.log('Height : ' + $scope.height);
               if ($scope.item.isMedia) {
 
 resizeVideo(learningObj);
@@ -718,6 +759,30 @@ if (learningObj.requestFullscreen) {
       // 미디어 사이즈 변경
       function resizeVideo() {
 
+
+// $scope.initSize.width;
+// $scope.initSize.height;
+// $scope.initSize.orientation;
+
+
+// var video = jQuery('#media');
+// var widthX = learningObj.videoWidth/learningObj.videoHeight;
+// var heightY = learningObj.videoHeight/learningObj.videoWidth;
+// if ($scope.viewerOrientation == 'portrait') {
+//   if ($scope.initSize.orientation == 'portrait') {
+//     var width = $scope.initSize.width;
+//     var height = width * heightY;
+//     video.width(width);
+//     video.height(height);
+//   }else {
+//     var height = $window.innerHeight;
+//     var width = height*widthX;
+//     video.width($scope.initSize.height);
+//     video.height($scope.initSize.width);
+//   };
+// }else {
+
+// };
           console.log('미디어 사이즈 조절 전 ========================');
           // 미디어 창 크기
           console.log('미디어 창 크기 : video.clientWidth : '+learningObj.clientWidth);
@@ -731,22 +796,28 @@ if (learningObj.requestFullscreen) {
           console.log('미디어 해상도 : video.videoWidth : '+learningObj.videoWidth);
           console.log('미디어 해상도 : video.videoHeight : '+learningObj.videoHeight);
 
-
 var widthX = learningObj.videoWidth/learningObj.videoHeight;
 var heightY = learningObj.videoHeight/learningObj.videoWidth;
 var video = jQuery('#media');
+console.log('orientation : '+$scope.viewerOrientation);
 if ($scope.viewerOrientation == 'portrait') {
 var width = $window.innerWidth;
 var height = width * heightY;
-//video.height(height);
+video.height(height);
 video.width(width);
+console.log('Orientation : '+$scope.viewerOrientation);
+console.log('미디어 width 세팅 : '+width);
+console.log('미디어 Height를 세팅 : '+height);
 }else if ($scope.viewerOrientation == 'landscape') {
 var height = $window.innerHeight;
 var width = height*widthX;
 console.log($scope.isIOS);
 if ($scope.isIOS) height -= 20;
 video.height(height);
-//video.width(width);
+video.width(width);
+console.log('Orientation : '+$scope.viewerOrientation);
+console.log('미디어 width 세팅 : '+width);
+console.log('미디어 Height를 세팅 : '+height);
 };
 
           // var percentWidth = learningObj.clientWidth * 100 / learningObj.videoWidth;
