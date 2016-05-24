@@ -1,12 +1,12 @@
 <ion-view view-title="FAQ">
 	<ion-content>
-		<ion-refresher 
+		<!-- <ion-refresher 
 			pulling-text="새로고침" 
 			on-refresh="doRefresh()" 
 			on-pulling="onPulling()" 
 			spinner="crescent" 
 			pulling-icon="ion-ios-arrow-up">
-		</ion-refresher>
+		</ion-refresher> -->
 		<div id="contents">
 			<dl class="faq_list" ng-repeat="faq in faqList">
 				<dt ng-click="toggleGroup(faq)">{{getFaqQuesGbName(faq.faqQuesGb)}} > {{faq.title}}</dt>

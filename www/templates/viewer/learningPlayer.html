@@ -5,7 +5,6 @@
       <button class="btn_close" ng-click="showConfirm()" style="margin-top: 5px;"><span class="hide">학습종료</span></button>
     </div>
   </ion-header-bar>
-
   <ion-content class="scu_player" style="margin-top: -45px;" scroll="false" drag-content="false">
     <div class="player_info_panel" id="infoPanel">
       <div class="player_panel_txt">{{item.tocName}}</div>
@@ -26,8 +25,9 @@
     <video id="media" 
       ng-show="item.isMedia"
       preload="auto" 
-      poster="{{item.poster}}" 
+      ng-class="getCssOrientation()"
       controls>
+      <!-- poster="{{item.poster}}"  -->
       <!-- webkit-playsinline -->
         <source type="{{mediaType}}">
         <!-- <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"> -->

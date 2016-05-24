@@ -194,15 +194,13 @@ video {
   top: 50%;
 }
 
-/*.video-portrait {
+.video-portrait {
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 .video-landscape {
   top : 0px;
-}*/
+}
 
 /*.contentsLayer {
   display: block;

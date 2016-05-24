@@ -22,9 +22,20 @@ define([
       
       var learningObj = null;
       $scope.isIOS = false;
+
       $ionicPlatform.ready(function() {
+
 $scope.isIOS = ionic.Platform.isIOS();
 console.log('isIOS : '+$scope.isIOS);
+
+        $scope.getCssOrientation = function() {
+          if ($scope.viewerOrientation == 'landscape') {
+            return 'video-portrait';
+          }else {
+            return 'video-portrait';
+          };
+        };
+
         // Setup the loader
         $ionicLoading.show({
           content: 'Loading',
@@ -165,14 +176,14 @@ console.log('isIOS : '+$scope.isIOS);
         // 화면 터치
         $scope.onTouch = function() {
           if ($scope.item.isMedia) {
-            // if (jQuery('#infoPanel').css('display') == 'none') {
-            //   jQuery('#infoPanel').slideDown();
-            //   $timeout(function() {
-            //     jQuery('#infoPanel').slideUp();
-            //   }, 7000, true);
-            // }else {
-            //   jQuery('#infoPanel').slideUp();
-            // };
+            if (jQuery('#infoPanel').css('display') == 'none') {
+              jQuery('#infoPanel').slideDown();
+              $timeout(function() {
+                jQuery('#infoPanel').slideUp();
+              }, 7000, true);
+            }else {
+              jQuery('#infoPanel').slideUp();
+            };
           };
         };
 
@@ -208,61 +219,41 @@ console.log('exit cancel------------------');
               $scope.viewerOrientation = 'landscape';
 
               if ($scope.item.isMedia) {
-resizeVideo(learningObj);
-
-                //onResizeWindow();
-              }else {
-                $scope.webContentsWidth = $window.innerWidth;
-              }
+                resizeVideo();
+              };
               break;
             case 90: // 가로모드 landscape
               $scope.viewerOrientation = 'landscape';
               if ($scope.item.isMedia) {
-                //onResizeWindow();
-resizeVideo(learningObj);
-              }else {
-                $scope.webContentsWidth = $window.innerWidth;
-              }
+                resizeVideo();
+              };
               break; 
             case 0: // 세로모드 Portrait
               $scope.viewerOrientation = 'portrait';
               if ($scope.item.isMedia) {
-resizeVideo(learningObj);
-                //onResizeWindow();
-              }else {
-                $scope.webContentsWidth = $window.innerWidth;
-              }
+                resizeVideo();
+              };
               break; 
             case 180: // 세로모드 Portrait
               $scope.viewerOrientation = 'portrait';
               if ($scope.item.isMedia) {
-resizeVideo(learningObj);
-                //onResizeWindow();
-              }else {
-                $scope.webContentsWidth = $window.innerWidth;
-              }
+                resizeVideo();
+              };
               break; 
             default: // 세로모드 Portrait
               $scope.viewerOrientation = 'portrait';
               if ($scope.item.isMedia) {
-
-resizeVideo(learningObj);
-
-                //onResizeWindow();
-              }else {
-                $scope.webContentsWidth = $window.innerWidth;
-              }
+                resizeVideo();
+              };
               break; 
           };
         }, false);
 
         $window.addEventListener("resume", function() {
-          //$scope.doResumeStudy();
           control.resume();
         }, false);
         
         $window.addEventListener("pause", function() {
-          //$scope.doPauseStudy();
           control.pause();
         }, false);
 
@@ -513,21 +504,30 @@ resizeVideo(learningObj);
 
               learningObj.src = $scope.item.contentsServiceUrl;
               
-if (learningObj.requestFullscreen) {
-  console.log('learningObj.requestFullscreen');
-  learningObj.requestFullscreen();
-}else if (learningObj.mozRequestFullScreen) {
-  console.log('learningObj.requestFullscreen');
-  learningObj.mozRequestFullScreen();
-}else if (learningObj.webkitRequestFullscreen) {
-  console.log('learningObj.requestFullscreen');
-  learningObj.webkitRequestFullscreen();
-}else if (learningObj.msRequestFullscreen) {
-  console.log('learningObj.msRequestFullscreen');
-  learningObj.msRequestFullscreen();
-};
+// if (learningObj.requestFullscreen) {
+//   console.log('learningObj.requestFullscreen');
+//   learningObj.requestFullscreen();
+// }else if (learningObj.mozRequestFullScreen) {
+//   console.log('learningObj.requestFullscreen');
+//   learningObj.mozRequestFullScreen();
+// }else if (learningObj.webkitRequestFullscreen) {
+//   console.log('learningObj.requestFullscreen');
+//   learningObj.webkitRequestFullscreen();
+// }else if (learningObj.msRequestFullscreen) {
+//   console.log('learningObj.msRequestFullscreen');
+//   learningObj.msRequestFullscreen();
+// };
 
               learningObj.width = $window.innerWidth;
+
+              console.log('=====================================');
+              console.log(learningObj.width);
+              console.log(learningObj.height);
+              console.log(learningObj.clientWidth);
+              console.log(learningObj.clientHeight);
+              console.log(learningObj.videoWidth);
+              console.log(learningObj.videoHeight);
+              console.log('=====================================');
 
 
               //learningObj.src = 'http://wodcontents.iscu.ac.kr/contents/FMAM0001/01/01.mp4';
@@ -710,11 +710,7 @@ if (learningObj.requestFullscreen) {
           if (isGoBack) $ionicHistory.goBack(-1);
         });
       };
-      // 프레임 사이즈 변경
-      function resizeFrame() {
-
-      };
-
+      
       // 미디어 사이즈 변경
       function resizeVideo() {
 
@@ -732,21 +728,46 @@ if (learningObj.requestFullscreen) {
           console.log('미디어 해상도 : video.videoHeight : '+learningObj.videoHeight);
 
 
-var widthX = learningObj.videoWidth/learningObj.videoHeight;
-var heightY = learningObj.videoHeight/learningObj.videoWidth;
 var video = jQuery('#media');
+var widthX = 1;
+var heightY = 1;
+if (learningObj.clientWidth > 0 && learningObj.clientHeight > 0) {
+  widthX = learningObj.clientWidth/learningObj.clientHeight;
+  heightY = learningObj.clientHeight/learningObj.clientWidth;
+}else if (learningObj.videoWidth > 0 && learningObj.videoHeight > 0) {
+  widthX = learningObj.videoWidth/learningObj.videoHeight;
+  heightY = learningObj.videoHeight/learningObj.videoWidth; 
+};
+// var widthX = learningObj.clientWidth/learningObj.clientHeight;
+// var heightY = learningObj.clientHeight/learningObj.clientWidth;
+
 if ($scope.viewerOrientation == 'portrait') {
-var width = $window.innerWidth;
-var height = width * heightY;
-//video.height(height);
-video.width(width);
+  var width = $window.innerWidth;
+  var height = width * heightY;
+
+  if ($window.innerWidth > $window.innerHeight) {
+    if (learningObj.clientHeight > 0) width = learningObj.clientHeight;
+    else width = $window.innerHeight;
+    height = width * heightY;
+  };
+  //video.height(height);
+  video.width(width);
+
 }else if ($scope.viewerOrientation == 'landscape') {
-var height = $window.innerHeight;
-var width = height*widthX;
-console.log($scope.isIOS);
-if ($scope.isIOS) height -= 20;
-video.height(height);
-//video.width(width);
+  var height = $window.innerHeight;
+  var width = height*widthX;
+
+  if ($window.innerHeight > $window.innerWidth) {
+    if (learningObj.clientHeight > 0) height = learningObj.clientWidth;
+    else height = $window.innerWidth;
+    width = height * widthX;
+  };
+  console.log($scope.isIOS);
+  if ($scope.isIOS) {
+    height -= 20;
+    video.height(height);
+  }
+  video.width(width);
 };
 
           // var percentWidth = learningObj.clientWidth * 100 / learningObj.videoWidth;
@@ -773,25 +794,6 @@ video.height(height);
 
       };
 
-
-      // 화면 사이즈 변경
-      function onResizeWindow() {
-          console.log('onResizeWindow isMedia : '+$scope.item.isMedia);
-        if ($scope.item.isMedia) {
-          console.log('isMedia : '+$scope.item.isMedia);
-          var video = jQuery('#media');
-          console.log('video.clientWidth : '+video.clientWidth);
-          console.log('video.videoWidth : '+video.videoWidth);
-          console.log('video.videoHeight : '+video.videoHeight);
-          console.log('$window.innerHeight : '+$window.innerHeight);
-          video.width($window.innerWidth);
-          //resizeVideo(video);
-
-        }else {
-          resizeFrame();
-        };
-      };
-
       // 학습 뷰어 콘트롤러
       var control = {
         /* 학습 시작 */
@@ -815,46 +817,25 @@ video.height(height);
 
 
             if ($scope.item.isMedia) {
-if (learningObj.requestFullscreen) {
-  console.log('learningObj.requestFullscreen');
-  learningObj.requestFullscreen();
-}else if (learningObj.mozRequestFullScreen) {
-  console.log('learningObj.requestFullscreen');
-  learningObj.mozRequestFullScreen();
-}else if (learningObj.webkitRequestFullscreen) {
-  console.log('learningObj.requestFullscreen');
-  learningObj.webkitRequestFullscreen();
-}else if (learningObj.msRequestFullscreen) {
-  console.log('learningObj.msRequestFullscreen');
-  learningObj.msRequestFullscreen();
-};
+// if (learningObj.requestFullscreen) {
+//   console.log('learningObj.requestFullscreen');
+//   learningObj.requestFullscreen();
+// }else if (learningObj.mozRequestFullScreen) {
+//   console.log('learningObj.requestFullscreen');
+//   learningObj.mozRequestFullScreen();
+// }else if (learningObj.webkitRequestFullscreen) {
+//   console.log('learningObj.requestFullscreen');
+//   learningObj.webkitRequestFullscreen();
+// }else if (learningObj.msRequestFullscreen) {
+//   console.log('learningObj.msRequestFullscreen');
+//   learningObj.msRequestFullscreen();
+// };
               if (learningObj) learningObj.play();
               // $scope.learner.finalLearnPst = parseInt(learningObj.currentTime);
             }else {
 
             };
 
-// //learningObj.width = 100;
-
-
-// // 미디어 창 크기
-// console.log('video.clientWidth : '+learningObj.clientWidth);
-// console.log('video.clientHeight : '+learningObj.clientHeight);
-
-// // 미디어 해상도
-// console.log('video.videoWidth : '+learningObj.videoWidth);
-// console.log('video.videoHeight : '+learningObj.videoHeight);
-
-// // 디바이스 크기
-// console.log('$window.innerWidth : '+$window.innerWidth);
-// console.log('$window.innerHeight : '+$window.innerHeight);
-
-
-// if (learningObj.clientHeight <= $window.innerHeight) {
-//   learningObj.width = $window.innerWidth;
-// }else {
-//   learningObj.height = $window.innerHeight;
-// };
 
             // 처음 실행이면 init 호출
             if ($scope.learner.actionType == 'unset') {

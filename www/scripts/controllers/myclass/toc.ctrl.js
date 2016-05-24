@@ -12,7 +12,9 @@ define([
     '$ionicLoading',
     'ENV',
     '$ionicTabsDelegate',
-    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicLoading, env, $ionicTabsDelegate) {
+    '$ionicPlatform',
+    '$ionicScrollDelegate',
+    function ($scope, $state, $stateParams, $rootScope, apiSvc, $ionicLoading, env, $ionicTabsDelegate, $ionicPlatform, $ionicScrollDelegate) {
 
       // // 모바일에서 사용가능한 학습 자원 유형
       // var ENABLE_CONNGB_TYPE = [
@@ -80,12 +82,14 @@ define([
       // 학습 목차
       if ($state.current.name == 'myclass.tocList') {
 
-        doTocList($stateParams);
         
-        $scope.isGroupShown = function(toc) {return $scope.shownGroup === toc;};
-        $scope.toggleGroup = function(toc) {
-          if ($scope.isGroupShown(toc)) $scope.shownGroup = null;
-          else $scope.shownGroup = toc;
+        
+        $scope.isGroupShown = function(wsSeqno) {return $scope.shownGroup === wsSeqno;};
+        $scope.toggleGroup = function(wsSeqno) {
+          if ($scope.isGroupShown(wsSeqno)) $scope.shownGroup = null;
+          else $scope.shownGroup = wsSeqno;
+
+          $ionicScrollDelegate.scrollTo(0, document.getElementById('ws_'+wsSeqno) ? document.getElementById('ws_'+wsSeqno).offsetTop : 0);
         };
 
 
@@ -113,6 +117,9 @@ define([
           $state.go('myclass.itemDetail', $stateParams);
         };
 
+        $ionicPlatform.ready(function() {
+          doTocList($stateParams);
+        });
       // 학습 목차 상세
       }else if ($state.current.name == 'myclass.itemDetail') {
 
@@ -219,6 +226,12 @@ define([
             console.log(res.LIST);
             //$scope.tocList = res.LIST; // 학습목차 목록
             $scope.wsList = setWsList(res.LIST); // 주차 목록
+
+            if ($stateParams.scrollTo == undefined || $stateParams.scrollTo == null) {
+              $scope.toggleGroup($scope.wsList[0].ws.wsSeqno);
+            }else {
+              $scope.toggleGroup($stateParams.scrollTo);
+            };
           }
         }, function(err) {
         });

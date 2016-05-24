@@ -32,14 +32,14 @@
 
   </ion-side-menu-content>
   <!-- 사이드메뉴 -->
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" drag-content="false">
     <div id="gnb">
     <ion-header-bar class="gnb_header">
-        <h1>SCU WOD Mobile LMS</h1>
+        <h1>SCU WOD Mobile App</h1>
         <button class="btn_close" menu-close><span class="hide">주요메뉴 닫기</span></button>
         <a href="#" class="btn_logout" ng-click="logout()"><span class="hide">로그아웃</span></a>
     </ion-header-bar>
-    <ion-content>
+    <ion-content drag-content="false">
       <div class="profile">
         <img src="images/thum_user.png" width="35" height="35" alt="회원 프로필 이미지" class="thumb" />
         <strong class="ellip">{{userInfo.userName}} 님</strong>

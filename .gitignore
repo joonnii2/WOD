@@ -1,2 +1,5 @@
 platforms
 hook
+.temp
+node_modules
+www
