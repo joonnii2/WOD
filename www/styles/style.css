@@ -216,3 +216,12 @@ video {
 }*/
 .btn_create_cop {position:fixed; right:15px; bottom:60px; width:50px; height:50px; border-radius:100%; background:#67b1d6 url('../images/btn_plus.png') no-repeat 50% 50%; background-size:50px 50px; box-shadow:1px 1px 3px rgba(0,0,0,0.3); z-index:100;}
 .btn_create_cop .hide {width:50px; height:50px;}
+.toc-active {
+  background-color: #11c1f3;/*#11c1f3*//*#33cd5f*/
+  color : #ffffff;
+  font-weight: bold;
+}
+.item-note-active {
+  color : #ffffff;
+  float : right;
+}

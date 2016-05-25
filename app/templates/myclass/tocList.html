@@ -1,4 +1,5 @@
 <ion-view view-title="{{lectureName}}">
+
   <ion-content style="/*background:#67b0d6; */margin-top:48px;" drag-content="false" scroll="true" overflow-scroll="false" has-bouncing="true">
 <!--     <ion-refresher 
 		pulling-text="새로고침" 
@@ -14,13 +15,13 @@
 		  <i class="icon ion-alert-circled assertive"></i>
 	      <p>학습하기 버튼이 있는 목차만 학습이 가능하며 <br/>토론, 과제등 학습활동은 웹사이트에서만 가능합니다.</p>
 		</div>
-	    <div ng-repeat="week in wsList" id="ws_{{week.ws.wsSeqno}}" name="ws_{{week.ws.wsSseqno}}">
-	      	<ion-item class="item-stable"
+	    <div ng-repeat="week in wsList">
+	      	<ion-item id="ws_{{week.ws.wsSeqno}}" name="ws_{{week.ws.wsSseqno}}" data-index="{{$index}}"
 	            ng-click="toggleGroup(week.ws.wsSeqno)"
-	            ng-class="{active: isGroupShown(week.ws.wsSeqno)}">
+	            ng-class="isGroupShown(week.ws.wsSeqno) ? 'toc-active' : 'item-stable'">
 	          	<i class="icon" ng-class="isGroupShown(week.ws.wsSeqno) ? 'ion-arrow-down-b' : 'ion-arrow-right-b'"></i>
 	        	<span style="font-size: 14px;">{{week.ws.wsName}}</span>
-	        	<span class="item-note" ng-show="week.ws.wsStartDttm" style="font-size: 12px;">
+	        	<span ng-class="isGroupShown(week.ws.wsSeqno) ? 'item-note-active' : 'item-note'" ng-show="week.ws.wsStartDttm" style="font-size: 12px;">
 	        		{{week.ws.wsStartDttm | limitTo : 10}} ~ {{week.ws.wsEndDttm | limitTo : 10}}
 	        	</span>
 	        	<!-- <span class="badge badge-assertive">3/4</span> -->

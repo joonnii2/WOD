@@ -82,16 +82,15 @@ define([
       // 학습 목차
       if ($state.current.name == 'myclass.tocList') {
 
-        
-        
         $scope.isGroupShown = function(wsSeqno) {return $scope.shownGroup === wsSeqno;};
         $scope.toggleGroup = function(wsSeqno) {
           if ($scope.isGroupShown(wsSeqno)) $scope.shownGroup = null;
           else $scope.shownGroup = wsSeqno;
 
-          $ionicScrollDelegate.scrollTo(0, document.getElementById('ws_'+wsSeqno) ? document.getElementById('ws_'+wsSeqno).offsetTop : 0);
+          if (jQuery('#ws_'+wsSeqno).attr('data-index') != undefined && jQuery('#ws_'+wsSeqno).attr('data-index') != null) {
+            $ionicScrollDelegate.scrollTo(0, ((jQuery('#ws_'+wsSeqno).attr('data-index')*55) + 58));
+          };
         };
-
 
         $scope.setTocStyle = function(toc) {
           var style = 'indent_'+toc.tocDepth;
@@ -118,6 +117,7 @@ define([
         };
 
         $ionicPlatform.ready(function() {
+
           doTocList($stateParams);
         });
       // 학습 목차 상세
